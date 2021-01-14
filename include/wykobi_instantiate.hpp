@@ -78,6 +78,7 @@ namespace wykobi
       template bool is_point_collinear<T>(const segment<T,3>& segment, const point3d<T>&point, const bool robust);\
       template bool robust_coplanar<T>(const point3d<T> point1, const point3d<T> point2, const point3d<T> point3, const point3d<T> point4, const T& epsilon);\
       template bool coplanar<T>(const ray<T,3>& ray1, const ray<T,3>& ray2);\
+      template bool coplanar<T>(const ray<T,3>& ray1, const segment<T,3>& segment1); \
       template bool coplanar<T>(const segment<T,3>& segment1, const segment<T,3>& segment2);\
       template bool coplanar<T>(const line<T,3>& line1, const line<T,3>& line2);\
       template bool coplanar<T>(const triangle<T,3>& triangle1, const triangle<T,3>& triangle2);\
@@ -98,6 +99,7 @@ namespace wykobi
       template bool intersect<T>(const segment<T,2>& segment1, const segment<T,2>& segment2,point2d<T>& i_point);\
       template bool intersect<T>(const T& x1, const T& y1, const T& z1, const T& x2, const T& y2, const T& z2, const T& x3, const T& y3, const T& z3, const T& x4, const T& y4, const T& z4, const T& fuzzy);\
       template bool intersect<T>(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3, const point3d<T>& point4, const T& fuzzy);\
+      template bool intersect<T>(const Eigen::MatrixBase<T>& point1, const Eigen::MatrixBase<T>& point2, const Eigen::MatrixBase<T>& point3, const Eigen::MatrixBase<T>& point4, const T& fuzzy = T(0.0));\
       template bool intersect<T>(const segment<T,3>& segment1, const segment<T,3>& segment2, const T& fuzzy);\
       template bool intersect<T>(const segment<T,2>& segment, const rectangle<T>& rectangle);\
       template bool intersect<T>(const segment<T,2>& segment, const triangle<T,2>& triangle);\
@@ -167,12 +169,14 @@ namespace wykobi
       template void intersection_point<T>(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3, const point2d<T>& point4, T& ix, T& iy);\
       template point2d<T> intersection_point<T>(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3, const point2d<T>& point4);\
       template point2d<T> intersection_point<T>(const segment<T,2>& segment1, const segment<T,2>& segment2);\
-      template void intersection_point<T>(const T& x1, const T& y1, const T& z1, const T& x2, const T& y2, const T& z2, const T& x3, const T& y3, const T& z3, const T& x4, const T& y4, const T& z4, T& ix, T& iy, T& iz, const T& fuzzy);\
-      template void intersection_point<T>(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3, const point3d<T>& point4, T& ix, T& iy, T& iz, const T& fuzzy);\
+      template bool intersection_point<T>(const T& x1, const T& y1, const T& z1, const T& x2, const T& y2, const T& z2, const T& x3, const T& y3, const T& z3, const T& x4, const T& y4, const T& z4, T& ix, T& iy, T& iz, const T& fuzzy);\
+      template bool intersection_point<T>(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3, const point3d<T>& point4, T& ix, T& iy, T& iz, const T& fuzzy);\
+      template bool intersection_point<T>(const Eigen::MatrixBase<T>& point1, const Eigen::MatrixBase<T>& point2, const Eigen::MatrixBase<T>& point3, const Eigen::MatrixBase<T>& point4, Eigen::MatrixBase<T>& ipoint, const typenameT::Scalar& fuzzy);\
       template point3d<T> intersection_point<T>(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3, const point3d<T>& point4, const T& fuzzy);\
       template point3d<T> intersection_point<T>(const segment<T,3>& segment1, const segment<T,3>& segment2, const T& fuzzy);\
       template point2d<T> intersection_point<T>(const segment<T,2>& segment, const line<T,2>& line);\
       template point3d<T> intersection_point<T>(const segment<T,3>& segment, const line<T,3>& line, const T& fuzzy);\
+      template bool intersection_point(const segment<T,3>& segment, const line<T,3>& line, Eigen::Vector3d& ipoint, const T& fuzzy = T(0.0));\
       template point3d<T> intersection_point<T>(const segment<T,3>& segment, const plane<T,3>& plane);\
       template void intersection_point<T,OutputIterator3d>(const segment<T,3>& segment, const sphere<T>& sphere, OutputIterator3d out);\
       template void intersection_point<T,OutputIterator2d>(const segment<T,2>& segment, const quadratic_bezier<T,2>& bezier, OutputIterator2d out, const std::size_t& steps);\
@@ -188,6 +192,7 @@ namespace wykobi
       template void intersection_point<T,OutputIterator2d>(const line<T,2>& line, const circle<T>& circle, OutputIterator2d out);\
       template void intersection_point<T,OutputIterator3d>(const line<T,3>& line, const sphere<T>& sphere, OutputIterator3d out);\
       template point2d<T> intersection_point<T>(const ray<T,2>& ray1, const ray<T,2>& ray2);\
+      template point2d<T> intersection_point<T>(const ray<T,2>& ray, const segment<T,2>& segment);\
       template point3d<T> intersection_point<T>(const ray<T,3>& ray, const triangle<T,3>& triangle);\
       template point3d<T> intersection_point<T>(const ray<T,3>& ray, const plane<T,3>& plane);\
       template void intersection_point<T,OutputIterator2d>(const ray<T,2>& ray, const circle<T>& circle, OutputIterator2d out);\
@@ -1124,6 +1129,8 @@ namespace wykobi
       template bool is_degenerate<T>(const circle<T>& circle);\
       template bool is_degenerate<T>(const sphere<T>& sphere);\
       template bool is_degenerate<T>(const circular_arc<T>& arc);\
+      template bool is_degenerate<T>(const point2d<T>& point);\
+      template bool is_degenerate<T>(const point3d<T>& point);\
       template point2d<T> degenerate_point2d<T>();\
       template point3d<T> degenerate_point3d<T>();\
       template vector2d<T> degenerate_vector2d<T>();\

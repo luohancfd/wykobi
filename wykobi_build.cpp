@@ -17,11 +17,19 @@
 (***********************************************************************)
 */
 
+#include "wykobi.hpp"
+#include <iostream>
 
-#include "wykobi_instantiate.hpp"
+using namespace wykobi;
+int main(void) {
+  point3d<double> p1(0.0, 0.0, 1.0), p2(1, 0, 1.0), p3(0, 1, 1.0);
+  point3d<double> p4(0, 0, -1), p5(0,0,2);
 
+  plane<double, 3> pl = make_plane(p1, p2,p3);
 
-int main(void)
-{
-   return 0;
+  std::cout << lay_distance(p4, pl) << std::endl;
+  std::cout << lay_distance(p5, pl) << std::endl;
+  std::cout << lay_distance(p1, pl) << std::endl;
+
+  return 0;
 }

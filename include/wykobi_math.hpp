@@ -24,6 +24,7 @@
 
 #include <cmath>
 #include <limits>
+#include <algorithm>
 
 
 namespace wykobi
@@ -127,6 +128,12 @@ namespace wykobi
    inline T infinity()
    {
       return std::numeric_limits<T>::infinity();
+   }
+
+   template <typename T>
+   inline T is_inifinity(T x)
+   {
+      return x == std::numeric_limits<T>::infinity();
    }
 
    template <typename T>

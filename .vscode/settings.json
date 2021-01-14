@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "core": "cpp",
+        "*.ipp": "cpp",
+        "*.tcc": "cpp",
+        "limits": "cpp"
+    }
+}

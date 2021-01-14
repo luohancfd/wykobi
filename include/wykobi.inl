@@ -1,3 +1,13 @@
+/**
+ * @file wykobi.inl
+ * @author Han Luo <han.luo@gmail.com>
+ * @brief List of inline functions of wykobi library
+ * @version 0.1
+ * @date 2021-01-15
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
 /*
 (***********************************************************************)
 (*                                                                     *)
@@ -53,6 +63,7 @@ namespace wykobi
       const T pz2 = z2 - pz;
       const T pz3 = z3 - pz;
 
+      // orin = dot_product(p1, cross_product(p3 - p1, p2 - p1))
       const T orin = px1 * (py2 * pz3 - pz2 * py3) +
                      px2 * (py3 * pz1 - pz3 * py1) +
                      px3 * (py1 * pz2 - pz1 * py2) ;
@@ -187,7 +198,7 @@ namespace wykobi
                                      const T& p2x, const T& p2y)
    {
       /* Collinear orientation is not considered */
-      return ((orientation(x1,y1,x2,y2,p1x,p1y) * orientation(x1,y1,x2,y2,p2x,p2y)) == -1);
+      return ((orientation(x1,y1,x2,y2,p1x,p1y) * orientation(x1,y1,x2,y2,p2x,p2y)) < 0);
    }
 
    template <typename T>
@@ -210,6 +221,16 @@ namespace wykobi
       const T dx3 = x3 - px;
       const T dy3 = y3 - py;
 
+      // The three points should be in counterclockwise direction
+      int orin = orientation<T>(x1, y1, x2, y2, x3, y3);
+      if (orin == LeftHandSide) {
+         orin = 1;
+      } else if (orin == RightHandSide) {
+         orin = -1;
+      } else {
+         return PointOutside;
+      }
+
       const T det1  = dx1 * dy2 - dx2 * dy1;
       const T det2  = dx2 * dy3 - dx3 * dy2;
       const T det3  = dx3 * dy1 - dx1 * dy3;
@@ -217,7 +238,7 @@ namespace wykobi
       const T lift2 = dx2 * dx2 + dy2 * dy2;
       const T lift3 = dx3 * dx3 + dy3 * dy3;
 
-      const T result = lift1 * det2 + lift2 * det3 + lift3 * det1;
+      const T result = static_cast<T>(orin) * (lift1 * det2 + lift2 * det3 + lift3 * det1);
 
       if (is_equal(result,T(0.0))) return Cocircular;
       else if (result > T(0.0))    return PointInside;
@@ -311,7 +332,7 @@ namespace wykobi
                         const T& x2, const T& y2,
                         const T& px, const T& py)
    {
-      return (x2 - x1) * (py - y1) - (px - x1) * (y2 - y1);
+      return T(0.5) * ((x2 - x1) * (py - y1) - (px - x1) * (y2 - y1));
    }
 
    template <typename T>
@@ -350,9 +371,11 @@ namespace wykobi
       const T pz2 = z2 - pz;
       const T pz3 = z3 - pz;
 
-      return px1 * (py2 * pz3 - pz2 * py3) +
-             px2 * (py3 * pz1 - pz3 * py1) +
-             px3 * (py1 * pz2 - pz1 * py2);
+      // volume = 1/6 * dot_product(p1, cross_product(p3 - p1, p2 - p1))
+      T V = px1 * (py2 * pz3 - pz2 * py3) +
+            px2 * (py3 * pz1 - pz3 * py1) +
+            px3 * (py1 * pz2 - pz1 * py2);
+      return V / T(6.0);
    }
 
    template <typename T>
@@ -493,7 +516,7 @@ namespace wykobi
                                   const bool robust)
    {
       /*
-         This method will return true iff the point (px,py) is collinear
+         This method will return true if the point (px,py) is collinear
          to points (x1,y1) and (x2,y2) and exists on the line segment A(x1,y1)->B(x2,y2)
       */
       if (
@@ -598,7 +621,16 @@ namespace wykobi
                                const point3d<T> point4,
                                const T& epsilon)
    {
-      return less_than_or_equal(lay_distance(point4,make_plane(point1,point2,point3)),sqr(epsilon));
+     bool is_collinear =
+         collinear<T>(point1.x, point1.y, point1.z, point2.x, point2.y,
+                      point2.z, point3.x, point3.y, point3.z, epsilon);
+     if (is_collinear) {
+        // if the first three points are collinear, the four points must on a plane
+        return true;
+     }
+     return less_than_or_equal(
+         lay_distance(point4, make_plane(point1, point2, point3, false)),
+         sqr(epsilon));
    }
 
    template <typename T>
@@ -611,6 +643,17 @@ namespace wykobi
          return true;
       else
          return robust_coplanar(ray1.origin,ray2.origin,pnt1,pnt2);
+   }
+
+   template <typename T>
+   inline bool coplanar(const ray<T,3>& ray1, const segment<T,3>& segment1)
+   {
+      const point3d<T> pnt1 = generate_point_on_ray(ray1,T(1.0));
+
+      if (robust_collinear(ray1.origin,pnt1,segment1[1]) && robust_collinear(segment1[0], segment1[1], pnt1))
+         return true;
+      else
+         return robust_coplanar(ray1.origin,pnt1,segment1[0],segment1[1]);
    }
 
    template <typename T>
@@ -1009,6 +1052,23 @@ namespace wykobi
                point2.x, point2.y, point2.z,
                point3.x, point3.y, point3.z,
                point4.x, point4.y, point4.z,
+               fuzzy
+             );
+   }
+
+   template <typename T>
+   inline bool intersect(const Eigen::MatrixBase<T>& point1,
+                         const Eigen::MatrixBase<T>& point2,
+                         const Eigen::MatrixBase<T>& point3,
+                         const Eigen::MatrixBase<T>& point4,
+                         const T& fuzzy)
+   {
+      return intersect
+             (
+               point1(0), point1(1), point1(2),
+               point2(0), point2(1), point2(2),
+               point3(0), point3(1), point3(2),
+               point4(0), point4(1), point4(2),
                fuzzy
              );
    }
@@ -1483,16 +1543,19 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,2>& ray1, const ray<T,2>& ray2)
    {
-      const T denom = dot_product(perpendicular(ray1.direction),ray2.direction);
+      const T denom = ray2.direction * ray1.direction;
+      // if denom > 0, ray1 is on the left  of ray2
+      //         == 0, parallel
+      //          < 0, ray1 is on the right of ray2
 
       if (denom != T(0.0))
       {
          vector2d<T> diff = ray1.origin - ray2.origin;
 
-         const T s = dot_product(perpendicular(ray1.direction),diff) / denom;
-         const T t = dot_product(perpendicular(ray2.direction),diff) / denom;
-
-         return (greater_than_or_equal(t,T(0.0)) &&  greater_than_or_equal(s,T(0.0)));
+         const T s = diff * ray2.direction / denom;
+         const T t = diff * ray1.direction / denom;
+         // ray1.origin + s * ray1.direction = ray2.origin + t * ray2.direction
+         return (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0)));
       }
       else // parallel
         return (point_on_ray(ray2.origin,ray1) || point_on_ray(ray1.origin,ray2));
@@ -1503,16 +1566,17 @@ namespace wykobi
    {
       if (!coplanar(ray1,ray2)) return false;
 
-      const T denom = dot_product(perpendicular(ray1.direction),ray2.direction);
+      vector3d<T> delta = perpendicular(ray2.direction, ray1.direction);
+      const T denom = dot_product(delta, ray1.direction);
 
       if (denom != T(0.0))
       {
-         vector3d<T> diff = ray1.origin - ray2.origin;
+         vector3d<T> diff = ray2.origin - ray1.origin;
 
-         const T s = dot_product(perpendicular(ray1.direction),diff) / denom;
-         const T t = dot_product(perpendicular(ray2.direction),diff) / denom;
+         const T s = dot_product(delta, diff) / denom;
+         const T t = - dot_product(diff - s * ray1.direction, ray2.direction);
 
-         return (greater_than_or_equal(t,T(0.0)) &&  greater_than_or_equal(s,T(0.0)));
+         return (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0)));
       }
       else // parallel
         return (point_on_ray(ray2.origin,ray1) || point_on_ray(ray1.origin,ray2));
@@ -1527,7 +1591,7 @@ namespace wykobi
 
       if (denom != T(0.0))
       {
-         vector2d<T> diff = ray.origin - segment[0];
+         vector2d<T> diff = segment[0] - ray.origin;
 
          const T s = dot_product(delta, diff) / denom;
          const T t = dot_product(perpendicular(ray.direction), diff) / denom;
@@ -1925,7 +1989,7 @@ namespace wykobi
    }
 
    template <typename T>
-   inline void  intersection_point(const T& x1, const T& y1, const T& z1,
+   inline bool intersection_point(const T& x1, const T& y1, const T& z1,
                                    const T& x2, const T& y2, const T& z2,
                                    const T& x3, const T& y3, const T& z3,
                                    const T& x4, const T& y4, const T& z4,
@@ -2033,27 +2097,45 @@ namespace wykobi
          ix = ((x1 + (sc * ux)) + (x3 + (tc * vx))) * T(0.5);
          iy = ((y1 + (sc * uy)) + (y3 + (tc * vy))) * T(0.5);
          iz = ((z1 + (sc * uz)) + (z3 + (tc * vz))) * T(0.5);
+         return true;
       }
       else
       {
          ix = +infinity<T>();
          iy = +infinity<T>();
          iz = +infinity<T>();
+         return false;
       }
    }
 
    template <typename T>
-   inline void intersection_point(const point3d<T>& point1,
+   inline bool intersection_point(const point3d<T>& point1,
                                   const point3d<T>& point2,
                                   const point3d<T>& point3,
                                   const point3d<T>& point4,
                                         T& ix, T& iy, T& iz, const T& fuzzy)
    {
-      intersection_point(point1.x, point1.y, point1.z,
+      return intersection_point(point1.x, point1.y, point1.z,
                          point2.x, point2.y, point2.z,
                          point3.x, point3.y, point3.z,
                          point4.x, point4.y, point4.z,
                                ix,       iy,       iz,fuzzy);
+   }
+
+   template <typename T>
+   inline bool intersection_point(const Eigen::MatrixBase<T>& point1,
+                                  const Eigen::MatrixBase<T>& point2,
+                                  const Eigen::MatrixBase<T>& point3,
+                                  const Eigen::MatrixBase<T>& point4,
+                                  Eigen::MatrixBase<T>& ipoint, const typename T::Scalar& fuzzy)
+   {
+      EIGEN_STATIC_ASSERT_VECTOR_ONLY(Eigen::MatrixBase<T>);
+      return intersection_point(point1(0), point1(1), point1(2),
+                         point2(0), point2(1), point2(2),
+                         point3(0), point3(1), point3(2),
+                         point4(0), point4(1), point4(2),
+                         ipoint(0), ipoint(1), ipoint(2), fuzzy);
+
    }
 
    template <typename T>
@@ -2135,6 +2217,17 @@ namespace wykobi
                fuzzy
              );
      }
+   }
+
+   template <typename T>
+   inline bool intersection_point(const segment<T,3>& segment,
+                                        const line<T,3>& line,
+                                        Eigen::Vector3d &ipoint,
+                                        const T& fuzzy)
+   {
+      point3d<T> point_ = intersection_point(segment, line, fuzzy);
+      ipoint << point_[0] , point_[1], point_[2];
+      return is_inifinity(point_[0]);
    }
 
    template <typename T>
@@ -2674,33 +2767,90 @@ namespace wykobi
    template <typename T>
    inline point2d<T> intersection_point(const ray<T,2>& ray1, const ray<T,2>& ray2)
    {
-      const T denom = (ray2.direction.y * ray1.direction.x  - ray2.direction.x * ray1.direction.y);
+      const T denom = ray2.direction * ray1.direction;
 
       if (denom != T(0.0))
       {
-         const T ta = (ray2.direction.x * (ray1.origin.y - ray2.origin.y) - ray2.direction.y * (ray1.origin.x - ray2.origin.x)) / denom;
-         const T tb = (ray1.direction.y * (ray2.origin.x - ray1.origin.x) - ray1.direction.x * (ray2.origin.y - ray1.origin.y)) / denom;
+         vector2d<T> diff = ray1.origin - ray2.origin;
+         const T s = diff * ray2.direction / denom;
+         const T t = diff * ray1.direction / denom;
 
          if (
-              greater_than_or_equal(ta,T(0.0)) &&
-              greater_than_or_equal(tb,T(0.0))
+              greater_than_or_equal(s,T(0.0)) &&
+              greater_than_or_equal(t,T(0.0))
             )
             return make_point
                    (
-                     ray1.origin.x + (ray1.direction.x * ta),
-                     ray1.origin.y + (ray1.direction.y * ta)
+                     ray1.origin.x + (ray1.direction.x * s),
+                     ray1.origin.y + (ray1.direction.y * s)
                    );
-         else
-            return degenerate_point2d<T>();
-
       }
-      else if (point_on_ray(ray2.origin,ray1))
-         return ray2.origin;
-      else if (point_on_ray(ray1.origin,ray2))
-         return ray1.origin;
-      else
-         return degenerate_point2d<T>();
+      // if they are on the same line, or they don't intersect, return degenerate point
+      return degenerate_point2d<T>();
    }
+
+   template <typename T>
+   inline point2d<T> intersection_point(const ray<T,2>& ray, const segment<T,2>& segment)
+   {
+      vector2d<T> delta = perpendicular(segment[1] - segment[0]);
+      // ray is like ray2, segment[0]->segment[1] is like ray1
+      const T denom = dot_product(delta, ray.direction);
+
+      if (denom != T(0.0))
+      {
+         vector2d<T> diff = segment[0] - ray.origin;
+
+         const T s = dot_product(delta, diff) / denom;
+         const T t = dot_product(perpendicular(ray.direction), diff) / denom;
+
+         if (
+               greater_than_or_equal(t, T(0.0)) &&
+               less_than_or_equal   (t, T(1.0)) &&
+               greater_than_or_equal(s, T(0.0))
+            )
+            return make_point
+                   (
+                     ray.origin.x + (ray.direction.x * s),
+                     ray.origin.y + (ray.direction.y * s)
+                   );
+      }
+
+      // if they are on the same line, or they don't intersect, return degenerate point
+      return degenerate_point2d<T>();
+   }
+
+   template <typename T>
+   inline point3d<T> intersection_point_coplanar(const ray<T,3>& ray, const segment<T,3>& segment)
+   {
+      vector3d<T> r = segment[1] - segment[0];
+      vector3d<T> delta = perpendicular(r, ray.direction);
+
+      const T denom = dot_product(delta, ray.direction);
+
+      if (denom != T(0.0))
+      {
+         vector3d<T> diff = segment[0] - ray.origin;
+
+         const T s = dot_product(delta, diff) / denom;
+         const T t = - dot_product(diff - s * ray.direction, r) / vector_square_norm(r);
+
+         if (
+               greater_than_or_equal(t, T(0.0)) &&
+               less_than_or_equal   (t, T(1.0)) &&
+               greater_than_or_equal(s, T(0.0))
+            )
+            return make_point
+                   (
+                     ray.origin.x + (ray.direction.x * s),
+                     ray.origin.y + (ray.direction.y * s),
+                     ray.origin.z + (ray.direction.z * s)
+                   );
+      }
+
+      // if they are on the same line, or they don't intersect, return degenerate point
+      return degenerate_point3d<T>();
+   }
+
 
    template <typename T>
    inline point3d<T> intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle)
@@ -9765,7 +9915,7 @@ namespace wykobi
    template <typename T>
    inline T lay_distance(const point3d<T>& point, const plane<T,3>& plane)
    {
-      return sqr((plane.normal.x * point.x + plane.normal.y * point.y + plane.normal.z * point.z ) - plane.constant);
+      return sqr((plane.normal.x * point.x + plane.normal.y * point.y + plane.normal.z * point.z ) + plane.constant);
    }
 
    template <typename T>
@@ -13475,6 +13625,27 @@ namespace wykobi
       return translate(v.x,v.y,v.z,polygon);
    }
 
+   template <typename T, class G>
+   inline G translate(const Eigen::MatrixBase<T>& v, const G& geom)
+   {
+      EIGEN_STATIC_ASSERT_VECTOR_ONLY(Eigen::MatrixBase<T>);
+      return translate(v(0),v(1),v(2), geom);
+   }
+
+   template <typename T, template<typename> class G>
+   inline G<typename T::Scalar> translate(const Eigen::MatrixBase<T>& v, const G<typename T::Scalar>& geom)
+   {
+      EIGEN_STATIC_ASSERT_VECTOR_ONLY(Eigen::MatrixBase<T>);
+      return translate(v(0),v(1),v(2), geom);
+   }
+
+   template <typename T, template<typename, int> class G>
+   inline G<typename T::Scalar, 3> translate(const Eigen::MatrixBase<T>& v, const G<typename T::Scalar, 3>& geom)
+   {
+      EIGEN_STATIC_ASSERT_VECTOR_ONLY(Eigen::MatrixBase<T>);
+      return translate(v(0),v(1),v(2), geom);
+   }
+
    template <typename T>
    inline point2d<T> scale(const T& dx, const T& dy, const point2d<T>& point)
    {
@@ -14676,6 +14847,18 @@ namespace wykobi
    }
 
    template <typename T>
+   inline T vector_square_norm(const vector2d<T>& v)
+   {
+      return v.x * v.x + v.y * v.y;
+   }
+
+   template <typename T>
+   inline T vector_square_norm(const vector3d<T>& v)
+   {
+      return v.x * v.x + v.y * v.y + v.z * v.z;
+   }
+
+   template <typename T>
    inline vector2d<T> normalize(const vector2d<T>& v)
    {
       return v * (T(1.0) / vector_norm(v));
@@ -14697,6 +14880,13 @@ namespace wykobi
    inline vector3d<T> perpendicular(const vector3d<T>& v)
    {
       return make_vector(v.y,-v.x,v.z);
+   }
+
+   template <typename T>
+   inline vector3d<T> perpendicular(const vector3d<T>& v, const vector3d<T>& w)
+   {
+      vector3d<T> u = w * v;
+      return normalize(u*v);
    }
 
    template <typename T>
@@ -14740,7 +14930,7 @@ namespace wykobi
    template <typename T>
    inline T operator*(const vector2d<T>& v1, const vector2d<T>& v2)
    {
-      return (v1.x * v2.y) - (v1.y - v2.x);
+      return (v1.x * v2.y) - (v1.y * v2.x);
    }
 
    template <typename T>
@@ -14766,6 +14956,32 @@ namespace wykobi
    {
       return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
    }
+
+   template <typename T>
+   inline T dot_product(const point2d<T>& v1, const vector2d<T>& v2)
+   {
+      return (v1.x * v2.x) + (v1.y * v2.y);
+   }
+
+   template <typename T>
+   inline T dot_product(const point3d<T>& v1, const vector3d<T>& v2)
+   {
+      return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+   }
+
+
+   template <typename T>
+   inline T dot_product(const vector2d<T>& v1, const point2d<T>& v2)
+   {
+      return (v1.x * v2.x) + (v1.y * v2.y);
+   }
+
+   template <typename T>
+   inline T dot_product(const vector3d<T>& v1, const point3d<T>& v2)
+   {
+      return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+   }
+
 
    template <typename T>
    inline T perpendicular_product(const vector2d<T>& v1, const vector2d<T>& v2)
@@ -15343,6 +15559,16 @@ namespace wykobi
    }
 
    template <typename T>
+   inline bool is_degenerate(const point2d<T>& point) {
+      return is_inifinity(point.x) && is_inifinity(point.y);
+   }
+
+   template <typename T>
+   inline bool is_degenerate(const point3d<T>& point) {
+      return is_inifinity(point.x) && is_inifinity(point.y) && is_inifinity(point.z);
+   }
+
+   template <typename T>
    inline point2d<T> degenerate_point2d()
    {
       return make_point
@@ -15581,32 +15807,35 @@ namespace wykobi
    template <typename T>
    inline point2d<T> make_point(const T& x, const T& y)
    {
-      point2d<T> point;
-      point.x = x;
-      point.y = y;
-      return point;
+      return point2d<T>(x, y);
    }
 
    template <typename T>
    inline point3d<T> make_point(const T& x, const T& y, const T& z)
    {
-      point3d<T> point;
-      point.x = x;
-      point.y = y;
-      point.z = z;
-      return point;
+      return point3d<T>(x, y, z);
+   }
+
+   inline point2d<double> make_point(const Eigen::Vector2d& v)
+   {
+      return point2d<double>(v(0), v(1));
+   }
+
+   inline point3d<double> make_point(const Eigen::Vector3d& v)
+   {
+      return point3d<double>(v(0), v(1), v(2));
    }
 
    template <typename T>
    inline point2d<T> make_point(const point3d<T> point)
    {
-      return make_point(point.x,point.y);
+      return point3d<T>(point.x, point.y);
    }
 
    template <typename T>
    inline point3d<T> make_point(const point2d<T> point, const T& z)
    {
-      return make_point(point.x,point.y,z);
+      return point3d<T>(point.x, point.y, z);
    }
 
    template <typename T>
@@ -15624,44 +15853,45 @@ namespace wykobi
    template <typename T>
    inline vector2d<T> make_vector(const T& x, const T& y)
    {
-      vector2d<T> v;
-      v.x = x;
-      v.y = y;
-      return v;
+      return vector2d<T>(x, y);
    }
 
    template <typename T>
    inline vector3d<T> make_vector(const T& x, const T& y, const T& z)
    {
-      vector3d<T> v;
-      v.x = x;
-      v.y = y;
-      v.z = z;
-      return v;
+      return vector3d<T>(x, y, z);
    }
 
    template <typename T>
    inline vector2d<T> make_vector(const vector3d<T> v)
    {
-      return make_vector(v.x,v.y);
+      return vector2d<T>(v.x,v.y);
    }
 
    template <typename T>
    inline vector3d<T> make_vector(const vector2d<T> v, const T& z)
    {
-      return make_vector(v.x,v.y,z);
+      return vector3d<T>(v.x,v.y,z);
+   }
+
+   inline vector2d<double> make_vector(const Eigen::Vector2d& v) {
+      return vector2d<double>(v(0), v(1));
+   }
+
+   inline vector3d<double> make_vector(const Eigen::Vector3d& v) {
+      return vector3d<double>(v(0), v(1), v(2));
    }
 
    template <typename T>
    inline vector2d<T> make_vector(const point2d<T> point)
    {
-      return make_vector(point.x,point.y);
+      return vector2d<T>(point.x,point.y);
    }
 
    template <typename T>
    inline vector3d<T> make_vector(const point3d<T> point)
    {
-      return make_vector(point.x,point.y,point.z);
+      return vector3d<T>(point.x,point.y,point.z);
    }
 
    template <typename T>
@@ -15713,6 +15943,13 @@ namespace wykobi
    }
 
    template <typename T>
+   inline ray<typename T::Scalar, 3> make_ray(const Eigen::MatrixBase<T>& origin, const Eigen::MatrixBase<T>& direction)
+   {
+      EIGEN_STATIC_ASSERT_VECTOR_ONLY(Eigen::MatrixBase<T>);
+      return make_ray(origin(0), origin(1), origin(2), direction(0), direction(1), direction(2));
+   }
+
+   template <typename T>
    inline ray<T,2> make_ray(const point2d<T>& origin, const T& bearing)
    {
       return make_ray(origin,make_vector(project_point<T>(make_point(T(0.0),T(0.0)),bearing,T(1.0))));
@@ -15744,97 +15981,89 @@ namespace wykobi
    template <typename T>
    inline segment<T,2> make_segment(const T& x1, const T& y1, const T& x2, const T& y2)
    {
-      segment<T,2> segment;
-      segment[0] = make_point(x1,y1);
-      segment[1] = make_point(x2,y2);
-      return segment;
+      return segment<T,2>(x1, y1, x2, y2);
    }
 
    template <typename T>
    inline segment<T,3> make_segment(const T& x1, const T& y1, const T& z1, const T& x2, const T& y2, const T& z2)
    {
-      segment<T,3> segment;
-      segment[0] = make_point(x1,y1,z1);
-      segment[1] = make_point(x2,y2,z2);
-      return segment;
+      return segment<T,3>(x1, y1, z1, x2, y2, z2);
    }
 
    template <typename T>
    inline segment<T,2> make_segment(const point2d<T>& point1, const point2d<T>& point2)
    {
-      return make_segment(point1.x,point1.y,point2.x,point2.y);
+      return segment<T,2>(point1, point2);
    }
 
    template <typename T>
    inline segment<T,3> make_segment(const point3d<T>& point1, const point3d<T>& point2)
    {
-      return make_segment(point1.x,point1.y,point1.z,point2.x,point2.y,point2.z);
+      return segment<T,3>(point1, point2);
    }
 
-   template <typename T>
-   inline segment<T,2> make_segment(const line<T,2>& line)
-   {
-      return make_segment(line[0],line[1]);
+   inline segment<double,2> make_segment(const Eigen::Vector2d& v, const Eigen::Vector2d& w) {
+      return segment<double,2>(v(0), v(1), w(0), w(1));
    }
 
-   template <typename T>
-   inline segment<T,3> make_segment(const line<T,3>& line)
-   {
-      return make_segment(line[0],line[1]);
+   inline segment<double,3> make_segment(const Eigen::Vector3d& v, const Eigen::Vector3d& w) {
+      return segment<double,3>(v(0), v(1), w(0), w(1));
    }
 
    template <typename T>
    inline line<T,2> make_line(const T& x1, const T& y1, const T& x2, const T& y2)
    {
-      line<T,2> line;
-      line[0] = make_point(x1,y1);
-      line[1] = make_point(x2,y2);
-      return line;
+      return line<T,2>(x1, y1, x2, y2);
    }
 
    template <typename T>
    inline line<T,3> make_line(const T& x1, const T& y1, const T& z1, const T& x2, const T& y2, const T& z2)
    {
-      line<T,3> line;
-      line[0] = make_point(x1,y1,z1);
-      line[1] = make_point(x2,y2,z2);
-      return line;
+      return line<T,3>(x1, y1, z1, x2, y2, z2);
    }
 
    template <typename T>
    inline line<T,2> make_line(const point2d<T>& point1, const point2d<T>& point2)
    {
-      return make_line(point1.x,point1.y,point2.x,point2.y);
+      return line<T,2>(point1, point2);
    }
 
    template <typename T>
    inline line<T,3> make_line(const point3d<T>& point1, const point3d<T>& point2)
    {
-      return make_line(point1.x,point1.y,point1.z,point2.x,point2.y,point2.z);
+      return line<T,3>(point1, point2);
+   }
+
+   inline line<double,2> make_line(const Eigen::Vector2d& v, const Eigen::Vector2d& w) {
+      return line<double,2>(v(0), v(1), w(0), w(1));
+   }
+
+   inline line<double,3> make_line(const Eigen::Vector3d& v, const Eigen::Vector3d& w) {
+      return line<double,3>(v(0), v(1), w(0), w(1));
    }
 
    template <typename T>
    inline line<T,2> make_line(const segment<T,2>& segment)
    {
-      return make_line(segment[0],segment[1]);
+      return line<T,2>(segment[0],segment[1]);
    }
 
    template <typename T>
    inline line<T,3> make_line(const segment<T,3>& segment)
    {
-      return make_line(segment[0],segment[1]);
+      return line<T,3>(segment[0],segment[1]);
    }
 
    template <typename T>
    inline line<T,2> make_line(const ray<T,2>& ray)
    {
-      return make_line(ray.origin,generate_point_on_ray(ray,T(1.0)));
+      return line<T,2>(ray.origin,generate_point_on_ray(ray,T(1.0)));
    }
 
    template <typename T>
    inline line<T,3> make_line(const ray<T,3>& ray)
    {
-      return make_line(ray.origin,generate_point_on_ray(ray,T(1.0)));
+      return line<T,3>(ray.origin,generate_point_on_ray(ray,T(1.0)));
    }
 
    template <typename T>
@@ -15919,6 +16148,15 @@ namespace wykobi
    }
 
    template <typename T>
+   inline triangle<typename T::Scalar, 3> make_triangle(const Eigen::MatrixBase<T>& point1, const Eigen::MatrixBase<T>& point2, const Eigen::MatrixBase<T>& point3)
+   {
+      return make_triangle(point1(0),point1(1),point1(2),
+                           point2(0),point2(1),point2(2),
+                           point3(0),point3(1),point3(2));
+   }
+
+
+   template <typename T>
    inline quadix<T,2> make_quadix(const T& x1, const T& y1,
                                   const T& x2, const T& y2,
                                   const T& x3, const T& y3,
@@ -15971,6 +16209,18 @@ namespace wykobi
                point2.x,point2.y,point2.z,
                point3.x,point3.y,point3.z,
                point4.x,point4.y,point4.z
+             );
+   }
+
+   template <typename T>
+   inline quadix<typename T::Scalar,3> make_quadix(const Eigen::MatrixBase<T>& point1, const Eigen::MatrixBase<T>& point2, const Eigen::MatrixBase<T>& point3, const Eigen::MatrixBase<T>& point4)
+   {
+      return make_quadix
+             (
+               point1(0),point1(1),point1(2),
+               point2(0),point2(1),point2(2),
+               point3(0),point3(1),point3(2),
+               point4(0),point4(1),point4(2)
              );
    }
 
@@ -16064,41 +16314,47 @@ namespace wykobi
    template <typename T>
    inline plane<T,3> make_plane(const T& x1, const T& y1, const T& z1,
                                 const T& x2, const T& y2, const T& z2,
-                                const T& x3, const T& y3, const T& z3)
+                                const T& x3, const T& y3, const T& z3,
+                                const bool check)
    {
-      plane<T,3> plane_;
+     if (check) {
+      bool is_collinear = collinear<T>(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+      wykobi_error_msg_if(is_collinear, "(" << x1 << "," << y1 << "," << z1
+                                             << "), "
+                                                "("
+                                             << x2 << "," << y2 << "," << z2
+                                             << "), "
+                                                "("
+                                             << x3 << "," << y3 << "," << z3
+                                             << ")"
+                                             << " are collinear");
+     }
 
-      vector3d<T> v1 = make_vector(x2 - x1, y2 - y1, z2 - z1);
-      vector3d<T> v2 = make_vector(x3 - x1, y3 - y1, z3 - z1);
+     vector3d<T> v1 = make_vector(x2 - x1, y2 - y1, z2 - z1);
+     vector3d<T> v2 = make_vector(x3 - x1, y3 - y1, z3 - z1);
 
-      plane_.normal   = normalize(v1 * v2);
-      plane_.constant = -dot_product(plane_.normal,make_vector(x1,y1,z1));
-
-      return plane_;
+     return plane<T,3>(vector3d<T>(x1, y1, z1), normalize(v1 * v2));
    }
 
    template <typename T>
    inline plane<T,3> make_plane(const T& px, const T& py, const T& pz,
                                 const T& nx, const T& ny, const T& nz)
    {
-      plane<T,3> plane_;
-
-      plane_.normal   = normalize(make_vector(nx, ny, nz));
-      plane_.constant = -dot_product(plane_.normal,make_vector(px, py, pz));
-
-      return plane_;
+      return plane<T,3>(point3d<T>(px, py, pz), vector3d<T>(nx, ny, nz));
    }
 
    template <typename T>
    inline plane<T,3> make_plane(const point3d<T>& point1,
                                 const point3d<T>& point2,
-                                const point3d<T>& point3)
+                                const point3d<T>& point3,
+                                const bool check)
    {
       return make_plane
              (
                point1.x, point1.y, point1.z,
                point2.x, point2.y, point2.z,
-               point3.x, point3.y, point3.z
+               point3.x, point3.y, point3.z,
+               check
              );
    }
 
@@ -16106,12 +16362,7 @@ namespace wykobi
    inline plane<T,3> make_plane(const point3d<T>& point,
                                 const vector3d<T>& normal)
    {
-      plane<T,3> plane_;
-
-      plane_.normal   = normalize(normal);
-      plane_.constant = -dot_product(plane_.normal,make_vector(point));
-
-      return plane_;
+      return plane<T,3>(point, normal);
    }
 
    template <typename T>
@@ -16143,6 +16394,13 @@ namespace wykobi
    inline polygon<T,3> make_polygon(const std::vector< point3d<T> >& point_list)
    {
       return make_polygon<T,3,typename std::vector< point3d<T> >::const_iterator>(point_list.begin(),point_list.end());
+   }
+
+   template <typename T>
+   inline polygon<typename T::Scalar,3> make_polygon(const std::vector< Eigen::MatrixBase<T> >& point_list)
+   {
+      std::vector<point3d<typename T::Scalar>> p = std::transform(point_list.begin(), point_list.end(), [](const Eigen::MatrixBase<T>& vec){ return point3d<typename T::Scalar>(vec);});
+      return make_polygon<typename T::Scalar,3,typename std::vector< point3d<typename T::Scalar> >::const_iterator>(p.begin(),p.end());
    }
 
    template <typename T>
