@@ -26,6 +26,7 @@
 #include <limits>
 #include <algorithm>
 #include <iterator>
+#include <ostream>
 #include <vector>
 #include <cassert>
 #include <Eigen/Core>
@@ -140,6 +141,11 @@ namespace wykobi
       inline reference       operator[](const std::size_t& index)       { return ((0 == index)? x : y); }
       inline const_reference operator[](const std::size_t& index) const { return ((0 == index)? x : y); }
 
+      friend std::ostream& operator<<(std::ostream& os, const point2d& p) {
+         os << "[" << p.x << ", " << p.y << "]";
+         return os;
+      }
+
       T x,y;
    };
 
@@ -179,6 +185,11 @@ namespace wykobi
 
       inline reference       operator[](const std::size_t& index)       { return value(index); }
       inline const_reference operator[](const std::size_t& index) const { return value(index); }
+
+      friend std::ostream& operator<<(std::ostream& os, const point3d& p) {
+         os << "[" << p.x << ", " << p.y  << ", " << p.z << "]";
+         return os;
+      }
 
       T x,y,z;
    private:
@@ -274,6 +285,14 @@ namespace wykobi
       inline reference       operator[](const std::size_t& index)       { return v[index]; }
       inline const_reference operator[](const std::size_t& index) const { return v[index]; }
 
+      friend std::ostream& operator<<(std::ostream& os, const pointnd<T, D>& p) {
+         os << "[" << p.v[0];
+         if (D > 1) {
+         for (std::size_t i = 1; i < D; ++i) os << ", " << p.v[i];
+         }
+         os << "]";
+         return os;
+      }
    protected:
       T v[D];
    };
@@ -368,23 +387,15 @@ namespace wykobi
    class line : public geometric_entity
    {
    public:
+      typedef typename define_point_type<T,Dimension>::PointType PointType;
+      typedef const PointType& const_reference;
+      typedef       PointType& reference;
 
       const static std::size_t PointCount = 2;
 
-      line(T x1, T y1, T x2, T y2) {
-         _data[0] = point2d<T>(x1, y1);
-         _data[1] = point2d<T>(x2, y2);
-      };
+      line(const PointType& point1, const PointType& point2) : _data({point1, point2}) {};
 
-      line(T x1, T y1, T z1, T x2, T y2, T z2) {
-         _data[0] = point3d<T>(x1, y1, z1);
-         _data[1] = point3d<T>(x2, y2, z2);
-      };
-
-      line(const point2d<T>& point1, const point2d<T>& point2) : _data({point1, point2}) {};
-
-      line(const point3d<T>& point1, const point3d<T>& point2) : _data({point1, point2}) {};
-
+      // FIXME: Dirty
       line(const Eigen::Vector3d& p1, const Eigen::Vector3d& p2)
       {
          _data[0] = point3d<T>(p1);
@@ -397,19 +408,24 @@ namespace wykobi
          _data[1] = point2d<T>(p2);
       }
 
+      line(T x1, T y1, T x2, T y2) {
+         _data[0] = point2d<T>(x1, y1);
+         _data[1] = point2d<T>(x2, y2);
+      };
+
+      line(T x1, T y1, T z1, T x2, T y2, T z2) {
+         _data[0] = point3d<T>(x1, y1, z1);
+         _data[1] = point3d<T>(x2, y2, z2);
+      };
+
       line(){}
      ~line(){}
-
-      typedef typename define_point_type<T,Dimension>::PointType PointType;
-      typedef const PointType& const_reference;
-      typedef       PointType& reference;
 
    private:
 
       PointType _data[PointCount];
 
    public:
-
       inline reference       operator [](const std::size_t& index)       { return _data[index]; }
       inline const_reference operator [](const std::size_t& index) const { return _data[index]; }
       inline std::size_t     size       ()                               { return PointCount;   }
@@ -704,6 +720,7 @@ namespace wykobi
    public:
 
       vector2d(const T& _x = T(0.0), const T& _y = T(0.0)) : point2d<T>(_x, _y) {}
+      vector2d(const Eigen::Vector2d& vec) : point2d<T> (vec) {}
 
       inline vector2d<T>& operator=(const vectornd<T,2>& vec)
       {
@@ -723,6 +740,7 @@ namespace wykobi
    public:
 
       vector3d(const T& _x = T(0.0), const T& _y = T(0.0), const T& _z = T(0.0)) : point3d<T>(_x, _y, _z) {}
+      vector3d(const Eigen::Vector3d& vec) : point3d<T> (vec) {}
 
       inline vector3d<T>& operator=(const vectornd<T,3>& vec)
       {
@@ -802,17 +820,28 @@ namespace wykobi
    template <typename T>
    class define_vector_type<T,3> { public: typedef vector3d<T> VectorType; };
 
+   template <typename T, std::size_t Dimension>
+   class define_eigen_vector { public: typedef Eigen::Matrix<T,Dimension,1> EigenVector; };
+
+   template<> class define_eigen_vector<double,3> { public: typedef Eigen::Vector3d EigenVector; };
+   template<> class define_eigen_vector<double,2> { public: typedef Eigen::Vector2d EigenVector; };
+
    /************[        Ray Type       ]************/
    template <typename T, std::size_t Dimension>
    class ray : public geometric_entity
    {
    public:
 
-      ray(){}
-     ~ray(){}
-
      typedef typename define_point_type<T,Dimension>::PointType   PointType;
      typedef typename define_vector_type<T,Dimension>::VectorType VectorType;
+
+      ray(T x1, T y1, T x2, T y2) : origin(x1, y1), direction(normalize(vector2d<T>(x2,y2))) {};
+      ray(T x1, T y1, T z1, T x2, T y2, T z2) : origin(x1, y1, z1), direction(normalize(vector3d<T>(x2,y2,z2))) {};
+      ray(PointType _or, VectorType _dir) : origin(_or), direction(normalize(_dir)) {};
+      ray(const Eigen::Vector2d& _or, const Eigen::Vector2d& _dir) : origin(_or), direction(_dir) {};
+      ray(const Eigen::Vector3d& _or, const Eigen::Vector3d& _dir) : origin(_or), direction(_dir) {};
+      ray();
+     ~ray(){}
 
       PointType  origin;
       VectorType direction;
@@ -3959,9 +3988,6 @@ namespace wykobi
    template <typename T> inline vector2d<T> make_vector(const vector3d<T> v);
    template <typename T> inline vector3d<T> make_vector(const vector2d<T> v, const T& z);
 
-   inline vector2d<double> make_vector(const Eigen::Vector2d& v);
-   inline vector3d<double> make_vector(const Eigen::Vector3d& v);
-
    template <typename T> inline vector2d<T> make_vector(const point2d<T> point);
    template <typename T> inline vector3d<T> make_vector(const point3d<T> point);
 
@@ -3970,9 +3996,10 @@ namespace wykobi
 
    template <typename T> inline ray<T,2> make_ray(const point2d<T>& origin, const vector2d<T>& direction);
    template <typename T> inline ray<T,3> make_ray(const point3d<T>& origin, const vector3d<T>& direction);
-   template <typename T> inline ray<typename T::Scalar, 3> make_ray(const Eigen::MatrixBase<T>& origin, const Eigen::MatrixBase<T>&direction);
-
    template <typename T> inline ray<T,2> make_ray(const point2d<T>& origin, const T& bearing);
+
+   ray<double,2> make_ray(const Eigen::Vector2d& origin, const Eigen::Vector2d& direction);
+   ray<double,3> make_ray(const Eigen::Vector3d& origin, const Eigen::Vector3d& direction);
 
    template <typename T> inline curve_point<T,2> make_curve_point(const T& x, const T& y, const T& t);
    template <typename T> inline curve_point<T,3> make_curve_point(const T& x, const T& y, const T& z, const T& t);

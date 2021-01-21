@@ -652,13 +652,7 @@ namespace wykobi
    template <typename T>
    inline bool coplanar(const ray<T,3>& ray1, const ray<T,3>& ray2)
    {
-      const point3d<T> pnt1 = generate_point_on_ray(ray1,T(1.0));
-      const point3d<T> pnt2 = generate_point_on_ray(ray2,T(1.0));
-
-      if (robust_collinear(ray1.origin,pnt1,pnt2) && robust_collinear(ray2.origin,pnt2,pnt1))
-         return true;
-      else
-         return robust_coplanar(ray1.origin,ray2.origin,pnt1,pnt2);
+      return coplanar(line<T,3>(ray1[0], ray1[1]), line<T,3>(ray2[0], ray2[1]));
    }
 
    template <typename T>
@@ -15821,16 +15815,6 @@ namespace wykobi
       return point3d<T>(x, y, z);
    }
 
-   inline point2d<double> make_point(const Eigen::Vector2d& v)
-   {
-      return point2d<double>(v(0), v(1));
-   }
-
-   inline point3d<double> make_point(const Eigen::Vector3d& v)
-   {
-      return point3d<double>(v(0), v(1), v(2));
-   }
-
    template <typename T>
    inline point2d<T> make_point(const point3d<T> point)
    {
@@ -15879,14 +15863,6 @@ namespace wykobi
       return vector3d<T>(v.x,v.y,z);
    }
 
-   inline vector2d<double> make_vector(const Eigen::Vector2d& v) {
-      return vector2d<double>(v(0), v(1));
-   }
-
-   inline vector3d<double> make_vector(const Eigen::Vector3d& v) {
-      return vector3d<double>(v(0), v(1), v(2));
-   }
-
    template <typename T>
    inline vector2d<T> make_vector(const point2d<T> point)
    {
@@ -15912,46 +15888,35 @@ namespace wykobi
    template <typename T>
    inline ray<T,2> make_ray(const T& ox, const T& oy, const T& dir_x, const T& dir_y)
    {
-      ray<T,2> _ray;
-      _ray.origin.x    = ox;
-      _ray.origin.y    = oy;
-      _ray.direction.x = dir_x;
-      _ray.direction.y = dir_y;
-      _ray.direction   = normalize(_ray.direction);
-      return _ray;
+      return ray<T,2>(ox, oy, dir_x, dir_y);
    }
 
    template <typename T>
    inline ray<T,3> make_ray(const T& ox, const T& oy, const T& oz, const T& dir_x, const T& dir_y, const T& dir_z)
    {
-      ray<T,3> _ray;
-      _ray.origin.x    = ox;
-      _ray.origin.y    = oy;
-      _ray.origin.z    = oz;
-      _ray.direction.x = dir_x;
-      _ray.direction.y = dir_y;
-      _ray.direction.z = dir_z;
-      _ray.direction   = normalize(_ray.direction);
-      return _ray;
+      return ray<T,3>(ox, oy, oz, dir_x, dir_y, dir_z);
    }
 
    template <typename T>
    inline ray<T,2> make_ray(const point2d<T>& origin, const vector2d<T>& direction)
    {
-      return make_ray(origin.x,origin.y,direction.x,direction.y);
+      return ray<T,2>(origin, direction);
    }
 
    template <typename T>
    inline ray<T,3> make_ray(const point3d<T>& origin, const vector3d<T>& direction)
    {
-      return make_ray(origin.x,origin.y,origin.z,direction.x,direction.y,direction.z);
+      return ray<T,3>(origin, direction);
    }
 
-   template <typename T>
-   inline ray<typename T::Scalar, 3> make_ray(const Eigen::MatrixBase<T>& origin, const Eigen::MatrixBase<T>& direction)
+   inline ray<double,2> make_ray(const Eigen::Vector2d& origin, const Eigen::Vector2d& direction)
    {
-      EIGEN_STATIC_ASSERT_VECTOR_ONLY(Eigen::MatrixBase<T>);
-      return make_ray(origin(0), origin(1), origin(2), direction(0), direction(1), direction(2));
+      return ray<double,2>(origin, direction);
+   }
+
+   inline ray<double,3> make_ray(const Eigen::Vector3d& origin, const Eigen::Vector3d& direction)
+   {
+      return ray<double,3>(origin, direction);
    }
 
    template <typename T>

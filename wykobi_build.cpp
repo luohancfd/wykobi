@@ -17,8 +17,10 @@
 (***********************************************************************)
 */
 
+// #include "Eigen/src/Core/Matrix.h"
 #include "wykobi.hpp"
 #include <iostream>
+#include "Eigen/Core"
 
 using namespace wykobi;
 int main(void) {
@@ -30,6 +32,23 @@ int main(void) {
   std::cout << lay_distance(p4, pl) << std::endl;
   std::cout << lay_distance(p5, pl) << std::endl;
   std::cout << lay_distance(p1, pl) << std::endl;
+
+  ray<double, 3> r1(0.0,0.0, 0,1,1,2);
+  std::cout << "Origin " << r1.origin << std::endl;
+  std::cout << "Direction " << r1.direction << std::endl;
+
+  point3d<double> po(0,0,0);
+  vector3d<double> pdir(1,1,2);
+  ray<double, 3> r2(po, pdir);
+  std::cout << "Origin " << r2.origin << std::endl;
+  std::cout << "Direction " << r2.direction << std::endl;
+
+  Eigen::Vector3d epo(0,0,0);
+  Eigen::Vector3d epdir(1,1,2);
+  ray<double, 3> r3(epo, epdir);
+  std::cout << "Origin " << r3.origin << std::endl;
+  std::cout << "Direction " << r3.direction << std::endl;
+
 
   return 0;
 }
