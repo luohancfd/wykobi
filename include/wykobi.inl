@@ -426,7 +426,7 @@ namespace wykobi
       const T cy = (dx2 * dz1) - (dx1 * dz2);
       const T cz = (dx1 * dy2) - (dx2 * dy1);
 
-      return is_equal(cx * cx + cy * cy + cz * cz,epsilon);
+      return is_equal(cx * cx + cy * cy + cz * cz, sqr(epsilon));
    }
 
    template <typename T>
@@ -640,13 +640,7 @@ namespace wykobi
    template <typename T>
    inline bool coplanar(const line<T,3>& line1, const line<T,3>& line2)
    {
-      if (
-           robust_collinear(line1[0],line1[1],line2[0]) ||
-           robust_collinear(line1[0],line1[1],line2[1])
-         )
-         return true;
-      else
-         return robust_coplanar(line1[0],line1[1],line2[0],line2[1]);
+      return robust_coplanar(line1[0], line1[1], line2[0], line2[1]);
    }
 
    template <typename T>
@@ -654,30 +648,20 @@ namespace wykobi
    {
       const point3d<T> pnt1 = generate_point_on_ray(ray1,T(1.0));
       const point3d<T> pnt2 = generate_point_on_ray(ray2,T(1.0));
-      return coplanar(line<T,3>(ray1.origin, pnt1), line<T,3>(ray2.origin, pnt2));
+      return robust_coplanar(ray1.origin, pnt1, ray2.origin, pnt2);
    }
 
    template <typename T>
    inline bool coplanar(const ray<T,3>& ray1, const segment<T,3>& segment1)
    {
       const point3d<T> pnt1 = generate_point_on_ray(ray1,T(1.0));
-
-      if (robust_collinear(ray1.origin,pnt1,segment1[1]) && robust_collinear(segment1[0], segment1[1], pnt1))
-         return true;
-      else
-         return robust_coplanar(ray1.origin,pnt1,segment1[0],segment1[1]);
+      return robust_coplanar(ray1.origin,pnt1,segment1[0],segment1[1]);
    }
 
    template <typename T>
    inline bool coplanar(const segment<T,3>& segment1, const segment<T,3>& segment2)
    {
-      if (
-           robust_collinear(segment1[0],segment1[1],segment2[0]) &&
-           robust_collinear(segment1[0],segment1[1],segment2[1])
-         )
-         return true;
-      else
-         return robust_coplanar(segment1[0],segment1[1],segment2[0],segment2[1]);
+      return robust_coplanar(segment1[0],segment1[1],segment2[0],segment2[1]);
    }
 
 
@@ -10783,7 +10767,7 @@ namespace wykobi
    }
 
    template <typename T>
-   inline T lay_distance_line_to_line(const T& x1, const T& y1,
+   inline T lay_distance_line_to_line_old(const T& x1, const T& y1,
                                       const T& x2, const T& y2,
                                       const T& x3, const T& y3,
                                       const T& x4, const T& y4)
@@ -10831,6 +10815,38 @@ namespace wykobi
       const T dy = wy + (sc * uy) - (tc * vy);
 
       return dx * dx + dy * dy;
+   }
+
+   template <typename T>
+   inline T lay_distance_line_to_line(const T& x1, const T& y1,
+                                      const T& x2, const T& y2,
+                                      const T& x3, const T& y3,
+                                      const T& x4, const T& y4)
+   {
+      const T ux = x2 - x1;
+      const T uy = y2 - y1;
+
+      const T vx = x4 - x3;
+      const T vy = y4 - y3;
+
+      if (not_equal(ux * vy, uy * vx))
+      {
+         return T(0.0);
+      }
+
+      const T wx = x1 - x3;
+      const T wy = y1 - y3;
+
+      const T det = -uy*uy - ux*ux;
+      const T at  =  uy*wx - ux*wy;
+
+      const T t = at / det;
+
+      const T dx =  t * uy;
+      const T dy = -t * ux;
+
+      return  dx*dx + dy*dy;
+
    }
 
    template <typename T>

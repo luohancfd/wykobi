@@ -1248,7 +1248,8 @@ namespace wykobi
    /**
     * @brief Check whether the four points are on the same plane by comparing
     *        the distance from a point to the plane formed by the other three
-    *        points.
+    *        points. If the first points are collinear, the four points must
+    *        be on the same plane.
     *
     * @param epsilon The threshold for the coplanar check
     * @return true
@@ -1303,6 +1304,13 @@ namespace wykobi
                          const T& x3, const T& y3,
                          const T& x4, const T& y4);
 
+   /**
+    * @brief Check whether line segment (x1,y1)--(x2,y2) and (x3,y3)--(x4,y4) intersects
+    *        and set (ix,iy) as the intersecting point
+    *
+    * @return true
+    * @return false
+    */
    template <typename T>
    inline bool intersect(const T& x1, const T& y1,
                          const T& x2, const T& y2,
@@ -3333,6 +3341,17 @@ namespace wykobi
                                             const T& x3, const T& y3, const T& z3,
                                             const T& x4, const T& y4, const T& z4);
 
+   template <typename T>
+   inline T distance_line_to_line_old(const T& x1, const T& y1,
+                                  const T& x2, const T& y2,
+                                  const T& x3, const T& y3,
+                                  const T& x4, const T& y4);
+
+   /**
+    * @brief Calculate the distance between two lines in 2D geometry. If the two lines are not parallel,
+    *        it will return 0.
+    * @return T Distance between the two lines
+    */
    template <typename T>
    inline T distance_line_to_line(const T& x1, const T& y1,
                                   const T& x2, const T& y2,
