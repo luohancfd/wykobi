@@ -454,12 +454,16 @@ namespace wykobi
 
       if (leydist1 >= leydist2)
          if (leydist1 >= leydist3)
+            // 1 ---- 3 ---- 2
             return is_equal(minimum_distance_from_point_to_line(x3,y3,x1,y1,x2,y2),T(0.0),epsilon);
          else
+            // 1 ---- 2 ---- 3
             return is_equal(minimum_distance_from_point_to_line(x2,y2,x3,y3,x1,y1),T(0.0),epsilon);
       else if (leydist2 >= leydist3)
+         // 2 --- 1 --- 3
          return is_equal(minimum_distance_from_point_to_line(x1,y1,x2,y2,x3,y3),T(0.0),epsilon);
       else
+         // 2 --- 3 --- 1
          return is_equal(minimum_distance_from_point_to_line(x2,y2,x3,y3,x1,y1),T(0.0),epsilon);
    }
 
@@ -634,6 +638,18 @@ namespace wykobi
    }
 
    template <typename T>
+   inline bool coplanar(const line<T,3>& line1, const line<T,3>& line2)
+   {
+      if (
+           robust_collinear(line1[0],line1[1],line2[0]) ||
+           robust_collinear(line1[0],line1[1],line2[1])
+         )
+         return true;
+      else
+         return robust_coplanar(line1[0],line1[1],line2[0],line2[1]);
+   }
+
+   template <typename T>
    inline bool coplanar(const ray<T,3>& ray1, const ray<T,3>& ray2)
    {
       const point3d<T> pnt1 = generate_point_on_ray(ray1,T(1.0));
@@ -668,17 +684,6 @@ namespace wykobi
          return robust_coplanar(segment1[0],segment1[1],segment2[0],segment2[1]);
    }
 
-   template <typename T>
-   inline bool coplanar(const line<T,3>& line1, const line<T,3>& line2)
-   {
-      if (
-           robust_collinear(line1[0],line1[1],line2[0]) &&
-           robust_collinear(line1[0],line1[1],line2[1])
-         )
-         return true;
-      else
-         return robust_coplanar(line1[0],line1[1],line2[0],line2[1]);
-   }
 
    template <typename T>
    inline bool coplanar(const triangle<T,3>& triangle1, const triangle<T,3>& triangle2)
