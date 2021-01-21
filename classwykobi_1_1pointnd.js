@@ -19,5 +19,6 @@ var classwykobi_1_1pointnd =
     [ "operator=", "classwykobi_1_1pointnd.html#a7c29c8e6346e295e4660d331b9c9ffcf", null ],
     [ "operator[]", "classwykobi_1_1pointnd.html#a233a4b146cd8e9bc200888fc3bfb1d12", null ],
     [ "operator[]", "classwykobi_1_1pointnd.html#a1c9e82cde4cc3e52a4d5c3185ee0d5f6", null ],
+    [ "operator<<", "classwykobi_1_1pointnd.html#ab9901fd003e063a9de9c8182684ea12f", null ],
     [ "v", "classwykobi_1_1pointnd.html#ad1c411c60a8b351d493a99e4c3c9e89c", null ]
 ];

@@ -1,5 +1,17 @@
 var NAVTREEINDEX7 =
 {
+"wykobi_8inl.html#afd5d184867719c512fb51aaffe3abcbf":[1,0,0,1,752],
+"wykobi_8inl.html#afdb40304d6b97fe0b5e499f9f4de4730":[1,0,0,1,986],
+"wykobi_8inl.html#afe000588deea1b9c1923dab0ac5ed36a":[1,0,0,1,129],
+"wykobi_8inl.html#afe55b5ed886a569f37b4f2b8e5f4d7ea":[1,0,0,1,1004],
+"wykobi_8inl.html#aff31529069a42b128361b3ad1584316c":[1,0,0,1,10],
+"wykobi_8inl.html#aff6b827cdf8aa01640ae36cc3951fe30":[1,0,0,1,1081],
+"wykobi_8inl.html#affab7cad6c53a2fe669e4a88eccdddc6":[1,0,0,1,592],
+"wykobi_8inl.html#affc9b34cee40a23be222073c719da045":[1,0,0,1,718],
+"wykobi__algorithm_8hpp_source.html":[1,0,0,2],
+"wykobi__graphics__net_8hpp_source.html":[1,0,0,3],
+"wykobi__graphics__opengl_8hpp_source.html":[1,0,0,4],
+"wykobi__graphics__vcl_8hpp_source.html":[1,0,0,5],
 "wykobi__gui_8hpp_source.html":[1,0,0,6],
 "wykobi__instantiate_8hpp_source.html":[1,0,0,7],
 "wykobi__math_8hpp_source.html":[1,0,0,8],

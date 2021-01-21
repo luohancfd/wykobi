@@ -14,6 +14,7 @@ var classwykobi_1_1point2d =
     [ "operator=", "classwykobi_1_1point2d.html#af468b6c227a2822f0bb541064c7b422d", null ],
     [ "operator[]", "classwykobi_1_1point2d.html#ac13b383fcdaf711ac6248293b74c4657", null ],
     [ "operator[]", "classwykobi_1_1point2d.html#a7753c31e8f3b87b62da8e5a01578a1a4", null ],
+    [ "operator<<", "classwykobi_1_1point2d.html#a426756f50a32c0ace3b5628e5131513c", null ],
     [ "x", "classwykobi_1_1point2d.html#a0f03608fbcb27fa8dc4332ac8e107776", null ],
     [ "y", "classwykobi_1_1point2d.html#aacccc949fc40628600f9b88de6bd9413", null ]
 ];

@@ -29,7 +29,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Wykobi
-   &#160;<span id="projectnumber">791f65e4a7d18cfda627ee3b2cef4bb44370831d</span>
+   &#160;<span id="projectnumber">36747d8680f46d4e17be2d7c46205f6948d67b6f</span>
    </div>
   </td>
  </tr>
@@ -278,10 +278,14 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a925eeb79062ecfe90e061968c67e942f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::is_point_collinear</b> (const segment&lt; T, 3 &gt; &amp;segment, const point3d&lt; T &gt; &amp;point, const bool robust=false)</td></tr>
 <tr class="separator:a925eeb79062ecfe90e061968c67e942f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a418e90e2eff3a22f82540ed90fcac6e6"><td class="memTemplParams" colspan="2"><a id="a418e90e2eff3a22f82540ed90fcac6e6"></a>
-template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a418e90e2eff3a22f82540ed90fcac6e6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a418e90e2eff3a22f82540ed90fcac6e6"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::robust_coplanar</b> (const point3d&lt; T &gt; point1, const point3d&lt; T &gt; point2, const point3d&lt; T &gt; point3, const point3d&lt; T &gt; point4, const T &amp;epsilon=T(Epsilon))</td></tr>
+<tr class="memdesc:a418e90e2eff3a22f82540ed90fcac6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the four points are on the same plane by comparing the distance from a point to the plane formed by the other three points.  <a href="wykobi_8hpp.html#a418e90e2eff3a22f82540ed90fcac6e6">More...</a><br /></td></tr>
 <tr class="separator:a418e90e2eff3a22f82540ed90fcac6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2edf35980043787cbf0eace59714f35"><td class="memTemplParams" colspan="2"><a id="af2edf35980043787cbf0eace59714f35"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af2edf35980043787cbf0eace59714f35"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::coplanar</b> (const line&lt; T, 3 &gt; &amp;line1, const line&lt; T, 3 &gt; &amp;line2)</td></tr>
+<tr class="separator:af2edf35980043787cbf0eace59714f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53d47b5b6c566d5ff1925dd79d96882f"><td class="memTemplParams" colspan="2"><a id="a53d47b5b6c566d5ff1925dd79d96882f"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a53d47b5b6c566d5ff1925dd79d96882f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::coplanar</b> (const ray&lt; T, 3 &gt; &amp;ray1, const ray&lt; T, 3 &gt; &amp;ray2)</td></tr>
@@ -294,10 +298,6 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a16cb4274024e8636ea2e03291ffc1329"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::coplanar</b> (const segment&lt; T, 3 &gt; &amp;segment1, const segment&lt; T, 3 &gt; &amp;segment2)</td></tr>
 <tr class="separator:a16cb4274024e8636ea2e03291ffc1329"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2edf35980043787cbf0eace59714f35"><td class="memTemplParams" colspan="2"><a id="af2edf35980043787cbf0eace59714f35"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:af2edf35980043787cbf0eace59714f35"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::coplanar</b> (const line&lt; T, 3 &gt; &amp;line1, const line&lt; T, 3 &gt; &amp;line2)</td></tr>
-<tr class="separator:af2edf35980043787cbf0eace59714f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a482cb34f80dec070be7a85e03955157c"><td class="memTemplParams" colspan="2"><a id="a482cb34f80dec070be7a85e03955157c"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a482cb34f80dec070be7a85e03955157c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::coplanar</b> (const triangle&lt; T, 3 &gt; &amp;triangle1, const triangle&lt; T, 3 &gt; &amp;triangle2)</td></tr>
@@ -4723,12 +4723,6 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af46ed677d38c8b2eeb16eb0f28b8055c"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_point</b> (const T &amp;x, const T &amp;y, const T &amp;z)</td></tr>
 <tr class="separator:af46ed677d38c8b2eeb16eb0f28b8055c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78861d656010a6d449f8a9bbedc8f29f"><td class="memItemLeft" align="right" valign="top"><a id="a78861d656010a6d449f8a9bbedc8f29f"></a>
-point2d&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::make_point</b> (const Eigen::Vector2d &amp;v)</td></tr>
-<tr class="separator:a78861d656010a6d449f8a9bbedc8f29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ef3cb268526115802ea27de449db5b7"><td class="memItemLeft" align="right" valign="top"><a id="a1ef3cb268526115802ea27de449db5b7"></a>
-point3d&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::make_point</b> (const Eigen::Vector3d &amp;v)</td></tr>
-<tr class="separator:a1ef3cb268526115802ea27de449db5b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61670ea4525ac4bb179caeadc9563ec4"><td class="memTemplParams" colspan="2"><a id="a61670ea4525ac4bb179caeadc9563ec4"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a61670ea4525ac4bb179caeadc9563ec4"><td class="memTemplItemLeft" align="right" valign="top">point2d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_point</b> (const point3d&lt; T &gt; point)</td></tr>
@@ -4761,12 +4755,6 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ac8c403d351863275357ec71f5eab357f"><td class="memTemplItemLeft" align="right" valign="top">vector3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_vector</b> (const vector2d&lt; T &gt; v, const T &amp;z)</td></tr>
 <tr class="separator:ac8c403d351863275357ec71f5eab357f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbc46aa695505eda92f64b5d6f47471f"><td class="memItemLeft" align="right" valign="top"><a id="afbc46aa695505eda92f64b5d6f47471f"></a>
-vector2d&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::make_vector</b> (const Eigen::Vector2d &amp;v)</td></tr>
-<tr class="separator:afbc46aa695505eda92f64b5d6f47471f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0f59ec568c3de0dfe76badb05f2aef1"><td class="memItemLeft" align="right" valign="top"><a id="ad0f59ec568c3de0dfe76badb05f2aef1"></a>
-vector3d&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::make_vector</b> (const Eigen::Vector3d &amp;v)</td></tr>
-<tr class="separator:ad0f59ec568c3de0dfe76badb05f2aef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac34cf6e15b31d0c11baee1081200039a"><td class="memTemplParams" colspan="2"><a id="ac34cf6e15b31d0c11baee1081200039a"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ac34cf6e15b31d0c11baee1081200039a"><td class="memTemplItemLeft" align="right" valign="top">vector2d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_vector</b> (const point2d&lt; T &gt; point)</td></tr>
@@ -4795,10 +4783,12 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9e5e34f9b09d6a8a30b0519abb305b40"><td class="memTemplItemLeft" align="right" valign="top">ray&lt; T, 3 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_ray</b> (const point3d&lt; T &gt; &amp;origin, const vector3d&lt; T &gt; &amp;direction)</td></tr>
 <tr class="separator:a9e5e34f9b09d6a8a30b0519abb305b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae32991cc115ef912971f663ebda85ac6"><td class="memTemplParams" colspan="2"><a id="ae32991cc115ef912971f663ebda85ac6"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ae32991cc115ef912971f663ebda85ac6"><td class="memTemplItemLeft" align="right" valign="top">ray&lt; typename T::Scalar, 3 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_ray</b> (const Eigen::MatrixBase&lt; T &gt; &amp;origin, const Eigen::MatrixBase&lt; T &gt; &amp;direction)</td></tr>
-<tr class="separator:ae32991cc115ef912971f663ebda85ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d1c8629870342f3ae4ea099994c52cd"><td class="memItemLeft" align="right" valign="top"><a id="a9d1c8629870342f3ae4ea099994c52cd"></a>
+ray&lt; double, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::make_ray</b> (const Eigen::Vector2d &amp;origin, const Eigen::Vector2d &amp;direction)</td></tr>
+<tr class="separator:a9d1c8629870342f3ae4ea099994c52cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a616213210eaf48a9f61f5e342c9ef9b7"><td class="memItemLeft" align="right" valign="top"><a id="a616213210eaf48a9f61f5e342c9ef9b7"></a>
+ray&lt; double, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::make_ray</b> (const Eigen::Vector3d &amp;origin, const Eigen::Vector3d &amp;direction)</td></tr>
+<tr class="separator:a616213210eaf48a9f61f5e342c9ef9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc7cc32655656cb13927faa0082c2794"><td class="memTemplParams" colspan="2"><a id="acc7cc32655656cb13927faa0082c2794"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:acc7cc32655656cb13927faa0082c2794"><td class="memTemplItemLeft" align="right" valign="top">ray&lt; T, 2 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_ray</b> (const point2d&lt; T &gt; &amp;origin, const T &amp;bearing)</td></tr>
@@ -5519,6 +5509,73 @@ template&lt;typename T &gt; </div>
 
 <p>Check the position of vector (px,py) relative to a plane. The plane is formed by vector (1 -&gt; 2) and vector (1 -&gt; 3). The plane normal direction is (1-&gt;3)x(1-2). For example, orientation(0,0,0, 1,0,0, 0,0,1, 0,1,0) will result in AboveOrientation. </p>
 <dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+</div>
+</div>
+<a id="file_a418e90e2eff3a22f82540ed90fcac6e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a418e90e2eff3a22f82540ed90fcac6e6">&#9670;&nbsp;</a></span>robust_coplanar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool wykobi::robust_coplanar </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classwykobi_1_1point3d.html">point3d</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>point1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classwykobi_1_1point3d.html">point3d</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>point2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classwykobi_1_1point3d.html">point3d</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>point3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classwykobi_1_1point3d.html">point3d</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>point4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>epsilon</em> = <code>T(Epsilon)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check whether the four points are on the same plane by comparing the distance from a point to the plane formed by the other three points. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">epsilon</td><td>The threshold for the coplanar check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
 
 </div>
 </div>
