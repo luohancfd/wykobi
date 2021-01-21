@@ -652,7 +652,9 @@ namespace wykobi
    template <typename T>
    inline bool coplanar(const ray<T,3>& ray1, const ray<T,3>& ray2)
    {
-      return coplanar(line<T,3>(ray1[0], ray1[1]), line<T,3>(ray2[0], ray2[1]));
+      const point3d<T> pnt1 = generate_point_on_ray(ray1,T(1.0));
+      const point3d<T> pnt2 = generate_point_on_ray(ray2,T(1.0));
+      return coplanar(line<T,3>(ray1.origin, pnt1), line<T,3>(ray2.origin, pnt2));
    }
 
    template <typename T>

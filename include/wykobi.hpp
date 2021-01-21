@@ -393,7 +393,11 @@ namespace wykobi
 
       const static std::size_t PointCount = 2;
 
-      line(const PointType& point1, const PointType& point2) : _data({point1, point2}) {};
+      line(const PointType& point1, const PointType& point2)
+      {
+         _data[0] = point1;
+         _data[1] = point2;
+      };
 
       // FIXME: Dirty
       line(const Eigen::Vector3d& p1, const Eigen::Vector3d& p2)
