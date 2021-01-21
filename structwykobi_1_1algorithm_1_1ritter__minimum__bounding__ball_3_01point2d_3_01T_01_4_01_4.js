@@ -1,0 +1,4 @@
+var structwykobi_1_1algorithm_1_1ritter__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4 =
+[
+    [ "ritter_minimum_bounding_ball", "structwykobi_1_1algorithm_1_1ritter__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html#a74934ab53e96929c595c4b111ad065c9", null ]
+];

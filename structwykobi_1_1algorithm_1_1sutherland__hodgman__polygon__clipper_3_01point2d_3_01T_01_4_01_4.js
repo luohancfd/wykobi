@@ -1,0 +1,5 @@
+var structwykobi_1_1algorithm_1_1sutherland__hodgman__polygon__clipper_3_01point2d_3_01T_01_4_01_4 =
+[
+    [ "sutherland_hodgman_polygon_clipper", "structwykobi_1_1algorithm_1_1sutherland__hodgman__polygon__clipper_3_01point2d_3_01T_01_4_01_4.html#a39ada96fd84db48b522253725175e3cd", null ],
+    [ "sutherland_hodgman_polygon_clipper", "structwykobi_1_1algorithm_1_1sutherland__hodgman__polygon__clipper_3_01point2d_3_01T_01_4_01_4.html#a02109e4a730d7612efc2a9d3482f4b1f", null ]
+];

@@ -1,0 +1,4 @@
+var structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter_3_01point2d_3_01T_01_4_01_4 =
+[
+    [ "naive_minimum_bounding_ball_with_ch_filter", "structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter_3_01point2d_3_01T_01_4_01_4.html#a0361bbcb254601a771efbc35399addf3", null ]
+];

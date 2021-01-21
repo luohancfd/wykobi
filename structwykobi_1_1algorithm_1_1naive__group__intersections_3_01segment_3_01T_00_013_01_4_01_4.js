@@ -1,0 +1,4 @@
+var structwykobi_1_1algorithm_1_1naive__group__intersections_3_01segment_3_01T_00_013_01_4_01_4 =
+[
+    [ "naive_group_intersections", "structwykobi_1_1algorithm_1_1naive__group__intersections_3_01segment_3_01T_00_013_01_4_01_4.html#a7006e2f4c06de9f184e75d8762ab5633", null ]
+];
