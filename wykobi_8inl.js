@@ -625,6 +625,7 @@ var wykobi_8inl =
     [ "lay_distance_from_point_to_sphere_center", "wykobi_8inl.html#a7307a6e96e0d53e595b047c0e1b1f551", null ],
     [ "lay_distance_line_to_line", "wykobi_8inl.html#a5c5e9716fe2e31de062ef987cb82280d", null ],
     [ "lay_distance_line_to_line", "wykobi_8inl.html#a64ce560a0eb159145ca45d5fdb61988d", null ],
+    [ "lay_distance_line_to_line_old", "wykobi_8inl.html#a627f2da1ac4275cc628801668fc6ad47", null ],
     [ "lay_distance_segment_to_segment", "wykobi_8inl.html#a49b27284a6ea8b90789eb0b0c72bf8d3", null ],
     [ "lay_distance_segment_to_segment", "wykobi_8inl.html#aa910568298fa87bf8cc7ae07342aa9d0", null ],
     [ "lengthen_segment", "wykobi_8inl.html#a48bea45103260b9428168a8bdc95095e", null ],

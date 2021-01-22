@@ -29,7 +29,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Wykobi
-   &#160;<span id="projectnumber">19996cbfe236a0bfae16dce3a780a93911e6ecb0</span>
+   &#160;<span id="projectnumber">eefc634bba9b5554f61d22af87d131270280ffec</span>
    </div>
   </td>
  </tr>
@@ -280,7 +280,7 @@ template&lt;typename T &gt; </td></tr>
 <tr class="separator:a925eeb79062ecfe90e061968c67e942f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a418e90e2eff3a22f82540ed90fcac6e6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a418e90e2eff3a22f82540ed90fcac6e6"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::robust_coplanar</b> (const point3d&lt; T &gt; point1, const point3d&lt; T &gt; point2, const point3d&lt; T &gt; point3, const point3d&lt; T &gt; point4, const T &amp;epsilon=T(Epsilon))</td></tr>
-<tr class="memdesc:a418e90e2eff3a22f82540ed90fcac6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the four points are on the same plane by comparing the distance from a point to the plane formed by the other three points.  <a href="wykobi_8hpp.html#a418e90e2eff3a22f82540ed90fcac6e6">More...</a><br /></td></tr>
+<tr class="memdesc:a418e90e2eff3a22f82540ed90fcac6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the four points are on the same plane by comparing the distance from a point to the plane formed by the other three points. If the first points are collinear, the four points must be on the same plane.  <a href="wykobi_8hpp.html#a418e90e2eff3a22f82540ed90fcac6e6">More...</a><br /></td></tr>
 <tr class="separator:a418e90e2eff3a22f82540ed90fcac6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2edf35980043787cbf0eace59714f35"><td class="memTemplParams" colspan="2"><a id="af2edf35980043787cbf0eace59714f35"></a>
 template&lt;typename T &gt; </td></tr>
@@ -338,9 +338,9 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a3523c40d2d0e3f8a8a0668cd992a877a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;x3, const T &amp;y3, const T &amp;x4, const T &amp;y4)</td></tr>
 <tr class="separator:a3523c40d2d0e3f8a8a0668cd992a877a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea844d88248c844eaefde4b9b7d4309b"><td class="memTemplParams" colspan="2"><a id="aea844d88248c844eaefde4b9b7d4309b"></a>
-template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aea844d88248c844eaefde4b9b7d4309b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aea844d88248c844eaefde4b9b7d4309b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;x3, const T &amp;y3, const T &amp;x4, const T &amp;y4, T &amp;ix, T &amp;iy)</td></tr>
+<tr class="memdesc:aea844d88248c844eaefde4b9b7d4309b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether line segment (x1,y1)&ndash;(x2,y2) and (x3,y3)&ndash;(x4,y4) intersects and set (ix,iy) as the intersecting point.  <a href="wykobi_8hpp.html#aea844d88248c844eaefde4b9b7d4309b">More...</a><br /></td></tr>
 <tr class="separator:aea844d88248c844eaefde4b9b7d4309b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29b601b5aab1bb9b16ff306913dc262b"><td class="memTemplParams" colspan="2"><a id="a29b601b5aab1bb9b16ff306913dc262b"></a>
 template&lt;typename T &gt; </td></tr>
@@ -3035,14 +3035,18 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aa910568298fa87bf8cc7ae07342aa9d0"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::lay_distance_segment_to_segment</b> (const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;x4, const T &amp;y4, const T &amp;z4)</td></tr>
 <tr class="separator:aa910568298fa87bf8cc7ae07342aa9d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9248dae4ee8bb8cded64e0c695ea5ea"><td class="memTemplParams" colspan="2"><a id="ad9248dae4ee8bb8cded64e0c695ea5ea"></a>
-template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ad9248dae4ee8bb8cded64e0c695ea5ea"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ad9248dae4ee8bb8cded64e0c695ea5ea"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::distance_line_to_line</b> (const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;x3, const T &amp;y3, const T &amp;x4, const T &amp;y4)</td></tr>
+<tr class="memdesc:ad9248dae4ee8bb8cded64e0c695ea5ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the distance between two lines in 2D geometry. If the two lines are not parallel, it will return 0.  <a href="wykobi_8hpp.html#ad9248dae4ee8bb8cded64e0c695ea5ea">More...</a><br /></td></tr>
 <tr class="separator:ad9248dae4ee8bb8cded64e0c695ea5ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9406d5df3cfcd231b2468500646ce5e"><td class="memTemplParams" colspan="2"><a id="af9406d5df3cfcd231b2468500646ce5e"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af9406d5df3cfcd231b2468500646ce5e"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::distance_line_to_line</b> (const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;x4, const T &amp;y4, const T &amp;z4)</td></tr>
 <tr class="separator:af9406d5df3cfcd231b2468500646ce5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a627f2da1ac4275cc628801668fc6ad47"><td class="memTemplParams" colspan="2"><a id="a627f2da1ac4275cc628801668fc6ad47"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a627f2da1ac4275cc628801668fc6ad47"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::lay_distance_line_to_line_old</b> (const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;x3, const T &amp;y3, const T &amp;x4, const T &amp;y4)</td></tr>
+<tr class="separator:a627f2da1ac4275cc628801668fc6ad47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c5e9716fe2e31de062ef987cb82280d"><td class="memTemplParams" colspan="2"><a id="a5c5e9716fe2e31de062ef987cb82280d"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a5c5e9716fe2e31de062ef987cb82280d"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::lay_distance_line_to_line</b> (const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;x3, const T &amp;y3, const T &amp;x4, const T &amp;y4)</td></tr>
@@ -5100,6 +5104,83 @@ false on the same side </dd></dl>
 
 </div>
 </div>
+<a id="file_ad9248dae4ee8bb8cded64e0c695ea5ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_ad9248dae4ee8bb8cded64e0c695ea5ea">&#9670;&nbsp;</a></span>distance_line_to_line()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T wykobi::distance_line_to_line </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y4</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate the distance between two lines in 2D geometry. If the two lines are not parallel, it will return 0. </p>
+<dl class="section return"><dt>Returns</dt><dd>T Distance between the two lines </dd></dl>
+
+</div>
+</div>
 <a id="file_ae0920c44daae0591d038cee6202568fb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#file_ae0920c44daae0591d038cee6202568fb">&#9670;&nbsp;</a></span>in_circle()</h2>
 
@@ -5175,6 +5256,97 @@ template&lt;typename T &gt; </div>
 <p>Given a circle made by three points, check whether another point is in the circle, algorithm is from <a href="https://bit.ly/2LQ2jY3">https://bit.ly/2LQ2jY3</a> return Cocircular, PointInside or PointOutside. </p>
 <p>If the three points are colinear, also return PointOutside</p>
 <dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+</div>
+</div>
+<a id="file_aea844d88248c844eaefde4b9b7d4309b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#file_aea844d88248c844eaefde4b9b7d4309b">&#9670;&nbsp;</a></span>intersect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool wykobi::intersect </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>x4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>y4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>ix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>iy</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check whether line segment (x1,y1)&ndash;(x2,y2) and (x3,y3)&ndash;(x4,y4) intersects and set (ix,iy) as the intersecting point. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
 
 </div>
 </div>
@@ -5566,7 +5738,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Check whether the four points are on the same plane by comparing the distance from a point to the plane formed by the other three points. </p>
+<p>Check whether the four points are on the same plane by comparing the distance from a point to the plane formed by the other three points. If the first points are collinear, the four points must be on the same plane. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">epsilon</td><td>The threshold for the coplanar check </td></tr>
