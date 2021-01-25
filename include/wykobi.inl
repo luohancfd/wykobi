@@ -1090,9 +1090,14 @@ namespace wykobi
    {
       return intersect(segment,edge(triangle,0))    ||
              intersect(segment,edge(triangle,1))    ||
-             intersect(segment,edge(triangle,2))    ||
-             point_in_triangle(segment[0],triangle) ||
-             point_in_triangle(segment[1],triangle) ;
+             intersect(segment,edge(triangle,2));
+
+   // Point in triangle doesn't guranteee intersection
+   // We may have two points that are in the triangle
+
+            //  &&
+            //  (point_in_triangle(segment[0],triangle) ||
+            //  point_in_triangle(segment[1],triangle)) ;
    }
 
    template <typename T>

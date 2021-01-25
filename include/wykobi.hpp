@@ -986,7 +986,9 @@ namespace wykobi
     * @brief Check the position of vector (px,py) relative
     *        to vector (x1,y1)--(x2,y2) for RHS coordinate
     *
-    * @return int
+    * @return int +1 if the point is on the left
+    *             -1 if the point is on the right
+    *              0 if the point is on the line
     */
    template <typename T>
    inline int orientation(const T& x1, const T& y1,
