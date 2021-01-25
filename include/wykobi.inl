@@ -962,12 +962,6 @@ namespace wykobi
    }
 
    template <typename T>
-   inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2)
-   {
-      return intersect(segment1[0],segment1[1],segment2[0],segment2[1]);
-   }
-
-   template <typename T>
    inline bool intersect_vertical_horizontal(const segment<T,2>& segment1, const segment<T,2>& segment2)
    {
       return (((segment1[0].y <= segment2[0].y) && (segment2[0].y <= segment1[1].y)) ||
@@ -996,6 +990,12 @@ namespace wykobi
                ((segment1[0].x <= segment2[0].x) && (segment2[0].x <= segment1[1].x)) ||
                ((segment1[0].x <= segment2[1].x) && (segment2[1].x <= segment1[1].x))
              );
+   }
+
+   template <typename T>
+   inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2)
+   {
+      return intersect(segment1[0],segment1[1],segment2[0],segment2[1]);
    }
 
    template <typename T>

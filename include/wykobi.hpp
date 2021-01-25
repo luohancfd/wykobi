@@ -3328,13 +3328,22 @@ namespace wykobi
                                         const T& x3, const T& y3, const T& z3,
                                         const T& x4, const T& y4, const T& z4);
 
+   /**
+    * @brief Calculate the square of the shortest distance between two 2D segments. For example
+    *        (0, 0, 1, 0, -2, 1, -1, 1) will give 2.
+    *
+    */
    template <typename T>
    inline T lay_distance_segment_to_segment(const T& x1, const T& y1,
                                             const T& x2, const T& y2,
                                             const T& x3, const T& y3,
                                             const T& x4, const T& y4);
 
-
+   /**
+    * @brief Calculate the square of the shortest distance between two 2D segments. For example
+    *        (0,0,1, 0,1,1, 0,0.5,0.5, 0,1,0) will give 0.25.
+    *
+    */
    template <typename T>
    inline T lay_distance_segment_to_segment(const T& x1, const T& y1, const T& z1,
                                             const T& x2, const T& y2, const T& z2,
