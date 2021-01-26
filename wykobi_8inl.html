@@ -29,7 +29,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Wykobi
-   &#160;<span id="projectnumber">4b8c3f556615279c75f2a1f7463d08e75462382b</span>
+   &#160;<span id="projectnumber">8e58672481337c0297022c83396f71e5bccabd1d</span>
    </div>
   </td>
  </tr>
@@ -4969,7 +4969,7 @@ template&lt;typename T &gt; </td></tr>
 <tr class="separator:acb4b6fc55ac815b8d9fc533c9b6f9378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4474ef7c520091c097eda3cd7e6131e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ad4474ef7c520091c097eda3cd7e6131e"><td class="memTemplItemLeft" align="right" valign="top">plane&lt; T, 3 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_plane</b> (const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const bool check=true)</td></tr>
-<tr class="memdesc:ad4474ef7c520091c097eda3cd7e6131e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a plane object from three points.  <a href="wykobi_8hpp.html#ad4474ef7c520091c097eda3cd7e6131e">More...</a><br /></td></tr>
+<tr class="memdesc:ad4474ef7c520091c097eda3cd7e6131e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a plane object from three points. The plane normal direction is defined as Vector(x1&ndash;&gt;x2) cross product Vector(x1&ndash;&gt;x3)  <a href="wykobi_8hpp.html#ad4474ef7c520091c097eda3cd7e6131e">More...</a><br /></td></tr>
 <tr class="separator:ad4474ef7c520091c097eda3cd7e6131e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac76daa86b8262cf77a38a6af935efa59"><td class="memTemplParams" colspan="2"><a id="ac76daa86b8262cf77a38a6af935efa59"></a>
 template&lt;typename T &gt; </td></tr>
@@ -5509,7 +5509,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Make a plane object from three points. </p>
+<p>Make a plane object from three points. The plane normal direction is defined as Vector(x1&ndash;&gt;x2) cross product Vector(x1&ndash;&gt;x3) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">check</td><td>Sanity check whether the three points are collinear </td></tr>
@@ -5581,7 +5581,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Check the position of vector (px,py) relative to vector (x1,y1)&ndash;(x2,y2) for RHS coordinate. </p>
-<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int +1 if the point is on the left -1 if the point is on the right 0 if the point is on the line </dd></dl>
 
 </div>
 </div>
