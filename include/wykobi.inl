@@ -1213,8 +1213,8 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const segment<T,3>& segment, const plane<T,3>& plane)
    {
-      T signed_dist1 = dot_product(plane.normal,make_vector(segment[0])) - plane.constant;
-      T signed_dist2 = dot_product(plane.normal,make_vector(segment[1])) - plane.constant;
+      T signed_dist1 = dot_product(plane.normal,make_vector(segment[0])) + plane.constant;
+      T signed_dist2 = dot_product(plane.normal,make_vector(segment[1])) + plane.constant;
 
       signed_dist1 = (is_equal(abs(signed_dist1),T(0.0)))? T(0.0) : signed_dist1;
       signed_dist2 = (is_equal(abs(signed_dist2),T(0.0)))? T(0.0) : signed_dist2;
@@ -7803,7 +7803,7 @@ namespace wykobi
    {
       const T mu = plane.normal.x * point.x +
                    plane.normal.y * point.y +
-                   plane.normal.z * point.z  - plane.constant;
+                   plane.normal.z * point.z + plane.constant;
 
       if (is_equal(mu,T(0.0)))
          return point;
@@ -9626,7 +9626,7 @@ namespace wykobi
    template <typename T>
    inline T distance(const point3d<T>& point, const plane<T,3>& plane)
    {
-      return (plane.normal.x * point.x + plane.normal.y * point.y + plane.normal.z * point.z ) - plane.constant;
+      return (plane.normal.x * point.x + plane.normal.y * point.y + plane.normal.z * point.z ) + plane.constant;
    }
 
    template <typename T>

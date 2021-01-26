@@ -869,7 +869,8 @@ namespace wykobi
      }
 
       // The distance of the origin to the plane, it will be negtive if
-      // the origin is below the plane
+      // the origin is in the opposite direction of vector normal, i.e.
+      // below the plane
       T          constant;
       // The normal vector to the plane
       VectorType normal;
@@ -4111,7 +4112,8 @@ namespace wykobi
    template <typename T> inline sphere<T> make_sphere(const point3d<T>& point1, const point3d<T>& point2);
 
    /**
-    * @brief Make a plane object from three points
+    * @brief Make a plane object from three points. The plane normal direction is defined as
+    *        Vector(x1-->x2) cross product Vector(x1-->x3)
     *
     * @param check Sanity check whether the three points are collinear
     * @return plane<T,3>
