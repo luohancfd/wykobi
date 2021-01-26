@@ -1310,37 +1310,57 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const line<T,3>& line, const triangle<T,3>& triangle)
    {
+      // some information about other algorithms
+      // https://stackoverflow.com/questions/42740765/intersection-between-line-and-triangle-in-3d
+
       vector3d<T> diff     = line[0] - triangle[0];
       vector3d<T> line_dir = line[1] - line[0];
       vector3d<T> edge1    = triangle[1] - triangle[0];
       vector3d<T> edge2    = triangle[2] - triangle[0];
       vector3d<T> normal   = edge1 * edge2;
 
+      // the projection of line[1]---line[0] on normal of the triangle
       T denom =  dot_product(line_dir,normal);
       T sign  = 0.0;
 
       if (denom > T(0.0))
       {
+         // line crosses the triangle from bottom to top
          sign = T(1.0);
       }
       else if (denom < T(0.0))
       {
+         // line crosses the triangle from top to bottom
          sign  = T(-1.0);
          denom = -denom;
       }
       else
-         return false;
+      {
+         // line is parallel to the triangle or in the triangle
+         if (is_equal(dot_product(diff, normal), T(0.0))) {
+            return true;
+         } else {
+            return false;
+         }
+      }
 
       T val1 = sign * dot_product(line_dir,(diff * edge2));
+      // if val1 is greater than 0, the line cross or in the plane formed by
+      // line[0], triangle[0], triangle[2]
 
       if (greater_than_or_equal(val1,T(0.0)))
       {
-         T val2 = sign * dot_product(line_dir,edge1 * diff);
-
+         T val2 = sign * dot_product(line_dir,edge1 * diff);;
+         // if val2 is greater than 0, the line cross or in the plane formed by
+         // line[0], triangle[0], triangle[1]
          if (greater_than_or_equal(val2,T(0.0)))
          {
             if (val1 + val2 <= denom)
             {
+               // val1 + val2 = sign * dot_produce(line_dir, diff*(edge2 - edge1))
+               //
+               // val1 + val2 <= denom is equivalent to
+               // dot_product( (diff - edge1) * (edge2 - edge1), sign*line_dir ) <= 0
                return true;
             }
          }
