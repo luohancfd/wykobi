@@ -1406,6 +1406,16 @@ namespace wykobi
    template <typename T> inline bool intersect(const sphere<T>& sphere1, const sphere<T>& sphere2);
    template <typename T> inline bool intersect(const sphere<T>& sphere, const quadratic_bezier<T,3>& bezier, const std::size_t& steps = 1000);
    template <typename T> inline bool intersect(const sphere<T>& sphere, const cubic_bezier<T,3>& bezier, const std::size_t& steps = 1000);
+
+   /**
+    * @brief Check whether two rays intersect.
+    *
+    * @tparam T
+    * @param ray1
+    * @param ray2
+    * @return true
+    * @return false
+    */
    template <typename T> inline bool intersect(const ray<T,2>& ray1, const ray<T,2>& ray2);
    template <typename T> inline bool intersect(const ray<T,3>& ray1, const ray<T,3>& ray2);
    template <typename T> inline bool intersect(const ray<T,2>& ray, const segment<T,2>& segment);
@@ -3871,9 +3881,24 @@ namespace wykobi
    template <typename T> inline vector2d<T> normalize(const vector2d<T>& v);
    template <typename T> inline vector3d<T> normalize(const vector3d<T>& v);
 
-   template <typename T> inline vector2d<T> perpendicular(const vector2d<T>& v);
-   template <typename T> inline vector3d<T> perpendicular(const vector3d<T>& v);
-   template <typename T> inline vector3d<T> perpendicular(const vector3d<T>& v, const vector3d<T>& w);
+   /**
+    * @brief Calculate a normalized vector perpendicular to v in the clockwise direction
+    *
+    * @tparam T
+    * @param v
+    * @return vector2d<T>
+    */
+   template <typename T> inline vector2d<T> create_perpendicular_vector(const vector2d<T>& v);
+   template <typename T> inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v);
+   /**
+    * @brief Calculate a normalized vector in plane that is perpendicular to v and in the plane formed by v and w
+    *
+    * @tparam T
+    * @param v
+    * @param w
+    * @return vector3d<T>
+    */
+   template <typename T> inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v, const vector3d<T>& w);
 
    template <typename T> inline vector2d<T> operator+(const vector2d<T>& v1, const vector2d<T>& v2);
    template <typename T> inline vector3d<T> operator+(const vector3d<T>& v1, const vector3d<T>& v2);

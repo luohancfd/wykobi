@@ -1554,9 +1554,11 @@ namespace wykobi
    inline bool intersect(const ray<T,2>& ray1, const ray<T,2>& ray2)
    {
       const T denom = ray2.direction * ray1.direction;
-      // if denom > 0, ray1 is on the left  of ray2
+      // if denom > 0, ray1 points to the left  of ray2
+      //               Then diff must points to the right of ray2 and ray1
       //         == 0, parallel
-      //          < 0, ray1 is on the right of ray2
+      //          < 0, ray1 points to the right of ray2
+      //               Then diff must points to the left of ray2 and ray1
 
       if (denom != T(0.0))
       {
@@ -1564,7 +1566,6 @@ namespace wykobi
 
          const T s = diff * ray2.direction / denom;
          const T t = diff * ray1.direction / denom;
-         // ray1.origin + s * ray1.direction = ray2.origin + t * ray2.direction
          return (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0)));
       }
       else // parallel
@@ -1576,7 +1577,7 @@ namespace wykobi
    {
       if (!coplanar(ray1,ray2)) return false;
 
-      vector3d<T> delta = perpendicular(ray2.direction, ray1.direction);
+      vector3d<T> delta = create_perpendicular_vector(ray2.direction, ray1.direction);
       const T denom = dot_product(delta, ray1.direction);
 
       if (denom != T(0.0))
@@ -1595,7 +1596,7 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,2>& ray, const segment<T,2>& segment)
    {
-      vector2d<T> delta = perpendicular(segment[1] - segment[0]);
+      vector2d<T> delta = create_perpendicular_vector(segment[1] - segment[0]);
 
       const T denom = dot_product(delta,ray.direction);
 
@@ -1604,7 +1605,7 @@ namespace wykobi
          vector2d<T> diff = segment[0] - ray.origin;
 
          const T s = dot_product(delta, diff) / denom;
-         const T t = dot_product(perpendicular(ray.direction), diff) / denom;
+         const T t = dot_product(create_perpendicular_vector(ray.direction), diff) / denom;
 
          return greater_than_or_equal(t, T(0.0)) &&
                 less_than_or_equal   (t, T(1.0)) &&
@@ -2811,7 +2812,7 @@ namespace wykobi
          vector2d<T> diff = segment[0] - ray.origin;
 
          const T s = dot_product(delta, diff) / denom;
-         const T t = dot_product(perpendicular(ray.direction), diff) / denom;
+         const T t = dot_product(create_perpendicular_vector(ray.direction), diff) / denom;
 
          if (
                greater_than_or_equal(t, T(0.0)) &&
@@ -5993,7 +5994,7 @@ namespace wykobi
       const T distance = wykobi::distance(p1,p2);
 
       const wykobi::point2d <T> mid = wykobi::segment_mid_point(p1,p2);
-      const wykobi::vector2d<T>   v = wykobi::normalize(wykobi::perpendicular(p1 - p2)) * (distance / T(2.0));
+      const wykobi::vector2d<T>   v = create_perpendicular_vector(p1 - p2) * (distance / T(2.0));
 
       c1 = mid + v;
       c2 = mid - v;
@@ -6778,10 +6779,10 @@ namespace wykobi
          lines.push_back(create_perpendicular_bisector(make_segment(c0, c1)));
       else if (is_equal(circle0.radius - circle1.radius,T(0.0)))
       {
-         const point2d<T> c0pnt0 = c0 + (+circle0.radius * perpendicular(normalize(c1 - c0)));
-         const point2d<T> c0pnt1 = c0 + (-circle0.radius * perpendicular(normalize(c1 - c0)));
-         const point2d<T> c1pnt0 = c1 + (+circle1.radius * perpendicular(normalize(c0 - c1)));
-         const point2d<T> c1pnt1 = c1 + (-circle1.radius * perpendicular(normalize(c0 - c1)));
+         const point2d<T> c0pnt0 = c0 + (+circle0.radius * create_perpendicular_vector(c1 - c0));
+         const point2d<T> c0pnt1 = c0 + (-circle0.radius * create_perpendicular_vector(c1 - c0));
+         const point2d<T> c1pnt0 = c1 + (+circle1.radius * create_perpendicular_vector(c0 - c1));
+         const point2d<T> c1pnt1 = c1 + (-circle1.radius * create_perpendicular_vector(c0 - c1));
 
          lines.push_back(make_line(c0pnt0, c1pnt1));
          lines.push_back(make_line(c0pnt1, c1pnt0));
@@ -6846,7 +6847,15 @@ namespace wykobi
    template <typename T>
    inline line<T,2> tangent_line(const circle<T>& circle, const point2d<T>& point)
    {
-      return make_line(point,point + perpendicular(point - make_point(circle)));
+      if (point_in_circle(point, circle)) {
+         return degenerate_line2d<T>();
+      }
+      const vector2d<T> v = make_point(circle) - point;
+      const vector2d<T> w;
+      rotate<T>(acos(circle.radius / vector_norm(v)) / T(PIDiv180), v.x, v.y, w.x, w.y));
+
+      return make_line(point,
+                       point + w);
    }
 
    template <typename T>
@@ -6986,7 +6995,7 @@ namespace wykobi
    template <typename T>
    inline line<T,2> create_perpendicular_line_at_end_point(const line<T,2>& line)
    {
-      return make_line(line[1],perpendicular(line[1] - line[0]) + line[1]);
+      return make_line(line[1],create_perpendicular_vector(line[1] - line[0]) + line[1]);
    }
 
    template <typename T>
@@ -14913,22 +14922,22 @@ namespace wykobi
    }
 
    template <typename T>
-   inline vector2d<T> perpendicular(const vector2d<T>& v)
+   inline vector2d<T> create_perpendicular_vector(const vector2d<T>& v)
    {
-      return make_vector(v.y,-v.x);
+      return normalize(vector2d<T>(v.y,-v.x));
    }
 
    template <typename T>
-   inline vector3d<T> perpendicular(const vector3d<T>& v)
+   inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v)
    {
-      return make_vector(v.y,-v.x,v.z);
+      return normliaze(vector2d<T>(v.y,-v.x,v.z));
    }
 
    template <typename T>
-   inline vector3d<T> perpendicular(const vector3d<T>& v, const vector3d<T>& w)
+   inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v, const vector3d<T>& w)
    {
-      vector3d<T> u = w * v;
-      return normalize(u*v);
+      vector3d<T> u = w*v;
+      return normalize(v*u);
    }
 
    template <typename T>
