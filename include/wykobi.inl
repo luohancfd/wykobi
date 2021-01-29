@@ -1632,8 +1632,8 @@ namespace wykobi
          vector2d<T> diff = segment[0] - ray.origin;
          vector2d<T> delta2 = create_perpendicular_vector(ray.direction);
 
-         const T t = dot_product(diff, delta) / denom;
          const T s = dot_product(diff, delta2) / denom;
+         const T t = dot_product(diff, delta) / denom;
 
          return greater_than_or_equal(s, T(0.0)) &&
                 less_than_or_equal   (s, segment_norm(segment)) &&
@@ -1646,10 +1646,26 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,3>& ray, const segment<T,3>& segment)
    {
-      if (robust_coplanar(segment[0],segment[1],ray.origin,generate_point_on_ray(ray,T(1.0))))
-         return point_on_segment(closest_point_on_ray_from_point(ray,segment[0]),segment);
-      else
-         return false;
+      if (!coplanar(ray, segment)) return false;
+
+      const vector3d<T> seg_direction = segment[1] - segment[0];
+      vector3d<T> delta = create_perpendicular_vector(seg_direction, ray.direction);
+      const T denom = dot_product(delta, ray.direction);
+
+      if (denom != T(0.0))
+      {
+         vector3d<T> diff = segment[0] - ray.origin;
+         vector3d<T> delta2 = - create_perpendicular_vector(ray.direction, seg_direction);
+
+         const T s = dot_product(diff, delta2) / denom;
+         const T t = dot_product(diff, delta)  / denom;
+
+          return greater_than_or_equal(s, T(0.0)) &&
+                 less_than_or_equal   (s, segment_norm(segment)) &&
+                 greater_than_or_equal(t, T(0.0));
+      }
+      else // parallel
+        return point_on_ray(segment[0],ray);
    }
 
    template <typename T>
