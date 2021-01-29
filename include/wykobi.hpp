@@ -443,6 +443,11 @@ namespace wykobi
       inline reference       operator [](const std::size_t& index)       { return _data[index]; }
       inline const_reference operator [](const std::size_t& index) const { return _data[index]; }
       inline std::size_t     size       ()                               { return PointCount;   }
+
+      friend std::ostream& operator<<(std::ostream& os, const line& l) {
+         os << "Points: " << l._data[0] << ", " << l._data[1];
+         return os;
+      }
    };
 
 

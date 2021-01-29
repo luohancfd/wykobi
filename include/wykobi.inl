@@ -29,6 +29,7 @@
 
 
 #include "wykobi.hpp"
+#include "wykobi_math.hpp"
 
 
 namespace wykobi
@@ -6878,11 +6879,12 @@ namespace wykobi
          return degenerate_line2d<T>();
       }
       const vector2d<T> v = make_point(circle) - point;
-      const vector2d<T> w;
-      rotate<T>(acos(circle.radius / vector_norm(v)) / T(PIDiv180), v.x, v.y, w.x, w.y));
+      vector2d<T> w;
+      const T angle = acos(circle.radius / vector_norm(v));
+      rotate<T>(T(90.0) - angle/T(PIDiv180), v.x, v.y, w.x, w.y);
 
       return make_line(point,
-                       point + w);
+                       point + normalize(w) * vector_norm(v) * sin(angle));
    }
 
    template <typename T>
