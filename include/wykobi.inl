@@ -16201,11 +16201,7 @@ namespace wykobi
                                       const T& x2, const T& y2,
                                       const T& x3, const T& y3)
    {
-      triangle<T,2> triangle_;
-      triangle_[0] = make_point(x1,y1);
-      triangle_[1] = make_point(x2,y2);
-      triangle_[2] = make_point(x3,y3);
-      return triangle_;
+      return triangle<T,2>(x1, y1, x2, y2, x3, y3);
    }
 
    template <typename T>
@@ -16213,17 +16209,13 @@ namespace wykobi
                                       const T& x2, const T& y2, const T& z2,
                                       const T& x3, const T& y3, const T& z3)
    {
-      triangle<T,3> triangle_;
-      triangle_[0] = make_point(x1,y1,z1);
-      triangle_[1] = make_point(x2,y2,z2);
-      triangle_[2] = make_point(x3,y3,z3);
-      return triangle_;
+      return triangle<T,3>(x1, y1, z1, x2, y2, z2, x3, y3, z3);
    }
 
    template <typename T>
    inline triangle<T,2> make_triangle(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3)
    {
-      return make_triangle(point1.x,point1.y,
+      return triangle<T,2>(point1.x,point1.y,
                            point2.x,point2.y,
                            point3.x,point3.y);
    }
@@ -16231,7 +16223,7 @@ namespace wykobi
    template <typename T>
    inline triangle<T,3> make_triangle(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3)
    {
-      return make_triangle(point1.x,point1.y,point1.z,
+      return triangle<T,3>(point1.x,point1.y,point1.z,
                            point2.x,point2.y,point2.z,
                            point3.x,point3.y,point3.z);
    }
@@ -16239,7 +16231,7 @@ namespace wykobi
    template <typename T>
    inline triangle<typename T::Scalar, 3> make_triangle(const Eigen::MatrixBase<T>& point1, const Eigen::MatrixBase<T>& point2, const Eigen::MatrixBase<T>& point3)
    {
-      return make_triangle(point1(0),point1(1),point1(2),
+      return triangle<T,3>(point1(0),point1(1),point1(2),
                            point2(0),point2(1),point2(2),
                            point3(0),point3(1),point3(2));
    }

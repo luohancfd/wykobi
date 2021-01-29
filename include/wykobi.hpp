@@ -389,6 +389,11 @@ namespace wykobi
 
       template<typename S, std::size_t E>
       friend inline S segment_norm(const segment<S,E>& seg);
+
+      friend std::ostream& operator<<(std::ostream& os, const segment& l) {
+         os << "Segment with points: " << l._data[0] << ", " << l._data[1];
+         return os;
+      }
    };
 
 
@@ -445,7 +450,7 @@ namespace wykobi
       inline std::size_t     size       ()                               { return PointCount;   }
 
       friend std::ostream& operator<<(std::ostream& os, const line& l) {
-         os << "Points: " << l._data[0] << ", " << l._data[1];
+         os << "Line with points: " << l._data[0] << ", " << l._data[1];
          return os;
       }
    };
@@ -458,13 +463,15 @@ namespace wykobi
    public:
 
       const static std::size_t PointCount = 3;
-
-      triangle(){}
-     ~triangle(){}
-
       typedef typename define_point_type<T,Dimension>::PointType PointType;
       typedef const PointType& const_reference;
       typedef       PointType& reference;
+
+      triangle(T x1, T y1, T x2, T y2, T x3, T y3) : _data{PointType(x1,y1), PointType(x2,y2), PointType(x3,y3)} {}
+      triangle(T x1, T y1, T z1, T x2, T y2, T z2, T x3, T y3, T z3) : _data{PointType(x1,y1,z1), PointType(x2,y2,z2), PointType(x3,y3,z3)} {}
+
+      triangle(){}
+     ~triangle(){}
 
    private:
       PointType _data[PointCount];
@@ -473,6 +480,11 @@ namespace wykobi
       inline reference       operator [](const std::size_t& index)       { return _data[index]; }
       inline const_reference operator [](const std::size_t& index) const { return _data[index]; }
       inline std::size_t     size       ()                         const { return PointCount;   }
+
+      friend std::ostream& operator<<(std::ostream& os, const triangle& l) {
+         os << "Triangle with points: " << l._data[0] << ", " << l._data[1] << ", " << l._data[2];
+         return os;
+      }
    };
 
 
