@@ -15,13 +15,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"classwykobi_1_1segment.html#a1aa0a1a66e3743e9af91e96256619cbc",
-"structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball__with__ch__filter.html",
-"wykobi_8inl.html#a319d61bf0e348514ae7c8d173a83ade4",
-"wykobi_8inl.html#a635f2bdcd8f6a1f2a91381c6f264e51b",
-"wykobi_8inl.html#a9478a2081ef18d3676f3c6bb314d787d",
-"wykobi_8inl.html#ac64feef635dbf016a6cf260d305fa742",
-"wykobi_8inl.html#afd3ab3f375c683fe8a154a9d29c501c5"
+"classwykobi_1_1rectangle.html#ad707b3663c7ce82029d6452f2421d0f8",
+"structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html",
+"wykobi_8inl.html#a30c4261de9877a3d9d178459763de461",
+"wykobi_8inl.html#a61760f02465a7b0cac1a29f5b66a9013",
+"wykobi_8inl.html#a931011c5e0e5e63f5216fa2a18aaf07c",
+"wykobi_8inl.html#ac51807cd4a0a4d2a42854fadb422b444",
+"wykobi_8inl.html#afb4dd87a0bf4c3c150c9e7fff3cd6527"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -10,6 +10,7 @@ var classwykobi_1_1point3d =
     [ "~point3d", "classwykobi_1_1point3d.html#a50bd2ec922a0cc9fcfbecfd1daffa2e8", null ],
     [ "operator()", "classwykobi_1_1point3d.html#a97e6a6cdac7783ad6f6c50ede6e523ea", null ],
     [ "operator()", "classwykobi_1_1point3d.html#a8c2b6eccd04cad1568f0fcee302399cd", null ],
+    [ "operator-", "classwykobi_1_1point3d.html#a99e81b165043bcf96bf16201bb6c0649", null ],
     [ "operator=", "classwykobi_1_1point3d.html#a93e395b54c2b0d2c85bec50e828c01c7", null ],
     [ "operator=", "classwykobi_1_1point3d.html#a91911f659700105782d3d648d2d4fb13", null ],
     [ "operator[]", "classwykobi_1_1point3d.html#a106f80a98b93e10a2f08607c157617a6", null ],

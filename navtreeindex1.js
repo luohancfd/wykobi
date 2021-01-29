@@ -1,18 +1,20 @@
 var NAVTREEINDEX1 =
 {
-"classwykobi_1_1segment.html#a1aa0a1a66e3743e9af91e96256619cbc":[0,0,0,34,11],
-"classwykobi_1_1segment.html#a354c7473ba3e95fe2f906259d8364f63":[0,0,0,34,13],
+"classwykobi_1_1rectangle.html#ad707b3663c7ce82029d6452f2421d0f8":[0,0,0,33,6],
+"classwykobi_1_1rectangle.html#affc86e0a34fdcf031f85d11613c58352":[0,0,0,33,1],
+"classwykobi_1_1segment.html":[0,0,0,34],
+"classwykobi_1_1segment.html#a1aa0a1a66e3743e9af91e96256619cbc":[0,0,0,34,10],
+"classwykobi_1_1segment.html#a354c7473ba3e95fe2f906259d8364f63":[0,0,0,34,12],
 "classwykobi_1_1segment.html#a4a44ed22d2810bda586f291c98cfe390":[0,0,0,34,7],
 "classwykobi_1_1segment.html#a76bffe273b8a21eb6170ee595a880c82":[0,0,0,34,5],
-"classwykobi_1_1segment.html#a7a5a6c344c96e69defd530273fe051f8":[0,0,0,34,12],
+"classwykobi_1_1segment.html#a7a5a6c344c96e69defd530273fe051f8":[0,0,0,34,11],
 "classwykobi_1_1segment.html#a7d5fbf96c1b0e804478eb0b735423fb7":[0,0,0,34,4],
 "classwykobi_1_1segment.html#a7fba7d495f7d6a2ed2fd9208321b62ea":[0,0,0,34,6],
 "classwykobi_1_1segment.html#a947f058b11dcda921ccd066c827b7b7a":[0,0,0,34,8],
 "classwykobi_1_1segment.html#aa5bbff6c45239c218e6d062475c025b0":[0,0,0,34,9],
+"classwykobi_1_1segment.html#aa953cc1528ac55629982788fd189d27c":[0,0,0,34,13],
 "classwykobi_1_1segment.html#aaa5c01bca6469b4ee359fb494ac4eb4a":[0,0,0,34,2],
-"classwykobi_1_1segment.html#aac9dac1eb210d52b615c993727e18ccb":[0,0,0,34,10],
 "classwykobi_1_1segment.html#ae6dfb694123ca80bee7d47b64d8e52ec":[0,0,0,34,1],
-"classwykobi_1_1segment.html#aee190fb55dc82a76620b02e68e23c7e5":[0,0,0,34,14],
 "classwykobi_1_1segment.html#aefb25b1ca2244437a65339e2095fccdb":[0,0,0,34,0],
 "classwykobi_1_1segment.html#afd2a480262c16492b4a456a93e934c7b":[0,0,0,34,3],
 "classwykobi_1_1sphere.html":[0,0,0,35],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "structwykobi_1_1algorithm_1_1polygon__triangulate.html":[0,0,0,0,23],
 "structwykobi_1_1algorithm_1_1polygon__triangulate_3_01point2d_3_01T_01_4_01_4.html":[0,0,0,0,24],
 "structwykobi_1_1algorithm_1_1polygon__triangulate_3_01point2d_3_01T_01_4_01_4.html#ac02e4bed1fca7f6fe252c29e48bca7f1":[0,0,0,0,24,0],
-"structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball.html":[0,0,0,0,25],
-"structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html":[0,0,0,0,26],
-"structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html#a5b01ccc85ac2744dc6f06b08338b0fdc":[0,0,0,0,26,0]
+"structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball.html":[0,0,0,0,25]
 };

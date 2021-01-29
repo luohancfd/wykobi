@@ -12,5 +12,6 @@ var classwykobi_1_1line =
     [ "~line", "classwykobi_1_1line.html#a9ad87027a4404c028faf7ddd781d97e3", null ],
     [ "operator[]", "classwykobi_1_1line.html#a794522e4d53dd7c1158036d1b194d1ed", null ],
     [ "operator[]", "classwykobi_1_1line.html#ac08ac73d23c80e493c54767fecdefa48", null ],
-    [ "size", "classwykobi_1_1line.html#acb51ae45ffdd811031e430338aca1da4", null ]
+    [ "size", "classwykobi_1_1line.html#acb51ae45ffdd811031e430338aca1da4", null ],
+    [ "operator<<", "classwykobi_1_1line.html#a7385b95520ae2b58f738c969550277ca", null ]
 ];
