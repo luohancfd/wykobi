@@ -146,8 +146,15 @@ namespace wykobi
          return os;
       }
 
+      inline point2d<T> operator-() const {
+        return point2d(-x, -y);
+      }
+
       T x,y;
    };
+   template <typename T> inline point2d<T> operator*(const point2d<T>& point, const T& scale);
+   template <typename T> inline point2d<T> operator*(const T& scale, const point2d<T>& point);
+   template <typename T> inline point2d<T> operator+(const point2d<T>& p1, const point2d<T>& p2);
 
    template <typename T = Float>
    class point3d : public geometric_entity
@@ -191,6 +198,10 @@ namespace wykobi
          return os;
       }
 
+      inline point3d<T> operator-() const {
+        return point3d(-x, -y, -z);
+      }
+
       T x,y,z;
    private:
       inline reference value(const std::size_t& index)
@@ -215,6 +226,9 @@ namespace wykobi
          }
       }
    };
+   template <typename T> inline point3d<T> operator*(const point3d<T>& point, const T& scale);
+   template <typename T> inline point3d<T> operator*(const T& scale, const point3d<T>& point);
+   template <typename T> inline point3d<T> operator+(const point3d<T>& p1, const point3d<T>& p2);
 
    template <typename T, std::size_t D>
    class pointnd : public geometric_entity
@@ -373,12 +387,8 @@ namespace wykobi
       inline const_reference operator [](const std::size_t& index) const { return _data[index]; }
       inline std::size_t     size       ()                               { return PointCount;   }
 
-      inline Float norm () {
-        return _len;
-      }
-      inline Float squaredNorm () {
-         return _len * _len;
-      }
+      template<typename S, std::size_t E>
+      friend inline S segment_norm(const segment<S,E>& seg);
    };
 
 
@@ -737,6 +747,11 @@ namespace wykobi
         return vector2d(-point2d<T>::x, -point2d<T>::y);
       }
    };
+   template <typename T> inline vector2d<T> operator+(const vector2d<T>& v1, const vector2d<T>& v2);
+   template <typename T> inline vector2d<T> operator-(const vector2d<T>& v1, const vector2d<T>& v2);
+   template <typename T> inline vector2d<T> operator*(const vector2d<T>& v1, const T& scale);
+   template <typename T> inline vector2d<T> operator*(const T& scale, const vector2d<T>& v1);
+   template <typename T> inline vector2d<T> operator/(const vector2d<T>& v1, const T& scale);
 
    template <typename T>
    class vector3d : public point3d<T>
@@ -758,6 +773,12 @@ namespace wykobi
         return vector3d(-point3d<T>::x, -point3d<T>::y, -point3d<T>::z);
       }
    };
+   template <typename T> inline vector3d<T> operator+(const vector3d<T>& v1, const vector3d<T>& v2);
+   template <typename T> inline vector3d<T> operator-(const vector3d<T>& v1, const vector3d<T>& v2);
+   template <typename T> inline vector3d<T> operator*(const vector3d<T>& v1, const T& scale);
+   template <typename T> inline vector3d<T> operator*(const T& scale, const vector3d<T>& v1);
+   template <typename T> inline vector3d<T> operator/(const vector3d<T>& v1, const T& scale);
+
 
    template <typename T, std::size_t D>
    class vectornd : public pointnd<T,D>
@@ -3874,6 +3895,9 @@ namespace wykobi
 
    template <typename T> inline T vector_norm(const vector2d<T>& v);
    template <typename T> inline T vector_norm(const vector3d<T>& v);
+   template <typename T, std::size_t Dimension> inline T segment_norm(const segment<T, Dimension>& v) {
+      return v._len;
+   }
 
    template <typename T> inline T vector_square_norm(const vector2d<T>& v);
    template <typename T> inline T vector_square_norm(const vector3d<T>& v);
@@ -3891,7 +3915,9 @@ namespace wykobi
    template <typename T> inline vector2d<T> create_perpendicular_vector(const vector2d<T>& v);
    template <typename T> inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v);
    /**
-    * @brief Calculate a normalized vector in plane that is perpendicular to v and in the plane formed by v and w
+    * @brief Calculate a normalized vector that is
+    *           1. perpendicular to vector v
+    *           2. in the plane formed by vector v and w. The plane normal is w * v
     *
     * @tparam T
     * @param v
@@ -3899,12 +3925,6 @@ namespace wykobi
     * @return vector3d<T>
     */
    template <typename T> inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v, const vector3d<T>& w);
-
-   template <typename T> inline vector2d<T> operator+(const vector2d<T>& v1, const vector2d<T>& v2);
-   template <typename T> inline vector3d<T> operator+(const vector3d<T>& v1, const vector3d<T>& v2);
-
-   template <typename T> inline vector2d<T> operator-(const vector2d<T>& v1, const vector2d<T>& v2);
-   template <typename T> inline vector3d<T> operator-(const vector3d<T>& v1, const vector3d<T>& v2);
 
    template <typename T> inline T           operator*(const vector2d<T>& v1, const vector2d<T>& v2);
    template <typename T> inline vector3d<T> operator*(const vector3d<T>& v1, const vector3d<T>& v2);
@@ -3915,19 +3935,6 @@ namespace wykobi
    template <typename T> inline T perpendicular_product(const vector2d<T>& v1, const vector2d<T>& v2);
    template <typename T> inline T triple_product(const vector3d<T>& v1, const vector3d<T>& v2, const vector3d<T>& v3);
 
-   template <typename T> inline vector2d<T> operator*(const vector2d<T>& v1, const T& scale);
-   template <typename T> inline vector3d<T> operator*(const vector3d<T>& v1, const T& scale);
-   template <typename T> inline vector2d<T> operator*(const T& scale, const vector2d<T>& v1);
-   template <typename T> inline vector3d<T> operator*(const T& scale, const vector3d<T>& v1);
-
-   template <typename T> inline vector2d<T> operator/(const vector2d<T>& v1, const T& scale);
-   template <typename T> inline vector3d<T> operator/(const vector3d<T>& v1, const T& scale);
-
-   template <typename T> inline point2d<T> operator*(const point2d<T>& point, const T& scale);
-   template <typename T> inline point3d<T> operator*(const point3d<T>& point, const T& scale);
-   template <typename T> inline point2d<T> operator*(const T& scale, const point2d<T>& point);
-   template <typename T> inline point3d<T> operator*(const T& scale, const point3d<T>& point);
-
    template <typename T> inline point2d<T> operator+(const point2d<T>& point, const vector2d<T>& v);
    template <typename T> inline point2d<T> operator+(const vector2d<T>& v, const point2d<T>& point);
 
@@ -3936,9 +3943,6 @@ namespace wykobi
 
    template <typename T> inline vector2d<T> operator-(const point2d<T>& p1, const point2d<T>& p2);
    template <typename T> inline vector3d<T> operator-(const point3d<T>& p1, const point3d<T>& p2);
-
-   template <typename T> inline point2d<T> operator+(const point2d<T>& p1, const point2d<T>& p2);
-   template <typename T> inline point3d<T> operator+(const point3d<T>& p1, const point3d<T>& p2);
 
    template <typename T> inline bool is_equal(const T& val1, const T& val2, const T& epsilon);
    template <typename T> inline bool is_equal(const point2d<T>& point1, const point2d<T>& point2, const T& epsilon);
@@ -4057,6 +4061,11 @@ namespace wykobi
    template <typename T> inline ray<T,2> make_ray(const point2d<T>& origin, const vector2d<T>& direction);
    template <typename T> inline ray<T,3> make_ray(const point3d<T>& origin, const vector3d<T>& direction);
    template <typename T> inline ray<T,2> make_ray(const point2d<T>& origin, const T& bearing);
+
+   template <typename T> inline ray<T,2> make_ray_with_points(const point2d<T>& point1, const point2d<T>& point2);
+   template <typename T> inline ray<T,3> make_ray_with_points(const point3d<T>& point1, const point3d<T>& point2);
+   ray<double,2> make_ray_with_points(const Eigen::Vector2d& point1, const Eigen::Vector2d& point2);
+   ray<double,3> make_ray_with_points(const Eigen::Vector3d& point1, const Eigen::Vector3d& point2);
 
    ray<double,2> make_ray(const Eigen::Vector2d& origin, const Eigen::Vector2d& direction);
    ray<double,3> make_ray(const Eigen::Vector3d& origin, const Eigen::Vector3d& direction);

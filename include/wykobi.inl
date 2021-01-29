@@ -1553,7 +1553,8 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,2>& ray1, const ray<T,2>& ray2)
    {
-      const T denom = ray2.direction * ray1.direction;
+      vector2d<T> delta = create_perpendicular_vector(ray1.direction);
+      const T denom = dot_product(delta,ray2.direction);
       // if denom > 0, ray1 points to the left  of ray2
       //               Then diff must points to the right of ray2 and ray1
       //         == 0, parallel
@@ -1563,9 +1564,10 @@ namespace wykobi
       if (denom != T(0.0))
       {
          vector2d<T> diff = ray1.origin - ray2.origin;
+         vector2d<T> delta2 = - create_perpendicular_vector(ray2.direction);
 
-         const T s = diff * ray2.direction / denom;
-         const T t = diff * ray1.direction / denom;
+         const T s = dot_product(diff, delta2) / denom;
+         const T t = dot_product(diff, delta)  / denom;
          return (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0)));
       }
       else // parallel
@@ -1577,15 +1579,39 @@ namespace wykobi
    {
       if (!coplanar(ray1,ray2)) return false;
 
-      vector3d<T> delta = create_perpendicular_vector(ray2.direction, ray1.direction);
-      const T denom = dot_product(delta, ray1.direction);
+      vector3d<T> delta = create_perpendicular_vector(ray1.direction, ray2.direction);
+      const T denom = dot_product(delta, ray2.direction);
+
+      // Let's first denote the side that delta points to as right. i.e. r1.direction and delta
+      // forms the basis of the coordinate
+      //
+      // The sign of denom tells us if ray2.direction points to the right or left side of ray1.direction
+      //
+      // Then for the ray to intersect
+      //      if ray2.direction points to the right
+      //               diff must points to the right of ray1 and ray2
+      //      if ray2.direction points to the left
+      //               diff must points to the left of ray1 and ray2
+      //
+      // The first condition is true if dot(diff, delta)*sign(denom) > 0
+      // The second condition is a bit tricky to find because we need to get a vector
+      // that is perpendicular to ray2 and points to the same side defined by delta
+      //
+      // create_perpendicular_vector(ray2.direction, ray1.direction) will give a vector points to the
+      // opposite of delta. That's why we need a negative sign
+      //
+      //
+      // Mathematically, s and t is the solution of the function
+      // ray1.origin + s * ray1.direction = ray2.origin + t * ray2.direction
+
 
       if (denom != T(0.0))
       {
-         vector3d<T> diff = ray2.origin - ray1.origin;
+         vector3d<T> diff = ray1.origin - ray2.origin;
+         vector3d<T> delta2 = - create_perpendicular_vector(ray2.direction, ray1.direction);
 
-         const T s = dot_product(delta, diff) / denom;
-         const T t = - dot_product(diff - s * ray1.direction, ray2.direction);
+         const T s = dot_product(diff, delta2) / denom;
+         const T t = dot_product(diff, delta)  / denom;
 
          return (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0)));
       }
@@ -1603,13 +1629,14 @@ namespace wykobi
       if (denom != T(0.0))
       {
          vector2d<T> diff = segment[0] - ray.origin;
+         vector2d<T> delta2 = create_perpendicular_vector(ray.direction);
 
-         const T s = dot_product(delta, diff) / denom;
-         const T t = dot_product(create_perpendicular_vector(ray.direction), diff) / denom;
+         const T t = dot_product(diff, delta) / denom;
+         const T s = dot_product(diff, delta2) / denom;
 
-         return greater_than_or_equal(t, T(0.0)) &&
-                less_than_or_equal   (t, T(1.0)) &&
-                greater_than_or_equal(s, T(0.0));
+         return greater_than_or_equal(s, T(0.0)) &&
+                less_than_or_equal   (s, segment_norm(segment)) &&
+                greater_than_or_equal(t, T(0.0));
       }
       else
         return point_on_ray(segment[0],ray);
@@ -15956,9 +15983,31 @@ namespace wykobi
    }
 
    template <typename T>
+   inline ray<T,2> make_ray_with_points(const point2d<T>& point1, const point2d<T>& point2)
+   {
+      return ray<T,2>(point1, point2-point1);
+   }
+
+   template <typename T>
    inline ray<T,3> make_ray(const point3d<T>& origin, const vector3d<T>& direction)
    {
       return ray<T,3>(origin, direction);
+   }
+
+   template <typename T>
+   inline ray<T,3> make_ray_with_points(const point3d<T>& point1, const point3d<T>& point2)
+   {
+      return ray<T,3>(point1, point2-point1);
+   }
+
+   inline ray<double,2> make_ray_with_points(const Eigen::Vector2d& point1, const Eigen::Vector2d& point2)
+   {
+      return ray<double,2>(point1, point2-point1);
+   }
+
+   inline ray<double,3> make_ray_with_points(const Eigen::Vector3d& point1, const Eigen::Vector3d& point2)
+   {
+      return ray<double,3>(point1, point2-point1);
    }
 
    inline ray<double,2> make_ray(const Eigen::Vector2d& origin, const Eigen::Vector2d& direction)
