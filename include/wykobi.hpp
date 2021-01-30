@@ -1013,11 +1013,13 @@ namespace wykobi
    /************[ General Definitions ]************/
    typedef segment <Float,2> segment2d;
    typedef line    <Float,2> line2d;
+   typedef ray     <Float,2> ray2d;
    typedef triangle<Float,2> triangle2d;
    typedef quadix  <Float,2> quadix2d;
 
    typedef segment <Float,3> segment3d;
    typedef line    <Float,3> line3d;
+   typedef ray     <Float,3> ray3d;
    typedef triangle<Float,3> triangle3d;
    typedef quadix  <Float,3> quadix3d;
 
@@ -1465,6 +1467,17 @@ namespace wykobi
    template <typename T> inline bool intersect(const ray<T,2>& ray, const rectangle<T>& rectangle);
    template <typename T> inline bool intersect(const ray<T,3>& ray, const box<T,3>& box);
    template <typename T> inline bool intersect(const ray<T,2>& ray, const triangle<T,2>& triangle);
+   /**
+    * @brief Check whether a 3D ray intersects with a triangle. It uses Moller–Trumbore ray-triangle intersection algorithm.
+    *        Its implementation is similar to the one in Wikipedia. The only difference is that if the origin of the ray is
+    *        in the triangle, it will also return true.
+    *
+    * @tparam T
+    * @param ray
+    * @param triangle
+    * @return true
+    * @return false
+    */
    template <typename T> inline bool intersect(const ray<T,3>& ray, const triangle<T,3>& triangle);
    template <typename T> inline bool intersect(const ray<T,2>& ray, const quadix<T,2>& quadix);
    template <typename T> inline bool intersect(const ray<T,2>& ray, const circle<T>& circle);

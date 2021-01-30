@@ -1792,6 +1792,7 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,3>& ray, const triangle<T,3>& triangle)
    {
+      // This is an implementation of Möller–Trumbore intersection algorithm
       const T edge1_x = triangle[1].x - triangle[0].x;
       const T edge1_y = triangle[1].y - triangle[0].y;
       const T edge1_z = triangle[1].z - triangle[0].z;
@@ -1806,6 +1807,20 @@ namespace wykobi
       const T det = edge1_x * pvec_x + edge1_y * pvec_y + edge1_z * pvec_z;
 
       if (is_equal(det,T(0.0))) {
+         if (robust_coplanar(ray.origin, triangle[0], triangle[1], triangle[2])) {
+            if (is_equal(edge1_x*edge2_y - edge1_y*edge2_x, T(0.0)))
+            {
+               if (is_equal(edge1_y*edge2_z - edge1_z*edge2_y, T(0.0)))
+               {
+                  // Project to x-z plane
+                  return intersect(project_onto_plane(ray,1), project_onto_plane(triangle,1));
+               }
+               // Project to y-z plane
+               return intersect(project_onto_plane(ray,0), project_onto_plane(triangle,0));
+            }
+            // Project to x-y plane
+            return intersect(project_onto_plane(ray,2), project_onto_plane(triangle,2));
+         }
          return false;
       }
 
@@ -1829,7 +1844,11 @@ namespace wykobi
 
       const T t = (edge2_x * qvec_x + edge2_y * qvec_y + edge2_z * qvec_z) * inv_det;
 
-      return (t > T(0.0));
+      return (t >= T(0.0));
+
+      // Intersecting point:
+      // ray.origin + t * ray.direction
+      // if t == 0, the ray origin is in the triangle
    }
 
    template <typename T>
