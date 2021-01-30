@@ -1,3 +1,10 @@
+/**
+ * @file wykobi.hpp
+ * @author Han Luo <han.luo@gmail.com>
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
 /*
 (***********************************************************************)
 (*                                                                     *)

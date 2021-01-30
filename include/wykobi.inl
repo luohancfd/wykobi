@@ -1,13 +1,3 @@
-/**
- * @file wykobi.inl
- * @author Han Luo <han.luo@gmail.com>
- * @brief List of inline functions of wykobi library
- * @version 0.1
- * @date 2021-01-15
- *
- * @copyright Copyright (c) 2021
- *
- */
 /*
 (***********************************************************************)
 (*                                                                     *)
