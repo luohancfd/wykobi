@@ -1,7 +1,6 @@
 var dir_d44c64559bbebec7f509842c48db8b23 =
 [
-    [ "wykobi.hpp", "wykobi_8hpp_source.html", null ],
-    [ "wykobi.inl", "wykobi_8inl.html", "wykobi_8inl" ],
+    [ "wykobi.hpp", "wykobi_8hpp.html", "wykobi_8hpp" ],
     [ "wykobi_algorithm.hpp", "wykobi__algorithm_8hpp_source.html", null ],
     [ "wykobi_graphics_net.hpp", "wykobi__graphics__net_8hpp_source.html", null ],
     [ "wykobi_graphics_opengl.hpp", "wykobi__graphics__opengl_8hpp_source.html", null ],

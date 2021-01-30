@@ -17,11 +17,11 @@ var NAVTREEINDEX =
 ".html",
 "classwykobi_1_1rectangle.html#ad0e52d017c8b6f8fd7fe8ef4a7fbf845",
 "structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter_3_01point2d_3_01T_01_4_01_4.html#a0361bbcb254601a771efbc35399addf3",
-"wykobi_8inl.html#a2e59cafa41e290257c16f3cbc8af929a",
-"wykobi_8inl.html#a5fbb0fd7902b3b78a192c77aefb9205a",
-"wykobi_8inl.html#a923f770c971c01cfc40e470955e8b3db",
-"wykobi_8inl.html#ac035a71ff4b498183925e755ef346bbf",
-"wykobi_8inl.html#af84e203cad1181f0d986c2c346906401"
+"wykobi_8hpp.html#a2d169cf7ab7dda4dd7b1d8ec257e98fd",
+"wykobi_8hpp.html#a5c5e9716fe2e31de062ef987cb82280d",
+"wykobi_8hpp.html#a8f8a26fad002c34734ea7e8fcf565240",
+"wykobi_8hpp.html#abc55bcb7950c0f696bd678a0cdba6b7d",
+"wykobi_8hpp.html#af02a3945bcb9f0a7b60ceb6fe780387b"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

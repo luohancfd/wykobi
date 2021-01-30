@@ -13,5 +13,7 @@ var searchData=
   ['define_5fpoint_5ftype_3c_20t_2c_203_20_3e',['define_point_type&lt; T, 3 &gt;',['../classwykobi_1_1define__point__type_3_01T_00_013_01_4.html',1,'wykobi']]],
   ['define_5fvector_5ftype',['define_vector_type',['../classwykobi_1_1define__vector__type.html',1,'wykobi']]],
   ['define_5fvector_5ftype_3c_20t_2c_202_20_3e',['define_vector_type&lt; T, 2 &gt;',['../classwykobi_1_1define__vector__type_3_01T_00_012_01_4.html',1,'wykobi']]],
-  ['define_5fvector_5ftype_3c_20t_2c_203_20_3e',['define_vector_type&lt; T, 3 &gt;',['../classwykobi_1_1define__vector__type_3_01T_00_013_01_4.html',1,'wykobi']]]
+  ['define_5fvector_5ftype_3c_20t_2c_203_20_3e',['define_vector_type&lt; T, 3 &gt;',['../classwykobi_1_1define__vector__type_3_01T_00_013_01_4.html',1,'wykobi']]],
+  ['differing_5forientation',['differing_orientation',['../wykobi_8hpp.html#a19cf6f6a9c8e712add150c560bfbac67',1,'wykobi']]],
+  ['distance_5fline_5fto_5fline',['distance_line_to_line',['../wykobi_8hpp.html#ad9248dae4ee8bb8cded64e0c695ea5ea',1,'wykobi']]]
 ];
