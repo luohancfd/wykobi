@@ -13,5 +13,6 @@ var classwykobi_1_1segment =
     [ "operator[]", "classwykobi_1_1segment.html#a1aa0a1a66e3743e9af91e96256619cbc", null ],
     [ "operator[]", "classwykobi_1_1segment.html#a7a5a6c344c96e69defd530273fe051f8", null ],
     [ "size", "classwykobi_1_1segment.html#a354c7473ba3e95fe2f906259d8364f63", null ],
+    [ "operator<<", "classwykobi_1_1segment.html#a46e91000c4125d4c0a999d2f49758f5f", null ],
     [ "segment_norm", "classwykobi_1_1segment.html#aa953cc1528ac55629982788fd189d27c", null ]
 ];

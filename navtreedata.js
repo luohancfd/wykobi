@@ -15,13 +15,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"classwykobi_1_1rectangle.html#ad707b3663c7ce82029d6452f2421d0f8",
-"structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html",
-"wykobi_8inl.html#a30c4261de9877a3d9d178459763de461",
-"wykobi_8inl.html#a61760f02465a7b0cac1a29f5b66a9013",
-"wykobi_8inl.html#a931011c5e0e5e63f5216fa2a18aaf07c",
-"wykobi_8inl.html#ac51807cd4a0a4d2a42854fadb422b444",
-"wykobi_8inl.html#afb4dd87a0bf4c3c150c9e7fff3cd6527"
+"classwykobi_1_1rectangle.html#ad0e52d017c8b6f8fd7fe8ef4a7fbf845",
+"structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter_3_01point2d_3_01T_01_4_01_4.html#a0361bbcb254601a771efbc35399addf3",
+"wykobi_8inl.html#a2e59cafa41e290257c16f3cbc8af929a",
+"wykobi_8inl.html#a5fbb0fd7902b3b78a192c77aefb9205a",
+"wykobi_8inl.html#a923f770c971c01cfc40e470955e8b3db",
+"wykobi_8inl.html#ac035a71ff4b498183925e755ef346bbf",
+"wykobi_8inl.html#af84e203cad1181f0d986c2c346906401"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
