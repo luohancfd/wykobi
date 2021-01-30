@@ -1805,7 +1805,9 @@ namespace wykobi
 
       const T det = edge1_x * pvec_x + edge1_y * pvec_y + edge1_z * pvec_z;
 
-      if (is_equal(det,T(0.0))) return false;
+      if (is_equal(det,T(0.0))) {
+         return false;
+      }
 
       const T inv_det = T(1.0) / det;
 
@@ -11568,6 +11570,62 @@ namespace wykobi
       std::sort(point_list.begin(),point_list.end());
 
       return make_segment(point_list.front(),point_list.back());
+   }
+
+   template <typename T>
+   inline point2d<T> project_onto_plane(const point3d<T>& point, int axis)
+   {
+      switch (axis) {
+      case 0:
+      return point2d<T>(point.y, point.z);
+      case 1:
+      return point2d<T>(point.z, point.x);
+      default:
+      return point2d<T>(point.x, point.y);
+      };
+   }
+
+   template <typename T>
+   inline vector2d<T> project_onto_plane(const vector3d<T>& vec, int axis)
+   {
+      return vector2d<T>(project_onto_plane(static_cast<point3d<T>>(vec), axis));
+   }
+
+   template <typename T>
+   inline segment<T,2> project_onto_plane(const segment<T,3>& seg, int axis)
+   {
+      return segment<T,2>(
+         project_onto_plane(seg[0], axis),
+         project_onto_plane(seg[1], axis)
+      );
+   }
+
+   template <typename T>
+   inline line<T,2> project_onto_plane(const line<T,3>& l, int axis)
+   {
+      return line<T,2>(
+         project_onto_plane(l[0], axis),
+         project_onto_plane(l[1], axis)
+      );
+   }
+
+   template <typename T>
+   inline ray<T,2> project_onto_plane(const ray<T,3>& r, int axis)
+   {
+      return ray<T,2>(
+         project_onto_plane(r.origin, axis),
+         project_onto_plane(r.direction, axis)
+      );
+   }
+
+   template <typename T>
+   inline triangle<T,2> project_onto_plane(const triangle<T,3>& tri, int axis)
+   {
+      return triangle<T,2>(
+         project_onto_plane(tri[0], axis),
+         project_onto_plane(tri[1], axis),
+         project_onto_plane(tri[2], axis)
+      );
    }
 
    template <typename T>

@@ -469,6 +469,7 @@ namespace wykobi
 
       triangle(T x1, T y1, T x2, T y2, T x3, T y3) : _data{PointType(x1,y1), PointType(x2,y2), PointType(x3,y3)} {}
       triangle(T x1, T y1, T z1, T x2, T y2, T z2, T x3, T y3, T z3) : _data{PointType(x1,y1,z1), PointType(x2,y2,z2), PointType(x3,y3,z3)} {}
+      triangle(const PointType& p1, const PointType& p2, const PointType& p3) : _data{p1, p2, p3} {}
 
       triangle(){}
      ~triangle(){}
@@ -752,6 +753,7 @@ namespace wykobi
 
       vector2d(const T& _x = T(0.0), const T& _y = T(0.0)) : point2d<T>(_x, _y) {}
       vector2d(const Eigen::Vector2d& vec) : point2d<T> (vec) {}
+      vector2d(const point2d<T>& p) : point2d<T>(p.x, p.y) {}
 
       inline vector2d<T>& operator=(const vectornd<T,2>& vec)
       {
@@ -776,6 +778,7 @@ namespace wykobi
    public:
 
       vector3d(const T& _x = T(0.0), const T& _y = T(0.0), const T& _z = T(0.0)) : point3d<T>(_x, _y, _z) {}
+      vector3d(const point3d<T>& p) : point3d<T>(p.x, p.y, p.z) {}
       vector3d(const Eigen::Vector3d& vec) : point3d<T> (vec) {}
 
       inline vector3d<T>& operator=(const vectornd<T,3>& vec)
@@ -879,7 +882,8 @@ namespace wykobi
 
       ray(T x1, T y1, T x2, T y2) : origin(x1, y1), direction(normalize(vector2d<T>(x2,y2))) {};
       ray(T x1, T y1, T z1, T x2, T y2, T z2) : origin(x1, y1, z1), direction(normalize(vector3d<T>(x2,y2,z2))) {};
-      ray(PointType _or, VectorType _dir) : origin(_or), direction(normalize(_dir)) {};
+      ray(const PointType& _or, const VectorType& _dir) : origin(_or), direction(normalize(_dir)) {};
+      ray(const PointType& p1,  const PointType& p2) : origin(p1), direction(normalize(p2-p1)) {};
       ray(const Eigen::Vector2d& _or, const Eigen::Vector2d& _dir) : origin(_or), direction(_dir) {};
       ray(const Eigen::Vector3d& _or, const Eigen::Vector3d& _dir) : origin(_or), direction(_dir) {};
       ray();
@@ -3544,6 +3548,13 @@ namespace wykobi
    template <typename T> inline segment<T,3> project_onto_axis(const quadix<T,3>& quadix, const line<T,3>& axis);
    template <typename T> inline segment<T,3> project_onto_axis(const sphere<T>& sphere, const line<T,3>& axis);
    template <typename T> inline segment<T,3> project_onto_axis(const polygon<T,3>& polygon, const line<T,3>& axis);
+
+   template <typename T> inline point2d<T>    project_onto_plane(const point3d<T>&    point, int axis);
+   template <typename T> inline vector2d<T>   project_onto_plane(const vector3d<T>&   vec,   int axis);
+   template <typename T> inline segment<T,2>  project_onto_plane(const segment<T,3>&  seg,   int axis);
+   template <typename T> inline line<T,2>     project_onto_plane(const line<T,3>&     line,  int axis);
+   template <typename T> inline ray<T,2>      project_onto_plane(const ray<T,3>&      ray,   int axis);
+   template <typename T> inline triangle<T,2> project_onto_plane(const triangle<T,3>& tri,   int axis);
 
    template <typename T> inline void calculate_bezier_coefficients(const quadratic_bezier<T,2>& bezier, T& ax, T& bx, T& ay, T& by);
    template <typename T> inline void calculate_bezier_coefficients(const quadratic_bezier<T,3>& bezier, T& ax, T& bx, T& ay, T& by, T& az, T& bz);
