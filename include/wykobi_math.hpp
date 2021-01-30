@@ -44,10 +44,9 @@ namespace wykobi
    #endif
 
    /*************[ Epsilon constants ]*************/
-   static const Float Epsilon_High      = 1.0E-16;
-   static const Float Epsilon_Medium    = 1.0E-10;
-   static const Float Epsilon_Low       = 1.0E-07;
-   static const Float Epsilon           = Epsilon_Medium;
+   static const Float Epsilon_Medium    = std::numeric_limits<double>::epsilon() ;
+   static const Float Epsilon_Low       = std::numeric_limits<float>::epsilon() ;
+   static const Float Epsilon           = std::numeric_limits<Float>::epsilon() ;
    static const Float Infinity          = std::numeric_limits<Float>::infinity();
 
    /********[ Random resolution constants ]********/
@@ -55,10 +54,10 @@ namespace wykobi
    static const double      RANDOM_RESOLUTION_FLT = RANDOM_RESOLUTION_INT * 1.0;
 
    /********[                             ]********/
-   static const Float PI        = Float( 3.141592653589793238462643383279500);
-   static const Float PI2       = Float( 6.283185307179586476925286766559000);
-   static const Float PIDiv180  = Float( 0.017453292519943295769236907684886);
-   static const Float _180DivPI = Float(57.295779513082320876798154814105000);
+   static const Float PI        = Float(std::asin(double(0.0)));
+   static const Float PI2       = PI * Float(2);
+   static const Float PIDiv180  = PI / Float(180.0);
+   static const Float _180DivPI = Float(1.0) / PIDiv180;
 
 
    template <typename T> inline T sqr(const T& val);
