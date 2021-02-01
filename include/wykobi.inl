@@ -1078,6 +1078,10 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const segment<T,3>& segment, const line<T,3>& line, const T& fuzzy)
    {
+      if (perpendicular(line, segment)) {
+         point3d<T> p = closest_point_on_line_from_point(line, segment[0]);
+         return point_on_segment(p, segment);
+      }
       return intersect
              (
                segment,
