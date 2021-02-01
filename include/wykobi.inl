@@ -836,6 +836,8 @@ namespace wykobi
    {
       const T ax = x2 - x1;
       const T bx = x3 - x4;
+      ix = +infinity<T>();
+      iy = +infinity<T>();
 
       T lowerx;
       T upperx;
@@ -953,37 +955,6 @@ namespace wykobi
    }
 
    template <typename T>
-   inline bool intersect_vertical_horizontal(const segment<T,2>& segment1, const segment<T,2>& segment2)
-   {
-      return (((segment1[0].y <= segment2[0].y) && (segment2[0].y <= segment1[1].y)) ||
-              ((segment1[1].y <= segment2[0].y) && (segment2[0].y <= segment1[0].y))) &&
-              (
-                ((segment2[0].x <= segment1[0].x) && (segment1[0].x <= segment2[1].x)) ||
-                ((segment2[1].x <= segment1[0].x) && (segment1[0].x <= segment2[0].x))
-              );
-   }
-
-   template <typename T>
-   inline bool intersect_vertical_vertical(const segment<T,2>& segment1, const segment<T,2>& segment2)
-   {
-      return (segment1[0].x == segment2[0].x) &&
-             (
-               ((segment1[0].y <= segment2[0].y) && (segment2[0].y <= segment1[1].y)) ||
-               ((segment1[0].y <= segment2[1].y) && (segment2[1].y <= segment1[1].y))
-             );
-   }
-
-   template <typename T>
-   inline bool intersect_horizontal_horizontal(const segment<T,2>& segment1, const segment<T,2>& segment2)
-   {
-      return (segment1[0].y == segment2[0].y) &&
-             (
-               ((segment1[0].x <= segment2[0].x) && (segment2[0].x <= segment1[1].x)) ||
-               ((segment1[0].x <= segment2[1].x) && (segment2[1].x <= segment1[1].x))
-             );
-   }
-
-   template <typename T>
    inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2)
    {
       return intersect(segment1[0],segment1[1],segment2[0],segment2[1]);
@@ -1012,7 +983,7 @@ namespace wykobi
                          const T& x4, const T& y4, const T& z4,
                          const T& fuzzy)
    {
-      return (less_than_or_equal(lay_distance_segment_to_segment(x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4),fuzzy));
+      return (less_than_or_equal(lay_distance_segment_to_segment(x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4),fuzzy*fuzzy));
    }
 
    template <typename T>
@@ -1987,6 +1958,37 @@ namespace wykobi
    }
 
    template <typename T>
+   inline bool intersect_vertical_horizontal(const segment<T,2>& segment1, const segment<T,2>& segment2)
+   {
+      return (((segment1[0].y <= segment2[0].y) && (segment2[0].y <= segment1[1].y)) ||
+              ((segment1[1].y <= segment2[0].y) && (segment2[0].y <= segment1[0].y))) &&
+              (
+                ((segment2[0].x <= segment1[0].x) && (segment1[0].x <= segment2[1].x)) ||
+                ((segment2[1].x <= segment1[0].x) && (segment1[0].x <= segment2[0].x))
+              );
+   }
+
+   template <typename T>
+   inline bool intersect_vertical_vertical(const segment<T,2>& segment1, const segment<T,2>& segment2)
+   {
+      return (segment1[0].x == segment2[0].x) &&
+             (
+               ((segment1[0].y <= segment2[0].y) && (segment2[0].y <= segment1[1].y)) ||
+               ((segment1[0].y <= segment2[1].y) && (segment2[1].y <= segment1[1].y))
+             );
+   }
+
+   template <typename T>
+   inline bool intersect_horizontal_horizontal(const segment<T,2>& segment1, const segment<T,2>& segment2)
+   {
+      return (segment1[0].y == segment2[0].y) &&
+             (
+               ((segment1[0].x <= segment2[0].x) && (segment2[0].x <= segment1[1].x)) ||
+               ((segment1[0].x <= segment2[1].x) && (segment2[1].x <= segment1[1].x))
+             );
+   }
+
+   template <typename T>
    inline void intersection_point(const T& x1, const T& y1,
                                   const T& x2, const T& y2,
                                   const T& x3, const T& y3,
@@ -2044,13 +2046,13 @@ namespace wykobi
                                         const point2d<T>& point3,
                                         const point2d<T>& point4)
    {
-      point2d<T> point_;
+      T x, y;
       intersection_point(point1.x, point1.y,
                          point2.x, point2.y,
                          point3.x, point3.y,
                          point4.x, point4.y,
-                         point_.x, point_.y);
-      return point_;
+                         x, y);
+      return point2d<T>(x,y);
    }
 
    template <typename T>
@@ -2164,7 +2166,8 @@ namespace wykobi
       const T dy = wy + (sc * uy) - (tc * vy);
       const T dz = wz + (sc * uz) - (tc * vz);
 
-      if ((dx * dx + dy * dy + dz * dz) <= sqr(fuzzy))
+      // the above lines are the same as the codes of lay_distance_segment_to_segment
+      if (less_than_or_equal(dx * dx + dy * dy + dz * dz, fuzzy*fuzzy))
       {
          ix = ((x1 + (sc * ux)) + (x3 + (tc * vx))) * T(0.5);
          iy = ((y1 + (sc * uy)) + (y3 + (tc * vy))) * T(0.5);

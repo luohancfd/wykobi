@@ -36,6 +36,7 @@
 #include <ostream>
 #include <vector>
 #include <cassert>
+#include <iomanip>
 #include <Eigen/Core>
 #include "Eigen/src/Core/Matrix.h"
 #include "wykobi_math.hpp"
@@ -149,7 +150,10 @@ namespace wykobi
       inline const_reference operator[](const std::size_t& index) const { return ((0 == index)? x : y); }
 
       friend std::ostream& operator<<(std::ostream& os, const point2d& p) {
-         os << "[" << p.x << ", " << p.y << "]";
+         os << std::scientific
+            << std::showpoint
+            << std::setprecision(std::numeric_limits<T>::max_digits10)
+            << "[" << p.x << ", " << p.y << "]";
          return os;
       }
 
@@ -201,7 +205,10 @@ namespace wykobi
       inline const_reference operator[](const std::size_t& index) const { return value(index); }
 
       friend std::ostream& operator<<(std::ostream& os, const point3d& p) {
-         os << "[" << p.x << ", " << p.y  << ", " << p.z << "]";
+         os << std::scientific
+            << std::showpoint
+            << std::setprecision(std::numeric_limits<T>::max_digits10)
+            << "[" << p.x << ", " << p.y  << ", " << p.z << "]";
          return os;
       }
 
@@ -1512,6 +1519,10 @@ namespace wykobi
    template <typename T> inline bool intersect_vertical_vertical(const segment<T,2>& segment1, const segment<T,2>& segment2);
    template <typename T> inline bool intersect_horizontal_horizontal(const segment<T,2>& segment1, const segment<T,2>& segment2);
 
+   /**
+    * @brief Calculate the intersection point of two line segments assuming they intersect.
+    *        The line segments are bounded by the four points (x1, y1), (x2, y2), (x3, y3) (x4, y4)
+    */
    template <typename T>
    inline void intersection_point(const T& x1, const T& y1,
                                   const T& x2, const T& y2,
