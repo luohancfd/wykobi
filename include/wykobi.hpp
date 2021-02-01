@@ -2261,6 +2261,12 @@ namespace wykobi
    inline bool point_in_triangle(const point2d<T>& point, const triangle<T,2>& triangle);
 
    template <typename T>
+   inline bool point_in_plane(T px, T py, T pz, const plane<T,3>& plane);
+
+   template <typename T>
+   inline bool point_in_plane(const point3d<T>, const plane<T,3>& plane);
+
+   template <typename T>
    inline bool point_in_quadix(const T& px, const T& py,
                                const T& x1, const T& y1,
                                const T& x2, const T& y2,

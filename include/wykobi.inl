@@ -1934,7 +1934,13 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const plane<T,3>& plane1, const plane<T,3>& plane2)
    {
-      return is_equal(dot_product(plane1.normal,plane2.normal),T(1.0));
+      if (is_equal(dot_product(plane1.normal, plane2.normal), T(1.0))) {
+         return is_equal(plane1.constant, plane2.constant);
+      }
+      if (is_equal(dot_product(plane1.normal, plane2.normal), T(-1.0))) {
+         return is_equal(plane1.constant, -plane2.constant);
+      }
+      return true;
    }
 
    template <typename T>
@@ -4893,6 +4899,16 @@ namespace wykobi
                triangle[1].x, triangle[1].y,
                triangle[2].x, triangle[2].y
              );
+   }
+
+   template <typename T>
+   inline bool point_in_plane(T px, T py, T pz, const plane<T,3>& plane) {
+      return is_equal(distance(point3d<T>(px, py, pz), plane), T(0.0));
+   }
+
+   template <typename T>
+   inline bool point_in_plane(const point3d<T>& point, const plane<T,3>& plane) {
+      return is_equal(distance(point, plane), T(0.0));
    }
 
    template <typename T>
@@ -16481,7 +16497,7 @@ namespace wykobi
      vector3d<T> v1 = make_vector(x2 - x1, y2 - y1, z2 - z1);
      vector3d<T> v2 = make_vector(x3 - x1, y3 - y1, z3 - z1);
 
-     return plane<T,3>(vector3d<T>(x1, y1, z1), normalize(v1 * v2));
+     return plane<T,3>(point3d<T>(x1, y1, z1), v1 * v2);
    }
 
    template <typename T>
