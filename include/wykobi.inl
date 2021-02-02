@@ -747,113 +747,41 @@ namespace wykobi
    }
 
    template <typename T>
-   inline bool intersect(const T& x1, const T& y1,
-                         const T& x2, const T& y2,
-                         const T& x3, const T& y3,
-                         const T& x4, const T& y4)
+   inline bool intersect(T x1, T y1,
+                         T x2, T y2,
+                         T x3, T y3,
+                         T x4, T y4)
    {
-      const T ax = x2 - x1;
-      const T bx = x3 - x4;
-
-      T lowerx;
-      T upperx;
-      T uppery;
-      T lowery;
-
-      if (ax < T(0.0))
-      {
-         lowerx = x2;
-         upperx = x1;
-      }
-      else
-      {
-         upperx = x2;
-         lowerx = x1;
-      }
-
-      if (bx > T(0.0))
-      {
-         if ((upperx < x4) || (x3 < lowerx))
-         return false;
-      }
-      else if ((upperx < x3) || (x4 < lowerx))
-         return false;
-
-      const T ay = y2 - y1;
-      const T by = y3 - y4;
-
-      if (ay < T(0.0))
-      {
-         lowery = y2;
-         uppery = y1;
-      }
-      else
-      {
-         uppery = y2;
-         lowery = y1;
-      }
-
-      if (by > T(0.0))
-      {
-         if ((uppery < y4) || (y3 < lowery))
-            return false;
-      }
-      else if ((uppery < y3) || (y4 < lowery))
-         return false;
-
-      const T cx = x1 - x3;
-      const T cy = y1 - y3;
-      const T  d = (by * cx) - (bx * cy);
-      const T  f = (ay * bx) - (ax * by);
-
-      if (f > T(0.0))
-      {
-         if ((d < T(0.0)) || (d > f))
-            return false;
-      }
-      else if ((d > T(0.0)) || (d < f))
-         return false;
-
-      const T e = (ax * cy) - (ay * cx);
-
-      if (f > T(0.0))
-      {
-         if ((e < T(0.0)) || (e > f))
-            return false;
-      }
-      else if ((e > T(0.0)) || (e < f))
-         return false;
-
-      return true;
+      T px, py;
+      return intersect(x1, y1, x2, y2, x3, y3, x4, y4, px, py);
    }
 
    template <typename T>
-   inline bool intersect(const T& x1, const T& y1,
-                         const T& x2, const T& y2,
-                         const T& x3, const T& y3,
-                         const T& x4, const T& y4,
-                               T& ix,       T& iy)
+   inline bool intersect(T x1, T y1,
+                         T x2, T y2,
+                         T x3, T y3,
+                         T x4, T y4,
+                         T& ix, T& iy)
    {
-      const T ax = x2 - x1;
-      const T bx = x3 - x4;
+      // make sure left point first
+      if (x1 > x2) {
+         std::swap(x1, x2);
+         std::swap(y1, y2);
+      }
+
+      if (x3 > x4) {
+         std::swap(x3, x4);
+         std::swap(y2, y4);
+      }
+
+      T ax = x2 - x1;
+      T bx = x3 - x4;
       ix = +infinity<T>();
       iy = +infinity<T>();
 
-      T lowerx;
-      T upperx;
-      T uppery;
-      T lowery;
+      T lowerx = x1;
+      T upperx = x2;
 
-      if (ax < T(0.0))
-      {
-         lowerx = x2;
-         upperx = x1;
-      }
-      else
-      {
-         upperx = x2;
-         lowerx = x1;
-      }
 
       if (bx > T(0.0))
       {
@@ -866,6 +794,8 @@ namespace wykobi
       const T ay = y2 - y1;
       const T by = y3 - y4;
 
+      T uppery;
+      T lowery;
       if (ay < T(0.0))
       {
          lowery = y2;
@@ -915,22 +845,26 @@ namespace wykobi
          ratio = ((cy * -bx) - (cx * -by)) / ratio;
          ix    = x1 + (ratio * ax);
          iy    = y1 + (ratio * ay);
+         return true;
       }
       else
       {
-         if (is_equal((ax * -cy),(-cx * ay)))
-         {
-            ix = x3;
-            iy = y3;
+         if (is_equal(x2, x3)) {
+            // intersect at a point
+            ix = x2;
+            iy = y2;
+            return true;
          }
-         else
-         {
-            ix = x4;
-            iy = y4;
+         if (is_equal(x1, x4)) {
+            // intersect at a point
+            ix = x1;
+            iy = y1;
+            return true;
          }
       }
 
-      return true;
+      return false;
+
    }
 
    template <typename T>
@@ -1179,8 +1113,8 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const segment<T,3>& segment, const plane<T,3>& plane)
    {
-      T signed_dist1 = dot_product(plane.normal,make_vector(segment[0])) + plane.constant;
-      T signed_dist2 = dot_product(plane.normal,make_vector(segment[1])) + plane.constant;
+      T signed_dist1 = distance(segment[0], plane);
+      T signed_dist2 = distance(segment[1], plane);
 
       signed_dist1 = (is_equal(abs(signed_dist1),T(0.0)))? T(0.0) : signed_dist1;
       signed_dist2 = (is_equal(abs(signed_dist2),T(0.0)))? T(0.0) : signed_dist2;
@@ -1999,35 +1933,7 @@ namespace wykobi
                                   const T& x4, const T& y4,
                                         T& ix,       T& iy)
    {
-      const T dx1 = x2 - x1;
-      const T dx2 = x4 - x3;
-      const T dx3 = x1 - x3;
-
-      const T dy1 = y2 - y1;
-      const T dy2 = y1 - y3;
-      const T dy3 = y4 - y3;
-
-      T ratio = dx1 * dy3 - dy1 * dx2;
-
-      if (not_equal(ratio,T(0.0)))
-      {
-         ratio = (dy2 * dx2 - dx3 * dy3) / ratio;
-         ix    = x1 + ratio * dx1;
-         iy    = y1 + ratio * dy1;
-      }
-      else
-      {
-         if (is_equal((dx1 * -dy2),(-dx3 * dy1)))
-         {
-            ix = x3;
-            iy = y3;
-         }
-         else
-         {
-            ix = x4;
-            iy = y4;
-         }
-      }
+      intersect(x1, y1, x2, y2, x3, y3, x4, y4, ix, iy);
    }
 
    template <typename T>
@@ -2445,23 +2351,14 @@ namespace wykobi
 
       const T det = (dx2 * dy1) - (dy2 * dx1);
 
-      point2d<T> point_ = make_point<T>(T(0.0),T(0.0));
+      point2d<T> point_ = degenerate_point2d<T>();
 
-      if (is_equal(det,T(0.0)))
+      if (not_equal(det,T(0.0)))
       {
-         if (is_equal((dx2 * dy3),(dy2 * dx3)))
-         {
-            point_.x = line2[1].x;
-            point_.y = line2[1].y;
-         }
-
-         return point_;
+         const T ratio  = ((dx1 * dy3) - (dy1 * dx3)) / det;
+         point_.x = (ratio * dx2) + line2[1].x;
+         point_.y = (ratio * dy2) + line2[1].y;
       }
-
-      const T ratio  = ((dx1 * dy3) - (dy1 * dx3)) / det;
-
-      point_.x = (ratio * dx2) + line2[1].x;
-      point_.y = (ratio * dy2) + line2[1].y;
 
       return point_;
    }
@@ -4916,6 +4813,11 @@ namespace wykobi
    template <typename T>
    inline bool point_in_plane(const point3d<T>& point, const plane<T,3>& plane) {
       return is_equal(distance(point, plane), T(0.0));
+   }
+
+   template <typename T>
+   inline bool segment_in_plane(const segment<T, 3> seg, const plane<T, 3> &plane) {
+      return is_equal(distance(seg[0], plane), T(0.0)) && is_equal(distance(seg[1], plane), T(0.0));
    }
 
    template <typename T>

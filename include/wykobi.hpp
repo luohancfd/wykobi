@@ -1360,10 +1360,10 @@ namespace wykobi
    template <typename T> inline bool is_skinny_triangle(const triangle<T,2>& triangle);
 
    template <typename T>
-   inline bool intersect(const T& x1, const T& y1,
-                         const T& x2, const T& y2,
-                         const T& x3, const T& y3,
-                         const T& x4, const T& y4);
+   inline bool intersect(T x1, T y1,
+                         T x2, T y2,
+                         T x3, T y3,
+                         T x4, T y4);
 
    /**
     * @brief Check whether line segment (x1,y1)--(x2,y2) and (x3,y3)--(x4,y4) intersects
@@ -1373,11 +1373,11 @@ namespace wykobi
     * @return false
     */
    template <typename T>
-   inline bool intersect(const T& x1, const T& y1,
-                         const T& x2, const T& y2,
-                         const T& x3, const T& y3,
-                         const T& x4, const T& y4,
-                              T& ix,      T& iy);
+   inline bool intersect(T x1,  T y1,
+                         T x2,  T y2,
+                         T x3,  T y3,
+                         T x4,  T y4,
+                         T& ix, T& iy);
    template <typename T>
    inline bool intersect(const point2d<T>& point1,
                          const point2d<T>& point2,
@@ -1596,6 +1596,11 @@ namespace wykobi
                                         Eigen::Vector3d& ipoint,
                                         const T& fuzzy = T(0.0));
 
+   /**
+    * @brief Calculate the intersection point of a segment and a plane. If there is no intersction point
+    *        or the line is in the plane, the function will return (+inf, +inf, +inf). This is different
+    *        from intersect(const segment<T,3>& segment, const plane<T,3>& plane)
+    */
    template <typename T>
    inline point3d<T> intersection_point(const segment<T,3>& segment,
                                         const plane<T,3>& plane);
@@ -1624,6 +1629,15 @@ namespace wykobi
                                   OutputIterator out,
                                   const std::size_t& steps = 1000);
 
+   /**
+    * @brief Calculate intersection point of two lines. If the lines are
+    *        parallel to each other or collinear, return a degenerated point
+    *
+    * @tparam T
+    * @param line1
+    * @param line2
+    * @return point2d<T>
+    */
    template <typename T>
    inline point2d<T> intersection_point(const line<T,2>& line1,
                                         const line<T,2>& line2);
@@ -2275,7 +2289,10 @@ namespace wykobi
    inline bool point_in_plane(T px, T py, T pz, const plane<T,3>& plane);
 
    template <typename T>
-   inline bool point_in_plane(const point3d<T>, const plane<T,3>& plane);
+   inline bool point_in_plane(const point3d<T> point, const plane<T,3>& plane);
+
+   template <typename T>
+   inline bool segment_in_plane(const segment<T,3> seg, const plane<T,3>& plane);
 
    template <typename T>
    inline bool point_in_quadix(const T& px, const T& py,
