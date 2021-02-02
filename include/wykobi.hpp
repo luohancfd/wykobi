@@ -29,7 +29,6 @@
 #define INCLUDE_WYKOBI
 
 
-#include <cstddef>
 #include <limits>
 #include <algorithm>
 #include <iterator>
@@ -1365,19 +1364,6 @@ namespace wykobi
                          T x3, T y3,
                          T x4, T y4);
 
-   /**
-    * @brief Check whether line segment (x1,y1)--(x2,y2) and (x3,y3)--(x4,y4) intersects
-    *        and set (ix,iy) as the intersecting point
-    *
-    * @return true
-    * @return false
-    */
-   template <typename T>
-   inline bool intersect(T x1,  T y1,
-                         T x2,  T y2,
-                         T x3,  T y3,
-                         T x4,  T y4,
-                         T& ix, T& iy);
    template <typename T>
    inline bool intersect(const point2d<T>& point1,
                          const point2d<T>& point2,
@@ -1385,43 +1371,28 @@ namespace wykobi
                          const point2d<T>& point4);
 
    template <typename T>
-   inline bool intersect(const point2d<T>& point1,
-                         const point2d<T>& point2,
-                         const point2d<T>& point3,
-                         const point2d<T>& point4,
-                               point2d<T>& int_point);
-
-   template <typename T>
    inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2);
 
    template <typename T>
-   inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2,T& ix, T& iy);
-
-   template <typename T>
-   inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2,point2d<T>& i_point);
-
-   template <typename T>
-   inline bool intersect(const T& x1, const T& y1, const T& z1,
-                         const T& x2, const T& y2, const T& z2,
-                         const T& x3, const T& y3, const T& z3,
-                         const T& x4, const T& y4, const T& z4,
-                         const T& fuzzy = T(0.0));
+   inline bool intersect(T x1, T y1, T z1,
+                         T x2, T y2, T z2,
+                         T x3, T y3, T z3,
+                         T x4, T y4, T z4);
 
    template <typename T>
    inline bool intersect(const point3d<T>& point1,
                          const point3d<T>& point2,
                          const point3d<T>& point3,
-                         const point3d<T>& point4,
-                         const T& fuzzy = T(0.0));
+                         const point3d<T>& point4);
+
+   inline bool intersect(const Eigen::Vector3d& point1,
+                         const Eigen::Vector3d& point2,
+                         const Eigen::Vector3d& point3,
+                         const Eigen::Vector3d& point4);
 
    template <typename T>
-   inline bool intersect(const Eigen::MatrixBase<T>& point1,
-                         const Eigen::MatrixBase<T>& point2,
-                         const Eigen::MatrixBase<T>& point3,
-                         const Eigen::MatrixBase<T>& point4,
-                         const T& fuzzy = T(0.0));
+   inline bool intersect(const segment<T,3>& segment1, const segment<T,3>&  segment2);
 
-   template <typename T> inline bool intersect(const segment<T,3>& segment1, const segment<T,3>&  segment2, const T& fuzzy = T(0.0));
    template <typename T> inline bool intersect(const segment<T,2>& segment, const rectangle<T>& rectangle);
    template <typename T> inline bool intersect(const segment<T,2>& segment, const triangle<T,2>& triangle);
    template <typename T> inline bool intersect(const segment<T,2>& segment, const quadix<T,2>& quadix);
@@ -1429,7 +1400,7 @@ namespace wykobi
    template <typename T> inline bool intersect(const segment<T,2>& segment, const circle<T>& circle);
    template <typename T> inline bool intersect(const segment<T,2>& segment, const quadratic_bezier<T,2>& bezier, const std::size_t& steps = 1000);
    template <typename T> inline bool intersect(const segment<T,2>& segment, const cubic_bezier<T,2>& bezier, const std::size_t& steps = 1000);
-   template <typename T> inline bool intersect(const segment<T,3>& segment, const line<T,3>& line, const T& fuzzy = T(0.0));
+   template <typename T> inline bool intersect(const segment<T,3>& segment, const line<T,3>& line);
    template <typename T> inline bool intersect(const segment<T,3>& segment, const box<T,3>& box);
    template <typename T> inline bool intersect(const segment<T,3>& segment, const sphere<T>& sphere);
    template <typename T> inline bool intersect(const segment<T,3>& segment, const plane<T,3>& plane);
@@ -1524,14 +1495,14 @@ namespace wykobi
     *        The line segments are bounded by the four points (x1, y1), (x2, y2), (x3, y3) (x4, y4)
     */
    template <typename T>
-   inline void intersection_point(const T& x1, const T& y1,
-                                  const T& x2, const T& y2,
-                                  const T& x3, const T& y3,
-                                  const T& x4, const T& y4,
-                                        T& ix,       T& iy);
+   inline bool intersection_point(T  x1, T  y1,
+                                  T  x2, T  y2,
+                                  T  x3, T  y3,
+                                  T  x4, T  y4,
+                                  T& ix, T& iy);
 
    template <typename T>
-   inline void intersection_point(const point2d<T>& point1,
+   inline bool intersection_point(const point2d<T>& point1,
                                   const point2d<T>& point2,
                                   const point2d<T>& point3,
                                   const point2d<T>& point4,
@@ -1547,41 +1518,43 @@ namespace wykobi
                                         const segment<T,2>& segment2);
 
    template <typename T>
-   inline bool intersection_point(const T& x1, const T& y1, const T& z1,
-                                  const T& x2, const T& y2, const T& z2,
-                                  const T& x3, const T& y3, const T& z3,
-                                  const T& x4, const T& y4, const T& z4,
-                                        T& ix,       T& iy,       T& iz, const T& fuzzy = T(0.0));
+   inline bool intersection_point(const segment<T,2>& segment1,
+                                  const segment<T,2>& segment2,
+                                  point2d<T>& point);
+
+   template <typename T>
+   inline bool intersection_point(T  x1, T  y1, T  z1,
+                                  T  x2, T  y2, T  z2,
+                                  T  x3, T  y3, T  z3,
+                                  T  x4, T  y4, T  z4,
+                                  T& ix, T& iy, T& iz);
 
    template <typename T>
    inline bool intersection_point(const point3d<T>& point1,
                                   const point3d<T>& point2,
                                   const point3d<T>& point3,
                                   const point3d<T>& point4,
-                                        T& ix, T& iy, T& iz, const T& fuzzy = T(0.0));
-
-   /*! \brief Calculate the insection point of two line segments p1--p2 with p3--p4
-   *   \param point1 Eigen::Vector3x p1
-   *   \param point2 Eigen::Vector3x p2
-   *   \param point3 Eigen::Vector3x p3
-   *   \param point4 Eigen::Vector3x p4
-   */
-   template <typename T>
-   inline bool intersection_point(const Eigen::MatrixBase<T>& point1,
-                                  const Eigen::MatrixBase<T>& point2,
-                                  const Eigen::MatrixBase<T>& point3,
-                                  const Eigen::MatrixBase<T>& point4,
-                                  Eigen::MatrixBase<T>& ipoint, const typename T::Scalar& fuzzy = typename T::Scalar(0.0));
+                                        T& ix, T& iy, T& iz);
 
    template <typename T>
    inline point3d<T> intersection_point(const point3d<T>& point1,
                                         const point3d<T>& point2,
                                         const point3d<T>& point3,
-                                        const point3d<T>& point4, const T& fuzzy = T(0.0));
+                                        const point3d<T>& point4);
 
    template <typename T>
    inline point3d<T> intersection_point(const segment<T,3>& segment1,
-                                        const segment<T,3>& segment2, const T& fuzzy = T(0.0));
+                                        const segment<T,3>& segment2);
+
+   template <typename T>
+   inline bool intersection_point(const segment<T,3>& segment1,
+                                  const segment<T,3>& segment2,
+                                  point3d<T> &point);
+
+   inline Eigen::Vector3d intersection_point(const Eigen::Vector3d& point1,
+                                             const Eigen::Vector3d& point2,
+                                             const Eigen::Vector3d& point3,
+                                             const Eigen::Vector3d& point4);
 
    template <typename T>
    inline point2d<T> intersection_point(const segment<T,2>& segment,
@@ -1589,12 +1562,11 @@ namespace wykobi
 
    template <typename T>
    inline point3d<T> intersection_point(const segment<T,3>& segment,
-                                        const line<T,3>& line, const T& fuzzy = T(0.0));
+                                        const line<T,3>& line);
    template <typename T>
    inline bool intersection_point(const segment<T,3>& segment,
                                         const line<T,3>& line,
-                                        Eigen::Vector3d& ipoint,
-                                        const T& fuzzy = T(0.0));
+                                        Eigen::Vector3d& ipoint);
 
    /**
     * @brief Calculate the intersection point of a segment and a plane. If there is no intersction point
@@ -1644,7 +1616,7 @@ namespace wykobi
 
    template <typename T>
    inline point3d<T> intersection_point(const line<T,3>& line1,
-                                        const line<T,3>& line2, const T& fuzzy = T(0.0));
+                                        const line<T,3>& line2);
 
    template <typename T>
    inline void intersection_point(const circle<T>&  circle1,
@@ -1716,7 +1688,7 @@ namespace wykobi
                                                const T& x2, const T& y2, const T& z2,
                                                const T& x3, const T& y3, const T& z3,
                                                const T& x4, const T& y4, const T& z4,
-                                                     T& Ix,       T& Iy,       T& Iz, const T& fuzzy = T(0.0));
+                                                     T& Ix,       T& Iy,       T& Iz);
 
    template <typename T>
    inline T normalize_angle(const T& angle);

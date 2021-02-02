@@ -753,118 +753,7 @@ namespace wykobi
                          T x4, T y4)
    {
       T px, py;
-      return intersect(x1, y1, x2, y2, x3, y3, x4, y4, px, py);
-   }
-
-   template <typename T>
-   inline bool intersect(T x1, T y1,
-                         T x2, T y2,
-                         T x3, T y3,
-                         T x4, T y4,
-                         T& ix, T& iy)
-   {
-      // make sure left point first
-      if (x1 > x2) {
-         std::swap(x1, x2);
-         std::swap(y1, y2);
-      }
-
-      if (x3 > x4) {
-         std::swap(x3, x4);
-         std::swap(y2, y4);
-      }
-
-      T ax = x2 - x1;
-      T bx = x3 - x4;
-      ix = +infinity<T>();
-      iy = +infinity<T>();
-
-      T lowerx = x1;
-      T upperx = x2;
-
-
-      if (bx > T(0.0))
-      {
-         if ((upperx < x4) || (x3 < lowerx))
-            return false;
-      }
-      else if ((upperx < x3) || (x4 < lowerx))
-         return false;
-
-      const T ay = y2 - y1;
-      const T by = y3 - y4;
-
-      T uppery;
-      T lowery;
-      if (ay < T(0.0))
-      {
-         lowery = y2;
-         uppery = y1;
-      }
-      else
-      {
-         uppery = y2;
-         lowery = y1;
-      }
-
-      if (by > T(0.0))
-      {
-         if ((uppery < y4) || (y3 < lowery))
-            return false;
-      }
-      else if ((uppery < y3) || (y4 < lowery))
-         return false;
-
-      const T cx = x1 - x3;
-      const T cy = y1 - y3;
-      const T d  = (by * cx) - (bx * cy);
-      const T f  = (ay * bx) - (ax * by);
-
-      if (f > T(0.0))
-      {
-         if ((d < T(0.0)) || (d > f))
-            return false;
-      }
-      else if ((d > T(0.0)) || (d < f))
-         return false;
-
-      const T e = (ax * cy) - (ay * cx);
-
-      if (f > T(0.0))
-      {
-         if ((e < T(0.0)) || (e > f))
-            return false;
-      }
-      else if ((e > T(0.0)) || (e < f))
-         return false;
-
-      T ratio = (ax * -by) - (ay * -bx);
-
-      if (not_equal(ratio,T(0.0)))
-      {
-         ratio = ((cy * -bx) - (cx * -by)) / ratio;
-         ix    = x1 + (ratio * ax);
-         iy    = y1 + (ratio * ay);
-         return true;
-      }
-      else
-      {
-         if (is_equal(x2, x3)) {
-            // intersect at a point
-            ix = x2;
-            iy = y2;
-            return true;
-         }
-         if (is_equal(x1, x4)) {
-            // intersect at a point
-            ix = x1;
-            iy = y1;
-            return true;
-         }
-      }
-
-      return false;
-
+      return intersection_point(x1, y1, x2, y2, x3, y3, x4, y4, px, py);
    }
 
    template <typename T>
@@ -878,86 +767,47 @@ namespace wykobi
    }
 
    template <typename T>
-   inline bool intersect(const point2d<T>& point1, const point2d<T>& point2,
-                         const point2d<T>& point3, const point2d<T>& point4, point2d<T>& int_point)
-   {
-      return intersect(point1   .x, point1   .y,
-                       point2   .x, point2   .y,
-                       point3   .x, point3   .y,
-                       point4   .x, point4   .y,
-                       int_point.x, int_point.y);
-   }
-
-   template <typename T>
    inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2)
    {
       return intersect(segment1[0],segment1[1],segment2[0],segment2[1]);
    }
 
    template <typename T>
-   inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2, T& ix,T& iy)
+   inline bool intersect(T x1, T y1, T z1,
+                         T x2, T y2, T z2,
+                         T x3, T y3, T z3,
+                         T x4, T y4, T z4)
    {
-      return intersect(segment1[0].x,segment1[0].y,segment1[1].x,segment1[1].y,
-                       segment2[0].x,segment2[0].y,segment2[1].x,segment2[1].y,
-                       ix,iy);
-   }
-
-   template <typename T>
-   inline bool intersect(const segment<T,2>& segment1, const segment<T,2>& segment2,point2d<T>& i_point)
-   {
-      return intersect(segment1[0].x,segment1[0].y,segment1[1].x,segment1[1].y,
-                       segment2[0].x,segment2[0].y,segment2[1].x,segment2[1].y,
-                       i_point.x,i_point.y);
-   }
-
-   template <typename T>
-   inline bool intersect(const T& x1, const T& y1, const T& z1,
-                         const T& x2, const T& y2, const T& z2,
-                         const T& x3, const T& y3, const T& z3,
-                         const T& x4, const T& y4, const T& z4,
-                         const T& fuzzy)
-   {
-      return (less_than_or_equal(lay_distance_segment_to_segment(x1,y1,z1,x2,y2,z2,x3,y3,z3,x4,y4,z4),fuzzy*fuzzy));
+      return intersect(point3d<T>(x1, y1, z2), point3d<T>(x2,y2,z2), point3d<T>(x3, y3, z3), point3d<T>(x4, y4,z4));
    }
 
    template <typename T>
    inline bool intersect(const point3d<T>& point1,
                          const point3d<T>& point2,
                          const point3d<T>& point3,
-                         const point3d<T>& point4,
-                         const T& fuzzy)
+                         const point3d<T>& point4)
    {
-      return intersect
-             (
-               point1.x, point1.y, point1.z,
-               point2.x, point2.y, point2.z,
-               point3.x, point3.y, point3.z,
-               point4.x, point4.y, point4.z,
-               fuzzy
-             );
+      double px, py, pz;
+      return intersection_point(point1, point2, point3, point4, px, py, pz);
    }
 
-   template <typename T>
-   inline bool intersect(const Eigen::MatrixBase<T>& point1,
-                         const Eigen::MatrixBase<T>& point2,
-                         const Eigen::MatrixBase<T>& point3,
-                         const Eigen::MatrixBase<T>& point4,
-                         const T& fuzzy)
+   inline bool intersect(const Eigen::Vector3d& point1,
+                         const Eigen::Vector3d& point2,
+                         const Eigen::Vector3d& point3,
+                         const Eigen::Vector3d& point4)
    {
-      return intersect
-             (
+      return intersect<double>(
                point1(0), point1(1), point1(2),
                point2(0), point2(1), point2(2),
                point3(0), point3(1), point3(2),
-               point4(0), point4(1), point4(2),
-               fuzzy
+               point4(0), point4(1), point4(2)
              );
    }
 
    template <typename T>
-   inline bool intersect(const segment<T,3>& segment1, const segment<T,3>& segment2, const T& fuzzy)
+   inline bool intersect(const segment<T,3>& segment1, const segment<T,3>& segment2)
    {
-      return intersect(segment1[0],segment1[1],segment2[0],segment2[1],fuzzy);
+      return intersect(segment1[0],segment1[1],segment2[0],segment2[1]);
    }
 
    template <typename T>
@@ -1010,7 +860,7 @@ namespace wykobi
    }
 
    template <typename T>
-   inline bool intersect(const segment<T,3>& segment, const line<T,3>& line, const T& fuzzy)
+   inline bool intersect(const segment<T,3>& segment, const line<T,3>& line)
    {
       if (perpendicular(line, segment)) {
          point3d<T> p = closest_point_on_line_from_point(line, segment[0]);
@@ -1023,8 +873,7 @@ namespace wykobi
                (
                  closest_point_on_line_from_point(line, segment[0]),
                  closest_point_on_line_from_point(line, segment[1])
-               ),
-               fuzzy
+               )
              );
    }
 
@@ -1927,27 +1776,127 @@ namespace wykobi
    }
 
    template <typename T>
-   inline void intersection_point(const T& x1, const T& y1,
-                                  const T& x2, const T& y2,
-                                  const T& x3, const T& y3,
-                                  const T& x4, const T& y4,
-                                        T& ix,       T& iy)
+   inline bool intersection_point(T x1, T y1,
+                                  T x2, T y2,
+                                  T x3, T y3,
+                                  T x4, T y4,
+                                  T& ix, T& iy)
    {
-      intersect(x1, y1, x2, y2, x3, y3, x4, y4, ix, iy);
+      // make sure left point first
+      if (x1 > x2) {
+         std::swap(x1, x2);
+         std::swap(y1, y2);
+      }
+
+      if (x3 > x4) {
+         std::swap(x3, x4);
+         std::swap(y2, y4);
+      }
+
+      T ax = x2 - x1;
+      T bx = x3 - x4;
+      ix = +infinity<T>();
+      iy = +infinity<T>();
+
+      T lowerx = x1;
+      T upperx = x2;
+
+
+      if (bx > T(0.0))
+      {
+         if ((upperx < x4) || (x3 < lowerx))
+            return false;
+      }
+      else if ((upperx < x3) || (x4 < lowerx))
+         return false;
+
+      const T ay = y2 - y1;
+      const T by = y3 - y4;
+
+      T uppery;
+      T lowery;
+      if (ay < T(0.0))
+      {
+         lowery = y2;
+         uppery = y1;
+      }
+      else
+      {
+         uppery = y2;
+         lowery = y1;
+      }
+
+      if (by > T(0.0))
+      {
+         if ((uppery < y4) || (y3 < lowery))
+            return false;
+      }
+      else if ((uppery < y3) || (y4 < lowery))
+         return false;
+
+      const T cx = x1 - x3;
+      const T cy = y1 - y3;
+      const T d  = (by * cx) - (bx * cy);
+      const T f  = (ay * bx) - (ax * by);
+
+      if (f > T(0.0))
+      {
+         if ((d < T(0.0)) || (d > f))
+            return false;
+      }
+      else if ((d > T(0.0)) || (d < f))
+         return false;
+
+      const T e = (ax * cy) - (ay * cx);
+
+      if (f > T(0.0))
+      {
+         if ((e < T(0.0)) || (e > f))
+            return false;
+      }
+      else if ((e > T(0.0)) || (e < f))
+         return false;
+
+      T ratio = (ax * -by) - (ay * -bx);
+
+      if (not_equal(ratio,T(0.0)))
+      {
+         ratio = ((cy * -bx) - (cx * -by)) / ratio;
+         ix    = x1 + (ratio * ax);
+         iy    = y1 + (ratio * ay);
+         return true;
+      }
+      else
+      {
+         if (is_equal(x2, x3)) {
+            // intersect at a point
+            ix = x2;
+            iy = y2;
+            return true;
+         }
+         if (is_equal(x1, x4)) {
+            // intersect at a point
+            ix = x1;
+            iy = y1;
+            return true;
+         }
+      }
+
+      return true;
    }
 
    template <typename T>
-   inline void intersection_point(const point2d<T>& point1,
+   inline bool intersection_point(const point2d<T>& point1,
                                   const point2d<T>& point2,
                                   const point2d<T>& point3,
                                   const point2d<T>& point4,
                                         T& ix,       T& iy)
    {
-      intersection_point(point1.x, point1.y,
-                         point2.x, point2.y,
-                         point3.x, point3.y,
-                         point4.x, point4.y,
-                               ix,       iy);
+      return intersection_point(point1.x, point1.y,
+                                point2.x, point2.y,
+                                point3.x, point3.y,
+                                point4.x, point4.y,
+                                ix, iy);
    }
 
    template <typename T>
@@ -1973,124 +1922,27 @@ namespace wykobi
    }
 
    template <typename T>
-   inline bool intersection_point(const T& x1, const T& y1, const T& z1,
-                                   const T& x2, const T& y2, const T& z2,
-                                   const T& x3, const T& y3, const T& z3,
-                                   const T& x4, const T& y4, const T& z4,
-                                         T& ix,       T& iy,       T& iz, const T& fuzzy)
+   inline bool intersection_point(const segment<T,2>& segment1,
+                                  const segment<T,2>& segment2,
+                                  point2d<T>& point)
    {
-      const T ux = x2 - x1;
-      const T uy = y2 - y1;
-      const T uz = z2 - z1;
+      return intersection_point(segment1[0], segment1[1],
+                                segment2[0], segment2[1],
+                                point.x, point.y);
+   }
 
-      const T vx = x4 - x3;
-      const T vy = y4 - y3;
-      const T vz = z4 - z3;
-
-      const T wx = x1 - x3;
-      const T wy = y1 - y3;
-      const T wz = z1 - z3;
-
-      const T a  = (ux * ux + uy * uy + uz * uz);
-      const T b  = (ux * vx + uy * vy + uz * vz);
-      const T c  = (vx * vx + vy * vy + vz * vz);
-      const T d  = (ux * wx + uy * wy + uz * wz);
-      const T e  = (vx * wx + vy * wy + vz * wz);
-      const T dt = a * c - b * b;
-
-      T sd = dt;
-      T td = dt;
-
-      T sn = T(0.0);
-      T tn = T(0.0);
-
-      if (is_equal(dt,T(0.0)))
-      {
-         sn = T(0.0);
-         sd = T(1.00);
-         tn = e;
-         td = c;
-      }
-      else
-      {
-         sn = (b * e - c * d);
-         tn = (a * e - b * d);
-
-         if (sn < T(0.0))
-         {
-            sn = T(0.0);
-            tn = e;
-            td = c;
-         }
-         else if (sn > sd)
-         {
-            sn = sd;
-            tn = e + b;
-            td = c;
-         }
-      }
-
-      if (tn < T(0.0))
-      {
-         tn = T(0.0);
-
-         if (-d < T(0.0))
-            sn = T(0.0);
-         else if (-d > a)
-            sn = sd;
-         else
-         {
-            sn = -d;
-            sd = a;
-         }
-      }
-      else if (tn > td)
-      {
-         tn = td;
-
-         if ((-d + b) < T(0.0))
-            sn = T(0.0);
-         else if ((-d + b) > a)
-            sn = sd;
-         else
-         {
-            sn = (-d + b);
-            sd = a;
-         }
-      }
-
-      T sc = T(0.0);
-      T tc = T(0.0);
-
-      if (is_equal(sn,T(0.0)))
-         sc = T(0.0);
-      else
-         sc = sn / sd;
-
-      if (is_equal(tn,T(0.0)))
-         tc = T(0.0);
-      else
-         tc = tn / td;
-
-      const T dx = wx + (sc * ux) - (tc * vx);
-      const T dy = wy + (sc * uy) - (tc * vy);
-      const T dz = wz + (sc * uz) - (tc * vz);
-
-      // the above lines are the same as the codes of lay_distance_segment_to_segment
-      if (less_than_or_equal(dx * dx + dy * dy + dz * dz, fuzzy*fuzzy))
-      {
-         ix = ((x1 + (sc * ux)) + (x3 + (tc * vx))) * T(0.5);
-         iy = ((y1 + (sc * uy)) + (y3 + (tc * vy))) * T(0.5);
-         iz = ((z1 + (sc * uz)) + (z3 + (tc * vz))) * T(0.5);
-         return true;
-      }
-      else
-      {
-         ix = +infinity<T>();
-         iy = +infinity<T>();
-         iz = +infinity<T>();
-         return false;
-      }
+   template <typename T>
+   inline bool intersection_point(T  x1, T  y1, T  z1,
+                                  T  x2, T  y2, T  z2,
+                                  T  x3, T  y3, T  z3,
+                                  T  x4, T  y4, T  z4,
+                                  T& ix, T& iy, T& iz)
+   {
+      return intersection_point(point3d<T>(x1,y1,z1),
+                                point3d<T>(x2,y2,z2),
+                                point3d<T>(x3,y3,z3),
+                                point3d<T>(x4,y4,z4),
+                                ix, iy, iz);
    }
 
    template <typename T>
@@ -2098,36 +1950,65 @@ namespace wykobi
                                   const point3d<T>& point2,
                                   const point3d<T>& point3,
                                   const point3d<T>& point4,
-                                        T& ix, T& iy, T& iz, const T& fuzzy)
+                                        T& ix, T& iy, T& iz)
    {
-      return intersection_point(point1.x, point1.y, point1.z,
-                         point2.x, point2.y, point2.z,
-                         point3.x, point3.y, point3.z,
-                         point4.x, point4.y, point4.z,
-                               ix,       iy,       iz,fuzzy);
-   }
+      // check the detail of my algorithm here
+      // https://math.stackexchange.com/a/4009935/882342
+      vector3d<T> u = point2 - point1;
+      vector3d<T> v = point4 - point3;
+      vector3d<T> w = point3 - point1;
 
-   template <typename T>
-   inline bool intersection_point(const Eigen::MatrixBase<T>& point1,
-                                  const Eigen::MatrixBase<T>& point2,
-                                  const Eigen::MatrixBase<T>& point3,
-                                  const Eigen::MatrixBase<T>& point4,
-                                  Eigen::MatrixBase<T>& ipoint, const typename T::Scalar& fuzzy)
-   {
-      EIGEN_STATIC_ASSERT_VECTOR_ONLY(Eigen::MatrixBase<T>);
-      return intersection_point(point1(0), point1(1), point1(2),
-                         point2(0), point2(1), point2(2),
-                         point3(0), point3(1), point3(2),
-                         point4(0), point4(1), point4(2),
-                         ipoint(0), ipoint(1), ipoint(2), fuzzy);
+      vector3d<T> n = v*u;
+      vector3d<T> m = w*u;
 
+      T n_sq_norm = vector_square_norm(n);
+
+      ix = +infinity<T>();
+      iy = ix;
+      iz = ix;
+
+      if (is_equal(n_sq_norm, T(0.0))) {
+         if (is_equal(vector_square_norm(m), T(0.0))) {
+            if ((is_equal(point2.x, std::max(point3.x, point4.x)) && point2.x < point1.x) ||
+               (is_equal(point2.x, std::min(point3.x, point4.x)) && point2.x > point1.x))
+            {
+                  ix = point2.x;
+                  iy = point2.y;
+                  return true;
+            }
+            if ((is_equal(point1.x, std::max(point3.x, point4.x)) && point2.x > point1.x) ||
+               (is_equal(point1.x, std::min(point3.x, point4.x)) && point2.x < point1.x))
+            {
+                  ix = point1.x;
+                  iy = point1.y;
+                  return true;
+            }
+            // intersect at more than one point
+            return true;
+         }
+         // parallel segments, no intersection points
+         return false;
+      }
+
+      T t = - dot_product(m,   n) / n_sq_norm;
+      T s = - dot_product(w*v, n) / n_sq_norm;
+
+      if (greater_than_or_equal(t, T(0.0)) && less_than_or_equal(t, T(1.0)) &&
+          greater_than_or_equal(t, T(0.0)) && less_than_or_equal(t, T(1.0)))
+      {
+         ix = point1.x + u.x * t;
+         iy = point1.y + u.y * t;
+         iz = point1.z + u.z * t;
+         return true;
+      }
+      return false;
    }
 
    template <typename T>
    inline point3d<T> intersection_point(const point3d<T>& point1,
                                         const point3d<T>& point2,
                                         const point3d<T>& point3,
-                                        const point3d<T>& point4, const T& fuzzy)
+                                        const point3d<T>& point4)
    {
       point3d<T> point_;
 
@@ -2137,8 +2018,7 @@ namespace wykobi
         point2.x, point2.y, point2.z,
         point3.x, point3.y, point3.z,
         point4.x, point4.y, point4.z,
-        point_.x, point_.y, point_.z,
-        fuzzy
+        point_.x, point_.y, point_.z
       );
 
       return point_;
@@ -2146,15 +2026,39 @@ namespace wykobi
 
    template <typename T>
    inline point3d<T> intersection_point(const segment<T,3>& segment1,
-                                        const segment<T,3>& segment2, const T& fuzzy)
+                                        const segment<T,3>& segment2)
    {
       return intersection_point
              (
                segment1[0], segment1[1],
-               segment2[0], segment2[1],
-               fuzzy
+               segment2[0], segment2[1]
              );
    }
+
+   template <typename T>
+   inline bool intersection_point(const segment<T,3>& segment1,
+                                  const segment<T,3>& segment2,
+                                  point3d<T>& point)
+   {
+      return intersection_point(segment1[0], segment1[1],
+                                segment2[0], segment2[1],
+                                point.x, point.y);
+   }
+
+   inline Eigen::Vector3d intersection_point(const Eigen::Vector3d& point1,
+                                             const Eigen::Vector3d& point2,
+                                             const Eigen::Vector3d& point3,
+                                             const Eigen::Vector3d& point4)
+   {
+      Eigen::Vector3d ipoint;
+      bool r = intersection_point<double>(point1(0), point1(1), point1(2),
+                                          point2(0), point2(1), point2(2),
+                                          point3(0), point3(1), point3(2),
+                                          point4(0), point4(1), point4(2),
+                                          ipoint(0), ipoint(1), ipoint(2));
+      return ipoint;
+   }
+
 
    template <typename T>
    inline point2d<T> intersection_point(const segment<T,2>& segment, const line<T,2>& line)
@@ -2164,7 +2068,7 @@ namespace wykobi
           if (point_on_segment(p, segment)) {
             return p;
           } else {
-            return point2d<T>(+infinity<T>(), +infinity<T>());
+            return degenerate_point2d<T>();
           }
      } else {
              return intersection_point
@@ -2181,14 +2085,14 @@ namespace wykobi
 
    template <typename T>
    inline point3d<T> intersection_point(const segment<T,3>& segment,
-                                        const line<T,3>& line, const T& fuzzy)
+                                        const line<T,3>& line)
    {
      if (perpendicular(line, segment)) {
        point3d<T> p = closest_point_on_line_from_point(line, segment[0]);
        if (point_on_segment(p, segment)) {
          return p;
        } else {
-         return point3d<T>(+infinity<T>(), +infinity<T>(), +infinity<T>());
+         return degenerate_point3d<T>();
        }
      } else {
       return intersection_point
@@ -2198,8 +2102,7 @@ namespace wykobi
                (
                  closest_point_on_line_from_point(line, segment[0]),
                  closest_point_on_line_from_point(line, segment[1])
-               ),
-               fuzzy
+               )
              );
      }
    }
@@ -2207,10 +2110,9 @@ namespace wykobi
    template <typename T>
    inline bool intersection_point(const segment<T,3>& segment,
                                         const line<T,3>& line,
-                                        Eigen::Vector3d &ipoint,
-                                        const T& fuzzy)
+                                        Eigen::Vector3d &ipoint)
    {
-      point3d<T> point_ = intersection_point(segment, line, fuzzy);
+      point3d<T> point_ = intersection_point(segment, line);
       ipoint << point_[0] , point_[1], point_[2];
       return is_inifinity(point_[0]);
    }
@@ -2365,8 +2267,7 @@ namespace wykobi
 
    template <typename T>
    inline point3d<T> intersection_point(const line<T,3>& line1,
-                                        const line<T,3>& line2,
-                                        const T& fuzzy)
+                                        const line<T,3>& line2)
    {
       point3d<T> point_;
 
@@ -2376,8 +2277,7 @@ namespace wykobi
         line1[1].x, line1[1].y, line1[1].z,
         line2[0].x, line2[0].y, line2[0].z,
         line2[1].x, line2[1].y, line2[1].z,
-          point_.x,   point_.y,   point_.z,
-        fuzzy
+          point_.x,   point_.y,   point_.z
       );
 
       return point_;
@@ -2981,8 +2881,7 @@ namespace wykobi
                                                const T& x2, const T& y2, const T& z2,
                                                const T& x3, const T& y3, const T& z3,
                                                const T& x4, const T& y4, const T& z4,
-                                                     T& ix,       T& iy,       T& iz,
-                                               const T& fuzzy)
+                                                     T& ix,       T& iy,       T& iz)
    {
       const T ux = x2 - x1;
       const T uy = y2 - y1;
@@ -3025,7 +2924,7 @@ namespace wykobi
       const T dy = wy + (sc * uy) - (tc * vy);
       const T dz = wz + (sc * uz) - (tc * vz);
 
-      if ((dx * dx + dy * dy + dz * dz) <= sqr(fuzzy))
+      if (is_equal(dx * dx + dy * dy + dz * dz, T(0.0)))
       {
          ix = ((x1 + (sc * ux)) + (x3 + (tc * vx))) * T(0.5);
          iy = ((y1 + (sc * uy)) + (y3 + (tc * vy))) * T(0.5);
@@ -15659,7 +15558,7 @@ namespace wykobi
    template <typename T>
    inline point2d<T> degenerate_point2d()
    {
-      return make_point
+      return point2d<T>
              (
                infinity<T>(),
                infinity<T>()
@@ -15669,7 +15568,7 @@ namespace wykobi
    template <typename T>
    inline point3d<T> degenerate_point3d()
    {
-      return make_point
+      return point3d<T>
              (
                infinity<T>(),
                infinity<T>(),
@@ -15680,7 +15579,7 @@ namespace wykobi
    template <typename T>
    inline vector2d<T> degenerate_vector2d()
    {
-      return make_vector
+      return vector2d<T>
              (
                infinity<T>(),
                infinity<T>()
@@ -15690,7 +15589,7 @@ namespace wykobi
    template <typename T>
    inline vector3d<T> degenerate_vector3d()
    {
-      return make_vector
+      return vector3d<T>
              (
                infinity<T>(),
                infinity<T>(),
