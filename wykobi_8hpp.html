@@ -29,7 +29,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Wykobi
-   &#160;<span id="projectnumber">05229ed27395164184a78db363db97477c8a7af0</span>
+   &#160;<span id="projectnumber">c067e1c3841f374a36251362be2f1c16006adf62</span>
    </div>
   </td>
  </tr>
@@ -91,8 +91,7 @@ $(document).ready(function(){initNavTree('wykobi_8hpp.html','');});
 <div class="title">wykobi.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
-<code>#include &lt;limits&gt;</code><br />
+<div class="textblock"><code>#include &lt;limits&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;iterator&gt;</code><br />
 <code>#include &lt;ostream&gt;</code><br />
@@ -607,46 +606,29 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a5d45517d6aad7117c283bce451212d3c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (T x1, T y1, T x2, T y2, T x3, T y3, T x4, T y4)</td></tr>
 <tr class="separator:a5d45517d6aad7117c283bce451212d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d9a43243e6fc486f27bd739147560d1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a0d9a43243e6fc486f27bd739147560d1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wykobi_8hpp.html#a0d9a43243e6fc486f27bd739147560d1">wykobi::intersect</a> (T x1, T y1, T x2, T y2, T x3, T y3, T x4, T y4, T &amp;ix, T &amp;iy)</td></tr>
-<tr class="memdesc:a0d9a43243e6fc486f27bd739147560d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether line segment (x1,y1)&ndash;(x2,y2) and (x3,y3)&ndash;(x4,y4) intersects and set (ix,iy) as the intersecting point.  <a href="wykobi_8hpp.html#a0d9a43243e6fc486f27bd739147560d1">More...</a><br /></td></tr>
-<tr class="separator:a0d9a43243e6fc486f27bd739147560d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29b601b5aab1bb9b16ff306913dc262b"><td class="memTemplParams" colspan="2"><a id="a29b601b5aab1bb9b16ff306913dc262b"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a29b601b5aab1bb9b16ff306913dc262b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const point2d&lt; T &gt; &amp;point1, const point2d&lt; T &gt; &amp;point2, const point2d&lt; T &gt; &amp;point3, const point2d&lt; T &gt; &amp;point4)</td></tr>
 <tr class="separator:a29b601b5aab1bb9b16ff306913dc262b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8186d5017c47a5a721a3cfd38a0eae7"><td class="memTemplParams" colspan="2"><a id="ab8186d5017c47a5a721a3cfd38a0eae7"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab8186d5017c47a5a721a3cfd38a0eae7"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const point2d&lt; T &gt; &amp;point1, const point2d&lt; T &gt; &amp;point2, const point2d&lt; T &gt; &amp;point3, const point2d&lt; T &gt; &amp;point4, point2d&lt; T &gt; &amp;int_point)</td></tr>
-<tr class="separator:ab8186d5017c47a5a721a3cfd38a0eae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6c5a9fb52eff4e83711bdf65783e8d2"><td class="memTemplParams" colspan="2"><a id="aa6c5a9fb52eff4e83711bdf65783e8d2"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aa6c5a9fb52eff4e83711bdf65783e8d2"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 2 &gt; &amp;segment1, const segment&lt; T, 2 &gt; &amp;segment2)</td></tr>
 <tr class="separator:aa6c5a9fb52eff4e83711bdf65783e8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d954537d50bcc1f2a747ea450924c9c"><td class="memTemplParams" colspan="2"><a id="a2d954537d50bcc1f2a747ea450924c9c"></a>
+<tr class="memitem:aa173b3192956626514b47e60948818f3"><td class="memTemplParams" colspan="2"><a id="aa173b3192956626514b47e60948818f3"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a2d954537d50bcc1f2a747ea450924c9c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 2 &gt; &amp;segment1, const segment&lt; T, 2 &gt; &amp;segment2, T &amp;ix, T &amp;iy)</td></tr>
-<tr class="separator:a2d954537d50bcc1f2a747ea450924c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2291148a56f1be28f6189d7988bac25a"><td class="memTemplParams" colspan="2"><a id="a2291148a56f1be28f6189d7988bac25a"></a>
+<tr class="memitem:aa173b3192956626514b47e60948818f3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (T x1, T y1, T z1, T x2, T y2, T z2, T x3, T y3, T z3, T x4, T y4, T z4)</td></tr>
+<tr class="separator:aa173b3192956626514b47e60948818f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53e14bb6b894185777e8dc8edef3696c"><td class="memTemplParams" colspan="2"><a id="a53e14bb6b894185777e8dc8edef3696c"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a2291148a56f1be28f6189d7988bac25a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 2 &gt; &amp;segment1, const segment&lt; T, 2 &gt; &amp;segment2, point2d&lt; T &gt; &amp;i_point)</td></tr>
-<tr class="separator:a2291148a56f1be28f6189d7988bac25a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aed4065b5b8ae1ee3fb671ef9915f22"><td class="memTemplParams" colspan="2"><a id="a3aed4065b5b8ae1ee3fb671ef9915f22"></a>
+<tr class="memitem:a53e14bb6b894185777e8dc8edef3696c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const point3d&lt; T &gt; &amp;point1, const point3d&lt; T &gt; &amp;point2, const point3d&lt; T &gt; &amp;point3, const point3d&lt; T &gt; &amp;point4)</td></tr>
+<tr class="separator:a53e14bb6b894185777e8dc8edef3696c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c1376d02543c77e1ed329edbdb83657"><td class="memItemLeft" align="right" valign="top"><a id="a6c1376d02543c77e1ed329edbdb83657"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::intersect</b> (const Eigen::Vector3d &amp;point1, const Eigen::Vector3d &amp;point2, const Eigen::Vector3d &amp;point3, const Eigen::Vector3d &amp;point4)</td></tr>
+<tr class="separator:a6c1376d02543c77e1ed329edbdb83657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af85e91bf066c038b6a03bd5a2e2bed5d"><td class="memTemplParams" colspan="2"><a id="af85e91bf066c038b6a03bd5a2e2bed5d"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a3aed4065b5b8ae1ee3fb671ef9915f22"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;x4, const T &amp;y4, const T &amp;z4, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a3aed4065b5b8ae1ee3fb671ef9915f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f948f9c001d1fdb59e71ed6b2ffa247"><td class="memTemplParams" colspan="2"><a id="a7f948f9c001d1fdb59e71ed6b2ffa247"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a7f948f9c001d1fdb59e71ed6b2ffa247"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const point3d&lt; T &gt; &amp;point1, const point3d&lt; T &gt; &amp;point2, const point3d&lt; T &gt; &amp;point3, const point3d&lt; T &gt; &amp;point4, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a7f948f9c001d1fdb59e71ed6b2ffa247"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9734e87085bc89b8f60655f63726d029"><td class="memTemplParams" colspan="2"><a id="a9734e87085bc89b8f60655f63726d029"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a9734e87085bc89b8f60655f63726d029"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const Eigen::MatrixBase&lt; T &gt; &amp;point1, const Eigen::MatrixBase&lt; T &gt; &amp;point2, const Eigen::MatrixBase&lt; T &gt; &amp;point3, const Eigen::MatrixBase&lt; T &gt; &amp;point4, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a9734e87085bc89b8f60655f63726d029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeecab089f172db8ceb450c876e14ff0c"><td class="memTemplParams" colspan="2"><a id="aeecab089f172db8ceb450c876e14ff0c"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aeecab089f172db8ceb450c876e14ff0c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 3 &gt; &amp;segment1, const segment&lt; T, 3 &gt; &amp;segment2, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:aeecab089f172db8ceb450c876e14ff0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af85e91bf066c038b6a03bd5a2e2bed5d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 3 &gt; &amp;segment1, const segment&lt; T, 3 &gt; &amp;segment2)</td></tr>
+<tr class="separator:af85e91bf066c038b6a03bd5a2e2bed5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab00277244a765cbd5246d11e38232da6"><td class="memTemplParams" colspan="2"><a id="ab00277244a765cbd5246d11e38232da6"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ab00277244a765cbd5246d11e38232da6"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 2 &gt; &amp;segment, const rectangle&lt; T &gt; &amp;rectangle)</td></tr>
@@ -675,10 +657,10 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ab86afb17ed1e77dc2246487b0e6072c9"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 2 &gt; &amp;segment, const cubic_bezier&lt; T, 2 &gt; &amp;bezier, const std::size_t &amp;steps=1000)</td></tr>
 <tr class="separator:ab86afb17ed1e77dc2246487b0e6072c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c3df477bc148419ea88a62041a192ab"><td class="memTemplParams" colspan="2"><a id="a8c3df477bc148419ea88a62041a192ab"></a>
+<tr class="memitem:aca4c2a0534aa330653691167cc1d642d"><td class="memTemplParams" colspan="2"><a id="aca4c2a0534aa330653691167cc1d642d"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8c3df477bc148419ea88a62041a192ab"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 3 &gt; &amp;segment, const line&lt; T, 3 &gt; &amp;line, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a8c3df477bc148419ea88a62041a192ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca4c2a0534aa330653691167cc1d642d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 3 &gt; &amp;segment, const line&lt; T, 3 &gt; &amp;line)</td></tr>
+<tr class="separator:aca4c2a0534aa330653691167cc1d642d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f8a26fad002c34734ea7e8fcf565240"><td class="memTemplParams" colspan="2"><a id="a8f8a26fad002c34734ea7e8fcf565240"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8f8a26fad002c34734ea7e8fcf565240"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect</b> (const segment&lt; T, 3 &gt; &amp;segment, const box&lt; T, 3 &gt; &amp;box)</td></tr>
@@ -903,15 +885,15 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aca9eebc0323b225061c1438514477a5f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersect_horizontal_horizontal</b> (const segment&lt; T, 2 &gt; &amp;segment1, const segment&lt; T, 2 &gt; &amp;segment2)</td></tr>
 <tr class="separator:aca9eebc0323b225061c1438514477a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9afd5eaab31493c41f9640dc9a568c65"><td class="memTemplParams" colspan="2"><a id="a9afd5eaab31493c41f9640dc9a568c65"></a>
+<tr class="memitem:aa932001d00f1346dfdc10a1470da6f48"><td class="memTemplParams" colspan="2"><a id="aa932001d00f1346dfdc10a1470da6f48"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a9afd5eaab31493c41f9640dc9a568c65"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wykobi_8hpp.html#a9afd5eaab31493c41f9640dc9a568c65">wykobi::intersection_point</a> (const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;x3, const T &amp;y3, const T &amp;x4, const T &amp;y4, T &amp;ix, T &amp;iy)</td></tr>
-<tr class="memdesc:a9afd5eaab31493c41f9640dc9a568c65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the intersection point of two line segments assuming they intersect. The line segments are bounded by the four points (x1, y1), (x2, y2), (x3, y3) (x4, y4) <br /></td></tr>
-<tr class="separator:a9afd5eaab31493c41f9640dc9a568c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcbbbf17e2c4fe9b44388d1e3ad9109d"><td class="memTemplParams" colspan="2"><a id="afcbbbf17e2c4fe9b44388d1e3ad9109d"></a>
+<tr class="memitem:aa932001d00f1346dfdc10a1470da6f48"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wykobi_8hpp.html#aa932001d00f1346dfdc10a1470da6f48">wykobi::intersection_point</a> (T x1, T y1, T x2, T y2, T x3, T y3, T x4, T y4, T &amp;ix, T &amp;iy)</td></tr>
+<tr class="memdesc:aa932001d00f1346dfdc10a1470da6f48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the intersection point of two line segments assuming they intersect. The line segments are bounded by the four points (x1, y1), (x2, y2), (x3, y3) (x4, y4) <br /></td></tr>
+<tr class="separator:aa932001d00f1346dfdc10a1470da6f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7476573ea5bbe0de28660f2f1d27147c"><td class="memTemplParams" colspan="2"><a id="a7476573ea5bbe0de28660f2f1d27147c"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:afcbbbf17e2c4fe9b44388d1e3ad9109d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const point2d&lt; T &gt; &amp;point1, const point2d&lt; T &gt; &amp;point2, const point2d&lt; T &gt; &amp;point3, const point2d&lt; T &gt; &amp;point4, T &amp;ix, T &amp;iy)</td></tr>
-<tr class="separator:afcbbbf17e2c4fe9b44388d1e3ad9109d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7476573ea5bbe0de28660f2f1d27147c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const point2d&lt; T &gt; &amp;point1, const point2d&lt; T &gt; &amp;point2, const point2d&lt; T &gt; &amp;point3, const point2d&lt; T &gt; &amp;point4, T &amp;ix, T &amp;iy)</td></tr>
+<tr class="separator:a7476573ea5bbe0de28660f2f1d27147c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd5d28ddc8bdb7b49ff8a48fe4b62fca"><td class="memTemplParams" colspan="2"><a id="abd5d28ddc8bdb7b49ff8a48fe4b62fca"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:abd5d28ddc8bdb7b49ff8a48fe4b62fca"><td class="memTemplItemLeft" align="right" valign="top">point2d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const point2d&lt; T &gt; &amp;point1, const point2d&lt; T &gt; &amp;point2, const point2d&lt; T &gt; &amp;point3, const point2d&lt; T &gt; &amp;point4)</td></tr>
@@ -920,38 +902,45 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:acf43a0199cb0e62271f59b5295dbee15"><td class="memTemplItemLeft" align="right" valign="top">point2d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 2 &gt; &amp;segment1, const segment&lt; T, 2 &gt; &amp;segment2)</td></tr>
 <tr class="separator:acf43a0199cb0e62271f59b5295dbee15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7221201293492997d0e002882e1bd78"><td class="memTemplParams" colspan="2"><a id="ac7221201293492997d0e002882e1bd78"></a>
+<tr class="memitem:aba5e37bd68d9fe876a49b8ad17cd842a"><td class="memTemplParams" colspan="2"><a id="aba5e37bd68d9fe876a49b8ad17cd842a"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ac7221201293492997d0e002882e1bd78"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;x4, const T &amp;y4, const T &amp;z4, T &amp;ix, T &amp;iy, T &amp;iz, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:ac7221201293492997d0e002882e1bd78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14b0f5fb9c541e3f2eb520173a8ebbed"><td class="memTemplParams" colspan="2"><a id="a14b0f5fb9c541e3f2eb520173a8ebbed"></a>
+<tr class="memitem:aba5e37bd68d9fe876a49b8ad17cd842a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 2 &gt; &amp;segment1, const segment&lt; T, 2 &gt; &amp;segment2, point2d&lt; T &gt; &amp;point)</td></tr>
+<tr class="separator:aba5e37bd68d9fe876a49b8ad17cd842a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5da57f17cba53d47825e6c0e5e4c176f"><td class="memTemplParams" colspan="2"><a id="a5da57f17cba53d47825e6c0e5e4c176f"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a14b0f5fb9c541e3f2eb520173a8ebbed"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const point3d&lt; T &gt; &amp;point1, const point3d&lt; T &gt; &amp;point2, const point3d&lt; T &gt; &amp;point3, const point3d&lt; T &gt; &amp;point4, T &amp;ix, T &amp;iy, T &amp;iz, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a14b0f5fb9c541e3f2eb520173a8ebbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c22a464dc1c71b60895c79fa37e1631"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5c22a464dc1c71b60895c79fa37e1631"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wykobi_8hpp.html#a5c22a464dc1c71b60895c79fa37e1631">wykobi::intersection_point</a> (const Eigen::MatrixBase&lt; T &gt; &amp;point1, const Eigen::MatrixBase&lt; T &gt; &amp;point2, const Eigen::MatrixBase&lt; T &gt; &amp;point3, const Eigen::MatrixBase&lt; T &gt; &amp;point4, Eigen::MatrixBase&lt; T &gt; &amp;ipoint, const typename T::Scalar &amp;fuzzy=typename T::Scalar(0.0))</td></tr>
-<tr class="memdesc:a5c22a464dc1c71b60895c79fa37e1631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the insection point of two line segments p1&ndash;p2 with p3&ndash;p4.  <a href="wykobi_8hpp.html#a5c22a464dc1c71b60895c79fa37e1631">More...</a><br /></td></tr>
-<tr class="separator:a5c22a464dc1c71b60895c79fa37e1631"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9ee0a2a3345f585384b16eca45b49a6"><td class="memTemplParams" colspan="2"><a id="ab9ee0a2a3345f585384b16eca45b49a6"></a>
+<tr class="memitem:a5da57f17cba53d47825e6c0e5e4c176f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (T x1, T y1, T z1, T x2, T y2, T z2, T x3, T y3, T z3, T x4, T y4, T z4, T &amp;ix, T &amp;iy, T &amp;iz)</td></tr>
+<tr class="separator:a5da57f17cba53d47825e6c0e5e4c176f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4a9da89d2a2984b7f959c70203ef0c9"><td class="memTemplParams" colspan="2"><a id="ac4a9da89d2a2984b7f959c70203ef0c9"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab9ee0a2a3345f585384b16eca45b49a6"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const point3d&lt; T &gt; &amp;point1, const point3d&lt; T &gt; &amp;point2, const point3d&lt; T &gt; &amp;point3, const point3d&lt; T &gt; &amp;point4, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:ab9ee0a2a3345f585384b16eca45b49a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a710932ef24edd95e4290ae17639294ae"><td class="memTemplParams" colspan="2"><a id="a710932ef24edd95e4290ae17639294ae"></a>
+<tr class="memitem:ac4a9da89d2a2984b7f959c70203ef0c9"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const point3d&lt; T &gt; &amp;point1, const point3d&lt; T &gt; &amp;point2, const point3d&lt; T &gt; &amp;point3, const point3d&lt; T &gt; &amp;point4, T &amp;ix, T &amp;iy, T &amp;iz)</td></tr>
+<tr class="separator:ac4a9da89d2a2984b7f959c70203ef0c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa19d9f701bd0f7f39c3352571133119e"><td class="memTemplParams" colspan="2"><a id="aa19d9f701bd0f7f39c3352571133119e"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a710932ef24edd95e4290ae17639294ae"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 3 &gt; &amp;segment1, const segment&lt; T, 3 &gt; &amp;segment2, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a710932ef24edd95e4290ae17639294ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa19d9f701bd0f7f39c3352571133119e"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const point3d&lt; T &gt; &amp;point1, const point3d&lt; T &gt; &amp;point2, const point3d&lt; T &gt; &amp;point3, const point3d&lt; T &gt; &amp;point4)</td></tr>
+<tr class="separator:aa19d9f701bd0f7f39c3352571133119e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82dde802ab86e55f7ee3e40c54abd5d4"><td class="memTemplParams" colspan="2"><a id="a82dde802ab86e55f7ee3e40c54abd5d4"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a82dde802ab86e55f7ee3e40c54abd5d4"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 3 &gt; &amp;segment1, const segment&lt; T, 3 &gt; &amp;segment2)</td></tr>
+<tr class="separator:a82dde802ab86e55f7ee3e40c54abd5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4131eded63db70764edea740c4f2362b"><td class="memTemplParams" colspan="2"><a id="a4131eded63db70764edea740c4f2362b"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a4131eded63db70764edea740c4f2362b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 3 &gt; &amp;segment1, const segment&lt; T, 3 &gt; &amp;segment2, point3d&lt; T &gt; &amp;point)</td></tr>
+<tr class="separator:a4131eded63db70764edea740c4f2362b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ea7be5c41ff20bc6a7b2a80c04b788"><td class="memItemLeft" align="right" valign="top"><a id="ac0ea7be5c41ff20bc6a7b2a80c04b788"></a>
+Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const Eigen::Vector3d &amp;point1, const Eigen::Vector3d &amp;point2, const Eigen::Vector3d &amp;point3, const Eigen::Vector3d &amp;point4)</td></tr>
+<tr class="separator:ac0ea7be5c41ff20bc6a7b2a80c04b788"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af757676e4434af95e7a0327099add009"><td class="memTemplParams" colspan="2"><a id="af757676e4434af95e7a0327099add009"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af757676e4434af95e7a0327099add009"><td class="memTemplItemLeft" align="right" valign="top">point2d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 2 &gt; &amp;segment, const line&lt; T, 2 &gt; &amp;line)</td></tr>
 <tr class="separator:af757676e4434af95e7a0327099add009"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5d798b28f8bda3d49756bfba2b8d954"><td class="memTemplParams" colspan="2"><a id="ac5d798b28f8bda3d49756bfba2b8d954"></a>
+<tr class="memitem:ab5ed4d5d8abd738c9f8b1a9be0567b7b"><td class="memTemplParams" colspan="2"><a id="ab5ed4d5d8abd738c9f8b1a9be0567b7b"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ac5d798b28f8bda3d49756bfba2b8d954"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 3 &gt; &amp;segment, const line&lt; T, 3 &gt; &amp;line, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:ac5d798b28f8bda3d49756bfba2b8d954"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63f9bbc9d84808113f118e67538fea79"><td class="memTemplParams" colspan="2"><a id="a63f9bbc9d84808113f118e67538fea79"></a>
+<tr class="memitem:ab5ed4d5d8abd738c9f8b1a9be0567b7b"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 3 &gt; &amp;segment, const line&lt; T, 3 &gt; &amp;line)</td></tr>
+<tr class="separator:ab5ed4d5d8abd738c9f8b1a9be0567b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bb27ac40f3b11a9e012bfb3cbd03b4e"><td class="memTemplParams" colspan="2"><a id="a8bb27ac40f3b11a9e012bfb3cbd03b4e"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a63f9bbc9d84808113f118e67538fea79"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 3 &gt; &amp;segment, const line&lt; T, 3 &gt; &amp;line, Eigen::Vector3d &amp;ipoint, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a63f9bbc9d84808113f118e67538fea79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bb27ac40f3b11a9e012bfb3cbd03b4e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const segment&lt; T, 3 &gt; &amp;segment, const line&lt; T, 3 &gt; &amp;line, Eigen::Vector3d &amp;ipoint)</td></tr>
+<tr class="separator:a8bb27ac40f3b11a9e012bfb3cbd03b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40b18b6b0970e67060999eb53df525e8"><td class="memTemplParams" colspan="2"><a id="a40b18b6b0970e67060999eb53df525e8"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a40b18b6b0970e67060999eb53df525e8"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wykobi_8hpp.html#a40b18b6b0970e67060999eb53df525e8">wykobi::intersection_point</a> (const segment&lt; T, 3 &gt; &amp;segment, const plane&lt; T, 3 &gt; &amp;plane)</td></tr>
@@ -977,10 +966,10 @@ template&lt;typename T , typename OutputIterator &gt; </td></tr>
 <tr class="memitem:a4422247b8eb05d0185bc4ce974cedd74"><td class="memTemplItemLeft" align="right" valign="top">point2d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wykobi_8hpp.html#a4422247b8eb05d0185bc4ce974cedd74">wykobi::intersection_point</a> (const line&lt; T, 2 &gt; &amp;line1, const line&lt; T, 2 &gt; &amp;line2)</td></tr>
 <tr class="memdesc:a4422247b8eb05d0185bc4ce974cedd74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate intersection point of two lines. If the lines are parallel to each other or collinear, return a degenerated point.  <a href="wykobi_8hpp.html#a4422247b8eb05d0185bc4ce974cedd74">More...</a><br /></td></tr>
 <tr class="separator:a4422247b8eb05d0185bc4ce974cedd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a916186aca77ccadd7885f023b8d35060"><td class="memTemplParams" colspan="2"><a id="a916186aca77ccadd7885f023b8d35060"></a>
+<tr class="memitem:a2637b833d8ed62c62c3080874413d17b"><td class="memTemplParams" colspan="2"><a id="a2637b833d8ed62c62c3080874413d17b"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a916186aca77ccadd7885f023b8d35060"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const line&lt; T, 3 &gt; &amp;line1, const line&lt; T, 3 &gt; &amp;line2, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a916186aca77ccadd7885f023b8d35060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2637b833d8ed62c62c3080874413d17b"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const line&lt; T, 3 &gt; &amp;line1, const line&lt; T, 3 &gt; &amp;line2)</td></tr>
+<tr class="separator:a2637b833d8ed62c62c3080874413d17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0be55a466699df241aeb0990b67817d3"><td class="memTemplParams" colspan="2"><a id="a0be55a466699df241aeb0990b67817d3"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0be55a466699df241aeb0990b67817d3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const circle&lt; T &gt; &amp;circle1, const circle&lt; T &gt; &amp;circle2, point2d&lt; T &gt; &amp;point1, point2d&lt; T &gt; &amp;point2)</td></tr>
@@ -1041,10 +1030,10 @@ template&lt;typename T , typename OutputIterator &gt; </td></tr>
 template&lt;typename T , typename OutputIterator &gt; </td></tr>
 <tr class="memitem:ae318876e0bfffac735c78144b0bfbdd1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const ray&lt; T, 3 &gt; &amp;ray, const sphere&lt; T &gt; &amp;sphere, OutputIterator out)</td></tr>
 <tr class="separator:ae318876e0bfffac735c78144b0bfbdd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a934fcf31da2205e2f1c1ed576954ce4c"><td class="memTemplParams" colspan="2"><a id="a934fcf31da2205e2f1c1ed576954ce4c"></a>
+<tr class="memitem:acd3887c233709f6abc65efc2b5d02fad"><td class="memTemplParams" colspan="2"><a id="acd3887c233709f6abc65efc2b5d02fad"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a934fcf31da2205e2f1c1ed576954ce4c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point_line_to_line</b> (const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;x4, const T &amp;y4, const T &amp;z4, T &amp;Ix, T &amp;Iy, T &amp;Iz, const T &amp;fuzzy=T(0.0))</td></tr>
-<tr class="separator:a934fcf31da2205e2f1c1ed576954ce4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd3887c233709f6abc65efc2b5d02fad"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point_line_to_line</b> (const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;x4, const T &amp;y4, const T &amp;z4, T &amp;Ix, T &amp;Iy, T &amp;Iz)</td></tr>
+<tr class="separator:acd3887c233709f6abc65efc2b5d02fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ec7c87b0ce2f8e326093e1e6d2f1421"><td class="memTemplParams" colspan="2"><a id="a8ec7c87b0ce2f8e326093e1e6d2f1421"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8ec7c87b0ce2f8e326093e1e6d2f1421"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::normalize_angle</b> (const T &amp;angle)</td></tr>
@@ -5642,99 +5631,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="file_a0d9a43243e6fc486f27bd739147560d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a0d9a43243e6fc486f27bd739147560d1">&#9670;&nbsp;</a></span>intersect() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool wykobi::intersect </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>x1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>y1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>x2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>y2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>x3</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>y3</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>x4</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>y4</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T &amp;&#160;</td>
-          <td class="paramname"><em>ix</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T &amp;&#160;</td>
-          <td class="paramname"><em>iy</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Check whether line segment (x1,y1)&ndash;(x2,y2) and (x3,y3)&ndash;(x4,y4) intersects and set (ix,iy) as the intersecting point. </p>
-<dl class="section return"><dt>Returns</dt><dd>true </dd>
-<dd>
-false </dd></dl>
-
-</div>
-</div>
 <a id="file_a1702c58e9ab5b9c2838fb7b719ffc723"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a1702c58e9ab5b9c2838fb7b719ffc723">&#9670;&nbsp;</a></span>intersect() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a1702c58e9ab5b9c2838fb7b719ffc723">&#9670;&nbsp;</a></span>intersect() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -5790,7 +5688,7 @@ false </dd></dl>
 </div>
 </div>
 <a id="file_a937deafb0119ffddd0947fbb15ed7074"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a937deafb0119ffddd0947fbb15ed7074">&#9670;&nbsp;</a></span>intersect() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a937deafb0119ffddd0947fbb15ed7074">&#9670;&nbsp;</a></span>intersect() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -5845,81 +5743,8 @@ false </dd></dl>
 
 </div>
 </div>
-<a id="file_a5c22a464dc1c71b60895c79fa37e1631"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a5c22a464dc1c71b60895c79fa37e1631">&#9670;&nbsp;</a></span>intersection_point() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool wykobi::intersection_point </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::MatrixBase&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>point1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::MatrixBase&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>point2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::MatrixBase&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>point3</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::MatrixBase&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>point4</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::MatrixBase&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>ipoint</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const typename T::Scalar &amp;&#160;</td>
-          <td class="paramname"><em>fuzzy</em> = <code>typename&#160;T::Scalar(0.0)</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the insection point of two line segments p1&ndash;p2 with p3&ndash;p4. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">point1</td><td>Eigen::Vector3x p1 </td></tr>
-    <tr><td class="paramname">point2</td><td>Eigen::Vector3x p2 </td></tr>
-    <tr><td class="paramname">point3</td><td>Eigen::Vector3x p3 </td></tr>
-    <tr><td class="paramname">point4</td><td>Eigen::Vector3x p4 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="file_a4422247b8eb05d0185bc4ce974cedd74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#file_a4422247b8eb05d0185bc4ce974cedd74">&#9670;&nbsp;</a></span>intersection_point() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#file_a4422247b8eb05d0185bc4ce974cedd74">&#9670;&nbsp;</a></span>intersection_point()</h2>
 
 <div class="memitem">
 <div class="memproto">
