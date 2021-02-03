@@ -21,7 +21,6 @@
 #include "wykobi.hpp"
 #include "wykobi_math.hpp"
 
-
 namespace wykobi
 {
    template <typename T>
@@ -1302,25 +1301,8 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,2>& ray1, const ray<T,2>& ray2)
    {
-      vector2d<T> delta = create_perpendicular_vector(ray1.direction);
-      const T denom = dot_product(delta,ray2.direction);
-      // if denom > 0, ray1 points to the left  of ray2
-      //               Then diff must points to the right of ray2 and ray1
-      //         == 0, parallel
-      //          < 0, ray1 points to the right of ray2
-      //               Then diff must points to the left of ray2 and ray1
-
-      if (denom != T(0.0))
-      {
-         vector2d<T> diff = ray1.origin - ray2.origin;
-         vector2d<T> delta2 = - create_perpendicular_vector(ray2.direction);
-
-         const T s = dot_product(diff, delta2) / denom;
-         const T t = dot_product(diff, delta)  / denom;
-         return (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0)));
-      }
-      else // parallel
-        return (point_on_ray(ray2.origin,ray1) || point_on_ray(ray1.origin,ray2));
+      point2d<T> p;
+      return static_cast<bool>(intersection_point<T>(ray1, ray2, p));
    }
 
    template <typename T>
@@ -1331,36 +1313,18 @@ namespace wykobi
       vector3d<T> delta = create_perpendicular_vector(ray1.direction, ray2.direction);
       const T denom = dot_product(delta, ray2.direction);
 
-      // Let's first denote the side that delta points to as right. i.e. r1.direction and delta
-      // forms the basis of the coordinate
-      //
-      // The sign of denom tells us if ray2.direction points to the right or left side of ray1.direction
-      //
-      // Then for the ray to intersect
-      //      if ray2.direction points to the right
-      //               diff must points to the right of ray1 and ray2
-      //      if ray2.direction points to the left
-      //               diff must points to the left of ray1 and ray2
-      //
-      // The first condition is true if dot(diff, delta)*sign(denom) > 0
-      // The second condition is a bit tricky to find because we need to get a vector
-      // that is perpendicular to ray2 and points to the same side defined by delta
-      //
-      // create_perpendicular_vector(ray2.direction, ray1.direction) will give a vector points to the
-      // opposite of delta. That's why we need a negative sign
-      //
-      //
-      // Mathematically, s and t is the solution of the function
+      // Mathematically, s and t are the solutions of the equation
       // ray1.origin + s * ray1.direction = ray2.origin + t * ray2.direction
 
-
-      if (denom != T(0.0))
+      if (not_equal(denom, T(0.0)))
       {
          vector3d<T> diff = ray1.origin - ray2.origin;
-         vector3d<T> delta2 = - create_perpendicular_vector(ray2.direction, ray1.direction);
+         vector3d<T> delta2 = create_perpendicular_vector(ray2.direction, ray1.direction);
 
-         const T s = dot_product(diff, delta2) / denom;
-         const T t = dot_product(diff, delta)  / denom;
+         // const T s = - dot_product(diff, delta2) / dot_product(delta2, ray1.direction);
+         // dot_product(delta2, ray1.direction) == denom if denom != 0
+         const T s = - dot_product(diff, delta2) / denom;
+         const T t =   dot_product(diff, delta)  / denom;
 
          return (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0)));
       }
@@ -1371,49 +1335,34 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,2>& ray, const segment<T,2>& segment)
    {
-      vector2d<T> delta = create_perpendicular_vector(segment[1] - segment[0]);
-
-      const T denom = dot_product(delta,ray.direction);
-
-      if (denom != T(0.0))
-      {
-         vector2d<T> diff = segment[0] - ray.origin;
-         vector2d<T> delta2 = create_perpendicular_vector(ray.direction);
-
-         const T s = dot_product(diff, delta2) / denom;
-         const T t = dot_product(diff, delta) / denom;
-
-         return greater_than_or_equal(s, T(0.0)) &&
-                less_than_or_equal   (s, segment_norm(segment)) &&
-                greater_than_or_equal(t, T(0.0));
-      }
-      else
-        return point_on_ray(segment[0],ray);
+      point2d<T> p;
+      int r = intersection_point(ray, segment, p, true);
+      return r != 0;
    }
 
    template <typename T>
    inline bool intersect(const ray<T,3>& ray, const segment<T,3>& segment)
    {
-      if (!coplanar(ray, segment)) return false;
+     if (!coplanar(ray, segment)) return false;
 
-      const vector3d<T> seg_direction = segment[1] - segment[0];
-      vector3d<T> delta = create_perpendicular_vector(seg_direction, ray.direction);
-      const T denom = dot_product(delta, ray.direction);
+     // Mathematically, s and t are the solutions of the equation
+     // ray.origin + s * ray.direction = segment[0] + t * seg_direction
 
-      if (denom != T(0.0))
-      {
-         vector3d<T> diff = segment[0] - ray.origin;
-         vector3d<T> delta2 = - create_perpendicular_vector(ray.direction, seg_direction);
+     const vector3d<T> seg_direction = segment[1] - segment[0];
+     vector3d<T> delta =
+         create_perpendicular_vector(seg_direction, ray.direction);
+     const T denom = dot_product(delta, ray.direction);
 
-         const T s = dot_product(diff, delta2) / denom;
-         const T t = dot_product(diff, delta)  / denom;
+     if (not_equal(denom, T(0.0))) {
+       vector3d<T> diff = segment[0] - ray.origin;
+       vector3d<T> delta2 = create_perpendicular_vector(ray.direction, seg_direction);
 
-          return greater_than_or_equal(s, T(0.0)) &&
-                 less_than_or_equal   (s, segment_norm(segment)) &&
-                 greater_than_or_equal(t, T(0.0));
-      }
-      else // parallel
-        return point_on_ray(segment[0],ray);
+       const T s = - dot_product(diff, delta2) / denom / vector_norm(seg_direction);
+       const T t =   dot_product(diff, delta) / denom;
+       return greater_than_or_equal(s, T(0.0)) &&
+              less_than_or_equal(s, T(1.0)) && greater_than_or_equal(t, T(0.0));
+     } else  // parallel
+       return point_on_ray(segment[0], ray) || point_on_ray(segment[1], ray);
    }
 
    template <typename T>
@@ -1540,63 +1489,9 @@ namespace wykobi
    template <typename T>
    inline bool intersect(const ray<T,3>& ray, const triangle<T,3>& triangle)
    {
-      // This is an implementation of Möller–Trumbore intersection algorithm
-      const T edge1_x = triangle[1].x - triangle[0].x;
-      const T edge1_y = triangle[1].y - triangle[0].y;
-      const T edge1_z = triangle[1].z - triangle[0].z;
-      const T edge2_x = triangle[2].x - triangle[0].x;
-      const T edge2_y = triangle[2].y - triangle[0].y;
-      const T edge2_z = triangle[2].z - triangle[0].z;
-
-      const T pvec_x = (ray.direction.y * edge2_z) - (ray.direction.z * edge2_y);
-      const T pvec_y = (ray.direction.z * edge2_x) - (ray.direction.x * edge2_z);
-      const T pvec_z = (ray.direction.x * edge2_y) - (ray.direction.y * edge2_x);
-
-      const T det = edge1_x * pvec_x + edge1_y * pvec_y + edge1_z * pvec_z;
-
-      if (is_equal(det,T(0.0))) {
-         if (robust_coplanar(ray.origin, triangle[0], triangle[1], triangle[2])) {
-            if (is_equal(edge1_x*edge2_y - edge1_y*edge2_x, T(0.0)))
-            {
-               if (is_equal(edge1_y*edge2_z - edge1_z*edge2_y, T(0.0)))
-               {
-                  // Project to x-z plane
-                  return intersect(project_onto_plane(ray,1), project_onto_plane(triangle,1));
-               }
-               // Project to y-z plane
-               return intersect(project_onto_plane(ray,0), project_onto_plane(triangle,0));
-            }
-            // Project to x-y plane
-            return intersect(project_onto_plane(ray,2), project_onto_plane(triangle,2));
-         }
-         return false;
-      }
-
-      const T inv_det = T(1.0) / det;
-
-      const T tvec_x = ray.origin.x - triangle[0].x;
-      const T tvec_y = ray.origin.y - triangle[0].y;
-      const T tvec_z = ray.origin.z - triangle[0].z;
-
-      const T u = (tvec_x * pvec_x + tvec_y * pvec_y + tvec_z * pvec_z) * inv_det;
-
-      if (u < 0.0 || u > 1.0) return false;
-
-      const T qvec_x = (tvec_y * edge1_z) - (tvec_z * edge1_y);
-      const T qvec_y = (tvec_z * edge1_x) - (tvec_x * edge1_z);
-      const T qvec_z = (tvec_x * edge1_y) - (tvec_y * edge1_x);
-
-      const T v = (ray.direction.x * qvec_x + ray.direction.y * qvec_y + ray.direction.z * qvec_z) * inv_det;
-
-      if ((v < 0.0) || ((u + v) > 1.0)) return false;
-
-      const T t = (edge2_x * qvec_x + edge2_y * qvec_y + edge2_z * qvec_z) * inv_det;
-
-      return (t >= T(0.0));
-
-      // Intersecting point:
-      // ray.origin + t * ray.direction
-      // if t == 0, the ray origin is in the triangle
+      point3d<T> point;
+      int r = intersection_point(ray, triangle, point, true);
+      return r != 0;
    }
 
    template <typename T>
@@ -2641,96 +2536,172 @@ namespace wykobi
    }
 
    template <typename T>
-   inline point2d<T> intersection_point(const ray<T,2>& ray1, const ray<T,2>& ray2)
+   inline int intersection_point(const ray<T,2>& ray1, const ray<T,2>& ray2, point2d<T>& point)
    {
-      const T denom = ray2.direction * ray1.direction;
+      vector2d<T> delta = create_perpendicular_vector(ray1.direction);
+      const T denom = dot_product(delta,ray2.direction);
+      // solve the equation
+      //      ray1.origin + s * ray1.direction = ray2.origin + t * ray2.direction
 
-      if (denom != T(0.0))
+      if (not_equal(denom, T(0.0)))
       {
          vector2d<T> diff = ray1.origin - ray2.origin;
-         const T s = diff * ray2.direction / denom;
-         const T t = diff * ray1.direction / denom;
+         vector2d<T> delta2 = create_perpendicular_vector(ray2.direction);
+         // noted dot_product(delta2, ray1.direction) = - dot_product(delta, ray2.direction)
+
+         const T s = dot_product(diff, delta2) / denom;
+         const T t = dot_product(diff, delta)  / denom;
+         if (greater_than_or_equal(s,T(0.0)) &&  greater_than_or_equal(t,T(0.0))) {
+            point = point2d<T>(ray1.origin.x + s * ray1.direction.x, ray1.origin.y + s*ray1.direction.y);
+            return 1;
+         }
+         point = degenerate_point2d<T>();
+         return 0;
+      }
+
+      if (is_equal(ray1.origin, ray2.origin) && is_equal(ray1.direction.x + ray2.direction.x, T(0.0)))
+      {
+         point = ray1.origin;
+         return 1;
+      }
+
+      // parallel or intersect at more than a point
+      point = degenerate_point2d<T>();
+      return static_cast<int>(point_on_ray(ray2.origin,ray1) || point_on_ray(ray1.origin,ray2));
+   }
+
+
+   template <typename T>
+   inline point2d<T> intersection_point(const ray<T,2>& ray1, const ray<T,2>& ray2)
+   {
+      point2d<T> p;
+      intersection_point<T>(ray1, ray2, p);
+      return p;
+   }
+
+   template <typename T>
+   inline int intersection_point(const ray<T,2>& ray, const segment<T,2>& segment, point2d<T>& point, bool robust)
+   {
+      // ray is like ray2, segment[0]->segment[1] is like ray1
+      vector2d<T> v = segment[1] - segment[0];
+      vector2d<T> delta = create_perpendicular_vector(v);
+      const T denom = dot_product(delta, ray.direction);
+
+      if (not_equal(denom, T(0.0)))
+      {
+         vector2d<T> diff = segment[0] - ray.origin;
+         vector2d<T> delta2 = create_perpendicular_vector(ray.direction);
+
+         const T s = dot_product(diff, delta2) / denom;
+         const T t = dot_product(diff, delta)  / denom;
 
          if (
-              greater_than_or_equal(s,T(0.0)) &&
-              greater_than_or_equal(t,T(0.0))
+               greater_than_or_equal(s, T(0.0)) &&
+               less_than_or_equal   (s, segment_norm(segment)) &&
+               greater_than_or_equal(t, T(0.0))
             )
-            return make_point
+         {
+            point = point2d<T>
                    (
-                     ray1.origin.x + (ray1.direction.x * s),
-                     ray1.origin.y + (ray1.direction.y * s)
+                     ray.origin.x + (ray.direction.x * t),
+                     ray.origin.y + (ray.direction.y * t)
                    );
+            return greater_than_or_equal(denom, T(0.0)) ? 1 : -1;
+         } else {
+            point = degenerate_point2d<T>();
+            return 0;
+         }
       }
-      // if they are on the same line, or they don't intersect, return degenerate point
-      return degenerate_point2d<T>();
+
+      bool b0 = point_on_ray(segment[0], ray);
+      bool b1 = point_on_ray(segment[1], ray);
+      point = degenerate_point2d<T>();
+
+      if (robust) {
+         if (!(b0 || b1)) return 0;
+
+         int d = greater_than_or_equal(dot_product(v, ray.direction), T(0.0)) ? 1 : -1;
+         // I don't really think the following two conditions could happen...just  put it here in case ..
+         if (
+               (is_equal(ray.origin, segment[0]) && !b1) ||
+               (is_equal(ray.origin, segment[1]) && !b0)
+         )
+         {
+            point = ray.origin;
+            return 2 * d;
+         }
+         return 3*d;
+      } else {
+         return 0;
+      }
    }
 
    template <typename T>
    inline point2d<T> intersection_point(const ray<T,2>& ray, const segment<T,2>& segment)
    {
-      vector2d<T> delta = perpendicular(segment[1] - segment[0]);
-      // ray is like ray2, segment[0]->segment[1] is like ray1
-      const T denom = dot_product(delta, ray.direction);
-
-      if (denom != T(0.0))
-      {
-         vector2d<T> diff = segment[0] - ray.origin;
-
-         const T s = dot_product(delta, diff) / denom;
-         const T t = dot_product(create_perpendicular_vector(ray.direction), diff) / denom;
-
-         if (
-               greater_than_or_equal(t, T(0.0)) &&
-               less_than_or_equal   (t, T(1.0)) &&
-               greater_than_or_equal(s, T(0.0))
-            )
-            return make_point
-                   (
-                     ray.origin.x + (ray.direction.x * s),
-                     ray.origin.y + (ray.direction.y * s)
-                   );
-      }
-
-      // if they are on the same line, or they don't intersect, return degenerate point
-      return degenerate_point2d<T>();
+      point2d<T> p;
+      intersection_point(ray, segment, p, true);
+      return p;
    }
 
    template <typename T>
-   inline point3d<T> intersection_point_coplanar(const ray<T,3>& ray, const segment<T,3>& segment)
+   inline point3d<T> intersection_point(const ray<T,3>& ray, const segment<T,3>& segment)
    {
-      vector3d<T> r = segment[1] - segment[0];
-      vector3d<T> delta = perpendicular(r, ray.direction);
-
+      if (!coplanar(ray, segment)) return degenerate_point3d<T>();
+      vector3d<T> v = segment[1] - segment[0];
+      vector3d<T> delta = create_perpendicular_vector(v, ray.direction);
       const T denom = dot_product(delta, ray.direction);
 
-      if (denom != T(0.0))
+      if (not_equal(denom, T(0.0)))
       {
          vector3d<T> diff = segment[0] - ray.origin;
+         vector3d<T> delta2 = create_perpendicular_vector(ray.direction, v);
 
-         const T s = dot_product(delta, diff) / denom;
-         const T t = - dot_product(diff - s * ray.direction, r) / vector_square_norm(r);
+         const T s = - dot_product(diff, delta2) / denom / vector_norm(v);
+         const T t = dot_product(diff, delta)  / denom;
 
          if (
-               greater_than_or_equal(t, T(0.0)) &&
-               less_than_or_equal   (t, T(1.0)) &&
-               greater_than_or_equal(s, T(0.0))
+               greater_than_or_equal(s, T(0.0)) &&
+               less_than_or_equal   (s, T(1.0)) &&
+               greater_than_or_equal(t, T(0.0))
             )
-            return make_point
+         {
+            return point3d<T>
                    (
-                     ray.origin.x + (ray.direction.x * s),
-                     ray.origin.y + (ray.direction.y * s),
-                     ray.origin.z + (ray.direction.z * s)
+                     ray.origin.x + (ray.direction.x * t),
+                     ray.origin.y + (ray.direction.y * t),
+                     ray.origin.z + (ray.direction.z * t)
                    );
+         }
+         return degenerate_point3d<T>();
       }
 
-      // if they are on the same line, or they don't intersect, return degenerate point
+      bool b0 = point_on_ray(segment[0], ray);
+      bool b1 = point_on_ray(segment[1], ray);
+
+      if (!(b0 || b1)) return degenerate_point3d<T>();
+
+      // I don't really think the following two conditions could happen...just  put it here in case ..
+      if (
+            (is_equal(ray.origin, segment[0]) && !b1) ||
+            (is_equal(ray.origin, segment[1]) && !b0)
+      )
+      {
+         return ray.origin;
+      }
       return degenerate_point3d<T>();
    }
 
-
    template <typename T>
-   inline point3d<T> intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle)
+   inline int intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle, point3d<T>& point, bool robust)
    {
+      point = degenerate_point3d<T>();
+      // This is an implementation of Möller–Trumbore intersection algorithm
+      // It solve the following equation
+      //    ray.origin + t * ray.direction = (1-u-v) * p0 + u*p1 + v*p2
+      // After some rearrangement
+      //    u * (p1 - p0) + v * (p2 - p0) - t * ray.direction = ray.origin - p0
+      // They intersects inside the triangle if 0 < u + v < 1, t >= 0
       const T edge1_x = triangle[1].x - triangle[0].x;
       const T edge1_y = triangle[1].y - triangle[0].y;
       const T edge1_z = triangle[1].z - triangle[0].z;
@@ -2739,15 +2710,34 @@ namespace wykobi
       const T edge2_y = triangle[2].y - triangle[0].y;
       const T edge2_z = triangle[2].z - triangle[0].z;
 
+      // With Cramer rule, the determinant of the system is
+      //           dot_product(p1 - p0, cross_product(ray.direction, p2-p0))
+      //         = dot_product(ray.direction, cross_product(p2-p0, p1-p0))
       const T pvec_x = (ray.direction.y * edge2_z) - (ray.direction.z * edge2_y);
       const T pvec_y = (ray.direction.z * edge2_x) - (ray.direction.x * edge2_z);
       const T pvec_z = (ray.direction.x * edge2_y) - (ray.direction.y * edge2_x);
 
       const T det = edge1_x * pvec_x + edge1_y * pvec_y + edge1_z * pvec_z;
 
-      if (is_equal(det,T(0.0)))
-      {
-         return degenerate_point3d<T>();
+      // if det == 0, it means either the ray is in the plane or it's parallel to the plane
+      if (is_equal(det,T(0.0))) {
+         if (robust) {
+            if (robust_coplanar(ray.origin, triangle[0], triangle[1], triangle[2])) {
+               if (is_equal(edge1_x*edge2_y - edge1_y*edge2_x, T(0.0)))
+               {
+                  if (is_equal(edge1_y*edge2_z - edge1_z*edge2_y, T(0.0)))
+                  {
+                     // Project to x-z plane
+                     return intersect(project_onto_plane(ray,1), project_onto_plane(triangle,1)) ? 1 : 0;
+                  }
+                  // Project to y-z plane
+                  return intersect(project_onto_plane(ray,0), project_onto_plane(triangle,0)) ? 1 : 0;
+               }
+               // Project to x-y plane
+               return intersect(project_onto_plane(ray,2), project_onto_plane(triangle,2)) ? 1: 0;
+            }
+         }
+         return 0;
       }
 
       const T inv_det = T(1.0) / det;
@@ -2758,10 +2748,7 @@ namespace wykobi
 
       const T u = (tvec_x * pvec_x + tvec_y * pvec_y + tvec_z * pvec_z) * inv_det;
 
-      if ((u < T(0.0)) || (u > T(1.0)))
-      {
-         return degenerate_point3d<T>();
-      }
+      if (u < 0.0 || u > 1.0) return 0;
 
       const T qvec_x = (tvec_y * edge1_z) - (tvec_z * edge1_y);
       const T qvec_y = (tvec_z * edge1_x) - (tvec_x * edge1_z);
@@ -2769,22 +2756,25 @@ namespace wykobi
 
       const T v = (ray.direction.x * qvec_x + ray.direction.y * qvec_y + ray.direction.z * qvec_z) * inv_det;
 
-      if ((v < T(0.0)) || ((u + v) > T(1.0)))
-      {
-         return degenerate_point3d<T>();
-      }
+      if ((v < 0.0) || ((u + v) > 1.0)) return 0;
 
       const T t = (edge2_x * qvec_x + edge2_y * qvec_y + edge2_z * qvec_z) * inv_det;
 
-      if (t > T(0.0))
-         return make_point
-                (
-                  ray.origin.x + (ray.direction.x * t),
-                  ray.origin.y + (ray.direction.y * t),
-                  ray.origin.z + (ray.direction.z * t)
-                );
-      else
-         return degenerate_point3d<T>();
+      if (t < 0.0) return 0;
+
+      point.x = ray.origin.x + t * ray.direction.x;
+      point.y = ray.origin.y + t * ray.direction.y;
+      point.z = ray.origin.z + t * ray.direction.z;
+
+      return det > 0 ? -1 : 1;
+   }
+
+   template <typename T>
+   inline point3d<T> intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle)
+   {
+      point3d<T> point;
+      int r = intersection_point(ray, triangle, point, false);
+      return point;
    }
 
    template <typename T>
@@ -14860,20 +14850,28 @@ namespace wykobi
    template <typename T>
    inline vector2d<T> create_perpendicular_vector(const vector2d<T>& v)
    {
-      return normalize(vector2d<T>(v.y,-v.x));
+      return normalize(vector2d<T>(-v.y,+v.x));
    }
 
    template <typename T>
    inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v)
    {
-      return normliaze(vector2d<T>(v.y,-v.x,v.z));
+      if (is_equal(v.x, T(0.0)) && is_equal(v.y, T(0.0))) {
+         return vector3d<T>(0, -v.z/abs(v.z), 0);
+      }
+      return normalize(vector3d<T>(-v.y,+v.x,0.0));
    }
 
    template <typename T>
    inline vector3d<T> create_perpendicular_vector(const vector3d<T>& v, const vector3d<T>& w)
    {
-      vector3d<T> u = w*v;
-      return normalize(v*u);
+      vector3d<T> u = v*w;
+      if (is_equal(vector_square_norm(u), T(0.0))) {
+         // this condition should never happen since if v and u are in the same direction
+         // there is no meaning to create normal vectors for them
+         return create_perpendicular_vector<T>(v);
+      }
+      return normalize(u*v);
    }
 
    template <typename T>
@@ -15190,6 +15188,20 @@ namespace wykobi
    }
 
    template <typename T>
+   inline bool is_equal(const vector2d<T>& vec1, const vector2d<T>& vec2, const T& epsilon)
+   {
+      return (is_equal(vec1.x,vec2.x,epsilon) && is_equal(vec1.y,vec2.y,epsilon));
+   }
+
+   template <typename T>
+   inline bool is_equal(const vector3d<T>& vec1, const vector3d<T>& vec2, const T& epsilon)
+   {
+      return is_equal(vec1.x,vec2.x,epsilon) &&
+             is_equal(vec1.y,vec2.y,epsilon) &&
+             is_equal(vec1.z,vec2.z,epsilon) ;
+   }
+
+   template <typename T>
    inline bool is_equal(const T& val1, const T& val2)
    {
       return is_equal(val1,val2,T(Epsilon));
@@ -15205,6 +15217,18 @@ namespace wykobi
    inline bool is_equal(const point3d<T>& point1, const point3d<T>& point2)
    {
       return is_equal(point1,point2,T(Epsilon));
+   }
+
+   template <typename T>
+   inline bool is_equal(const vector2d<T>& vector1, const vector2d<T>& vector2)
+   {
+      return is_equal(vector1,vector2,T(Epsilon));
+   }
+
+   template <typename T>
+   inline bool is_equal(const vector3d<T>& vector1, const vector3d<T>& vector2)
+   {
+      return is_equal(vector1,vector2,T(Epsilon));
    }
 
    template <typename T>

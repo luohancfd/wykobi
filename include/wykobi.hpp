@@ -165,6 +165,10 @@ namespace wykobi
    template <typename T> inline point2d<T> operator*(const point2d<T>& point, const T& scale);
    template <typename T> inline point2d<T> operator*(const T& scale, const point2d<T>& point);
    template <typename T> inline point2d<T> operator+(const point2d<T>& p1, const point2d<T>& p2);
+   template <typename T>
+   inline point2d<T> operator-(const point2d<T>& p1) {
+      return point2d<T>(-p1.x, -p1.y);
+   }
 
    template <typename T = Float>
    class point3d : public geometric_entity
@@ -242,7 +246,10 @@ namespace wykobi
    template <typename T> inline point3d<T> operator*(const point3d<T>& point, const T& scale);
    template <typename T> inline point3d<T> operator*(const T& scale, const point3d<T>& point);
    template <typename T> inline point3d<T> operator+(const point3d<T>& p1, const point3d<T>& p2);
-
+   template <typename T>
+   inline point3d<T> operator-(const point3d<T>& p1) {
+      return point3d<T>(-p1.x, -p1.y, -p1.z);
+   }
    template <typename T, std::size_t D>
    class pointnd : public geometric_entity
    {
@@ -784,6 +791,10 @@ namespace wykobi
    template <typename T> inline vector2d<T> operator*(const vector2d<T>& v1, const T& scale);
    template <typename T> inline vector2d<T> operator*(const T& scale, const vector2d<T>& v1);
    template <typename T> inline vector2d<T> operator/(const vector2d<T>& v1, const T& scale);
+   template <typename T>
+   inline vector2d<T> operator-(const vector2d<T>& p1) {
+      return vector2d<T>(-p1.x, -p1.y, -p1.z);
+   }
 
    template <typename T>
    class vector3d : public point3d<T>
@@ -811,7 +822,10 @@ namespace wykobi
    template <typename T> inline vector3d<T> operator*(const vector3d<T>& v1, const T& scale);
    template <typename T> inline vector3d<T> operator*(const T& scale, const vector3d<T>& v1);
    template <typename T> inline vector3d<T> operator/(const vector3d<T>& v1, const T& scale);
-
+   template <typename T>
+   inline vector3d<T> operator-(const vector3d<T>& p1) {
+      return vector3d<T>(-p1.x, -p1.y, -p1.z);
+   }
 
    template <typename T, std::size_t D>
    class vectornd : public pointnd<T,D>
@@ -1665,11 +1679,64 @@ namespace wykobi
                                   const sphere<T>& sphere,
                                   OutputIterator out);
 
+   /**
+    * @brief Calculate the intersecting point of two rays.
+    * @details The function could return the following results
+    *          - 1 with some value of point: The rays intersect at exact one point (including the edge)
+    *          - 0 with degenerated point:   The rays don't intersect at all
+    *          - 1 with degenerated point:   The ray intersect at more than one point.
+    *
+    * @tparam T
+    * @param ray1
+    * @param ray2
+    * @param point
+    * @return int
+    */
+   template <typename T>
+   inline int intersection_point(const ray<T,2>& ray1, const ray<T,2>& ray2, point2d<T>& point);
+
    template <typename T>
    inline point2d<T> intersection_point(const ray<T,2>& ray1, const ray<T,2>& ray2);
 
+   /**
+    * @brief Calculate the intersecting point of a ray and a segment
+    * @details The function could return the following results
+    *          - 1 or -1 with some value of point: They intersect at one point. +1 if the ray points to the LHS of the segment, vice verse
+    *          - 0 with degenerated point:   They don't intersect at all
+    *          - 2 or -2 with some value of point: They intersect at the ray origin. +2 if they have the same direction, vice verse
+    *          - 3 or -3 with degenerate point: They intersect at more than one point. +3 if they have the same direction.
+    *         If robust is false, the code only check condition 1, -1. Other conditions will give 0;
+    *
+    * @tparam T
+    * @param ray1
+    * @param ray2
+    * @param point
+    * @param robust
+    * @return int
+    */
+   template <typename T>
+   inline int intersection_point(const ray<T,2>& ray1, const segment<T,2>& segment, point2d<T>& point, bool robust = true);
+
    template <typename T>
    inline point2d<T> intersection_point(const ray<T,2>& ray, const segment<T,2>& segment);
+
+   template <typename T>
+   inline point3d<T> intersection_point(const ray<T,3>& ray, const segment<T,3>& segment);
+
+   /**
+    * @brief Calculate the intersecting point of a ray and a triangle
+    * @details The function could return the following results
+    *          -
+    *
+    * @tparam T
+    * @param ray
+    * @param triangle
+    * @param point
+    * @param robust
+    * @return int
+    */
+   template <typename T>
+   inline int intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle, point3d<T>& point, bool robust = true);
 
    template <typename T>
    inline point3d<T> intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle);
@@ -3960,7 +4027,7 @@ namespace wykobi
    template <typename T> inline vector3d<T> normalize(const vector3d<T>& v);
 
    /**
-    * @brief Calculate a normalized vector perpendicular to v in the clockwise direction
+    * @brief Calculate a normalized vector perpendicular to v in the counter-clockwise direction, i.e. left
     *
     * @tparam T
     * @param v
@@ -3971,7 +4038,8 @@ namespace wykobi
    /**
     * @brief Calculate a normalized vector that is
     *           1. perpendicular to vector v
-    *           2. in the plane formed by vector v and w. The plane normal is w * v
+    *           2. in the plane formed by vector v and w. The plane normal is v*u
+    *           3. pointing to the left of vector v
     *
     * @tparam T
     * @param v
@@ -4002,9 +4070,15 @@ namespace wykobi
    template <typename T> inline bool is_equal(const point2d<T>& point1, const point2d<T>& point2, const T& epsilon);
    template <typename T> inline bool is_equal(const point3d<T>& point1, const point3d<T>& point2, const T& epsilon);
 
+   template <typename T> inline bool is_equal(const vector2d<T>& vector1, const vector2d<T>& vector2, const T& epsilon);
+   template <typename T> inline bool is_equal(const vector3d<T>& vector1, const vector3d<T>& vector2, const T& epsilon);
+
    template <typename T> inline bool is_equal(const T& val1, const T& val2);
    template <typename T> inline bool is_equal(const point2d<T>& point1, const point2d<T>& point2);
    template <typename T> inline bool is_equal(const point3d<T>& point1, const point3d<T>& point2);
+
+   template <typename T> inline bool is_equal(const vector2d<T>& vector1, const vector2d<T>& vector2);
+   template <typename T> inline bool is_equal(const vector3d<T>& vector1, const vector3d<T>& vector2);
 
    template <typename T> inline bool is_equal(const rectangle<T>& rectangle1, const rectangle<T>& rectangle2);
    template <typename T> inline bool is_equal(const circle<T>& circle1, const circle<T>& circle2);
