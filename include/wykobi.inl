@@ -41,22 +41,18 @@ namespace wykobi
                           const T& x3, const T& y3, const T& z3,
                           const T& px, const T& py, const T& pz)
    {
-      const T px1 = x1 - px;
-      const T px2 = x2 - px;
-      const T px3 = x3 - px;
+      const T ux = x2 - x1;
+      const T uy = y2 - y1;
+      const T uz = z2 - z1;
 
-      const T py1 = y1 - py;
-      const T py2 = y2 - py;
-      const T py3 = y3 - py;
-
-      const T pz1 = z1 - pz;
-      const T pz2 = z2 - pz;
-      const T pz3 = z3 - pz;
+      const T vx = x3 - x1;
+      const T vy = y3 - y1;
+      const T vz = z3 - z1;
 
       // orin = dot_product(p1, cross_product(p3 - p1, p2 - p1))
-      const T orin = px1 * (py2 * pz3 - pz2 * py3) +
-                     px2 * (py3 * pz1 - pz3 * py1) +
-                     px3 * (py1 * pz2 - pz1 * py2) ;
+      const T orin = (px - x1) * (uy * vz - vy * uz) +
+                     (py - y1) * (uz * vx - vz * ux) +
+                     (pz - z1) * (ux * vy - vx * uy) ;
 
       if (orin < T(0.0))      return BelowOrientation;    /* Orientaion is below plane                      */
       else if (orin > T(0.0)) return AboveOrientation;    /* Orientaion is above plane                      */
@@ -90,21 +86,18 @@ namespace wykobi
                                  const T& x3, const T& y3, const T& z3,
                                  const T& px, const T& py, const T& pz)
    {
-      const T px1 = x1 - px;
-      const T px2 = x2 - px;
-      const T px3 = x3 - px;
+      const T ux = x2 - x1;
+      const T uy = y2 - y1;
+      const T uz = z2 - z1;
 
-      const T py1 = y1 - py;
-      const T py2 = y2 - py;
-      const T py3 = y3 - py;
+      const T vx = x3 - x1;
+      const T vy = y3 - y1;
+      const T vz = z3 - z1;
 
-      const T pz1 = z1 - pz;
-      const T pz2 = z2 - pz;
-      const T pz3 = z3 - pz;
-
-      const T orin = px1 * (py2 * pz3 - pz2 * py3) +
-                     px2 * (py3 * pz1 - pz3 * py1) +
-                     px3 * (py1 * pz2 - pz1 * py2) ;
+      // orin = dot_product(p1, cross_product(p3 - p1, p2 - p1))
+      const T orin = (px - x1) * (uy * vz - vy * uz) +
+                     (py - y1) * (uz * vx - vz * ux) +
+                     (pz - z1) * (ux * vy - vx * uy) ;
 
       if (is_equal(orin,T(0.0))) return CoplanarOrientation; /* Orientaion is coplanar to plane if Result is 0 */
       else if (orin < T(0.0))    return BelowOrientation;    /* Orientaion is below plane                      */
@@ -1685,7 +1678,7 @@ namespace wykobi
 
       if (x3 > x4) {
          std::swap(x3, x4);
-         std::swap(y2, y4);
+         std::swap(y3, y4);
       }
 
       T ax = x2 - x1;

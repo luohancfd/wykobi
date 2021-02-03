@@ -1071,7 +1071,7 @@ namespace wykobi
     * @brief Check the position of vector (px,py) relative
     *        to a plane. The plane is formed by vector (1 -> 2)
     *        and vector (1 -> 3). The plane normal direction is
-    *        (1->3)x(1-2). For example, orientation(0,0,0, 1,0,0, 0,0,1, 0,1,0)
+    *        (1->2)x(1->3). For example, orientation(0,0,0, 1,0,0, 0,1,0, 0,0,1)
     *        will result in AboveOrientation.
     * @return int
     */
