@@ -2585,12 +2585,12 @@ namespace wykobi
          vector2d<T> diff = segment[0] - ray.origin;
          vector2d<T> delta2 = create_perpendicular_vector(ray.direction);
 
-         const T s = dot_product(diff, delta2) / denom;
+         const T s = dot_product(diff, delta2) / denom / vector_norm(v);
          const T t = dot_product(diff, delta)  / denom;
 
          if (
                greater_than_or_equal(s, T(0.0)) &&
-               less_than_or_equal   (s, segment_norm(segment)) &&
+               less_than_or_equal   (s, T(1.0)) &&
                greater_than_or_equal(t, T(0.0))
             )
          {

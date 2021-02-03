@@ -24,8 +24,41 @@
 #include <iomanip>
 using namespace wykobi;
 int main(void) {
-  double x, y;
-  std::cout << intersect(segment2d(-1, 0, 1, 0), segment2d(-2, 0, -0.9,0), x, y) << std::endl;
-  std::cout << x << ", "<< y << std::endl;
+
+  point2d<double> p2;
+  point3d<double> p3;
+
+  std::cout << "Test: inline int intersection_point(const ray<T,2>& ray, const segment<T,2>& segment, point2d<T>& point, bool robust)" <<std::endl;
+  std::cout << intersection_point(ray2d(0,0,0,-1), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(0,0.1,2, -0.1), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(0,-1, 0,1), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(2,0, 0,1), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(2,0, 1,0), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(2,0, -1,0), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(-2,0, -1,0), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(0,0, -1,0), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+  std::cout << intersection_point(ray2d(-3,0, -1,0), segment2d(-2,0,2,0), p2) << std::endl;
+  std::cout << p2 << std::endl;
+
+  std::cout << "Test: inline int intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle, point3d<T>& point, bool robust)" <<std::endl;
+  triangle3d tr(-1,-1,0, 1,-1,0, 0,2,0);
+  std::cout << intersection_point(ray3d(0,0,-1,0,0,1), tr, p3) <<std::endl;
+  std::cout << p3 <<std::endl;
+  std::cout << intersection_point(ray3d(0,0, 0,0,0,1), tr, p3) <<std::endl;
+  std::cout << p3 <<std::endl;
+  std::cout << intersection_point(ray3d(0,0, 1,0,0,-1), tr, p3) <<std::endl;
+  std::cout << p3 <<std::endl;
+  std::cout << intersection_point(ray3d(0,0, 1,-1,-1,-1), tr, p3) <<std::endl;
+  std::cout << p3 <<std::endl;
+  std::cout << intersection_point(ray3d(0,0, -0.1,-1,-1,-2), tr, p3) <<std::endl;
+  std::cout << p3 <<std::endl;
 
 }
