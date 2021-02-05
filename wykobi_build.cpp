@@ -61,4 +61,8 @@ int main(void) {
   std::cout << intersection_point(ray3d(0,0, -0.1,-1,-1,-2), tr, p3) <<std::endl;
   std::cout << p3 <<std::endl;
 
+  polygon<double,3> poly(std::vector<point3d<double>>{point3d<double>(1,0,1), point3d<double>(0,1,1), point3d<double>(-1,0,0), point3d<double>(0,-1,0)});
+  std::cout << intersection_point(ray3d(0,0,-1,0,0,1), poly, p3) <<std::endl;
+  std::cout << p3 <<std::endl;
+
 }

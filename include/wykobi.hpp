@@ -567,13 +567,16 @@ namespace wykobi
    class polygon : public geometric_entity
    {
    public:
-
-      polygon(const std::size_t initial_size = 0) : _data(initial_size){}
-     ~polygon(){}
-
       typedef typename define_point_type<T,Dimension>::PointType PointType;
       typedef const PointType& const_reference;
       typedef PointType& reference;
+
+      polygon(const std::size_t initial_size = 0) : _data(initial_size){}
+      polygon(const std::vector<PointType>& p) : _data(p){}
+
+     ~polygon(){}
+
+
 
    private:
 
@@ -1737,6 +1740,9 @@ namespace wykobi
     */
    template <typename T>
    inline int intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle, point3d<T>& point, bool robust = true);
+
+   template <typename T>
+   inline int intersection_point(const ray<T,3>& ray, const polygon<T,3>& polygon, point3d<T>& point, bool robust = true);
 
    template <typename T>
    inline point3d<T> intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle);
@@ -4245,6 +4251,8 @@ namespace wykobi
    template <typename T> inline triangle<T,2> make_triangle(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3);
    template <typename T> inline triangle<T,3> make_triangle(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3);
    template <typename T> inline triangle<typename T::Scalar, 3> make_triangle(const Eigen::MatrixBase<T>& point1, const Eigen::MatrixBase<T>& point2, const Eigen::MatrixBase<T>& point3);
+   template <typename T, std::size_t Dimension>
+   inline triangle<T, Dimension> make_triangle(const polygon<T, Dimension>& p, std::size_t i, std::size_t j, std::size_t k);
 
    template <typename T> inline quadix<T,2> make_quadix(const T& x1, const T& y1,
                                                         const T& x2, const T& y2,

@@ -2763,6 +2763,26 @@ namespace wykobi
    }
 
    template <typename T>
+   inline int intersection_point(const ray<T,3>& ray, const polygon<T,3>& polygon, point3d<T>& point, bool robust)
+   {
+      point3d<T> p;
+      int r;
+      for (size_t i = 1; i < polygon.size() - 1; ++i)
+      {
+         auto tri = make_triangle<T, 3>(polygon, 0, i, i+1);
+         r = intersection_point(ray, tri, p, false);
+         if (r != 0) {
+            point = p;
+            return r;
+         }
+      }
+
+      point = degenerate_point3d<T>();
+      return 0;
+   }
+
+
+   template <typename T>
    inline point3d<T> intersection_point(const ray<T,3>& ray, const triangle<T,3>& triangle)
    {
       point3d<T> point;
@@ -16144,6 +16164,11 @@ namespace wykobi
                            point3(0),point3(1),point3(2));
    }
 
+   template <typename T, std::size_t Dimension>
+   inline triangle<T, Dimension> make_triangle(const polygon<T, Dimension>& p, std::size_t i, std::size_t j, std::size_t k)
+   {
+      return triangle<T, Dimension>(p[i], p[j], p[k]);
+   }
 
    template <typename T>
    inline quadix<T,2> make_quadix(const T& x1, const T& y1,
