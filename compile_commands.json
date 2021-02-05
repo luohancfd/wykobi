@@ -1,0 +1,7 @@
+[
+{
+  "directory": "./",
+  "command": "/usr/bin/g++  -I/usr/include/eigen3 -I./include -g -o build/CMakeFiles/wykobi_build.dir/wykobi_build.cpp.o -c wykobi_build.cpp",
+  "file": "./wykobi_build.cpp"
+}
+]
