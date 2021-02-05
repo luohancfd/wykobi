@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"classwykobi_1_1rectangle.html#ac9e33bfa85bc688b72b544cc9d1e53b8":[0,0,0,33,2],
 "classwykobi_1_1rectangle.html#ad0e52d017c8b6f8fd7fe8ef4a7fbf845":[0,0,0,33,7],
 "classwykobi_1_1rectangle.html#ad707b3663c7ce82029d6452f2421d0f8":[0,0,0,33,6],
 "classwykobi_1_1rectangle.html#affc86e0a34fdcf031f85d11613c58352":[0,0,0,33,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball.html":[0,0,0,0,17],
 "structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html":[0,0,0,0,18],
 "structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html#a202dc3e803d88debeef25ea898469d9f":[0,0,0,0,18,0],
-"structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter.html":[0,0,0,0,19],
-"structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter_3_01point2d_3_01T_01_4_01_4.html":[0,0,0,0,20]
+"structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter.html":[0,0,0,0,19]
 };

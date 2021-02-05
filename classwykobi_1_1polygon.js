@@ -7,6 +7,7 @@ var classwykobi_1_1polygon =
     [ "reference", "classwykobi_1_1polygon.html#adaf97c0b59d110392dc0395bac672176", null ],
     [ "value_type", "classwykobi_1_1polygon.html#a19946f7fc17bac5b75ec0bfba14a1254", null ],
     [ "polygon", "classwykobi_1_1polygon.html#a3c5acbbc8d22be32a23bf817daed9b3d", null ],
+    [ "polygon", "classwykobi_1_1polygon.html#a67a00c0343f9fe4a68370859a840dd13", null ],
     [ "~polygon", "classwykobi_1_1polygon.html#adec7df64d846c8be7c7b8860ff6d9e6e", null ],
     [ "back", "classwykobi_1_1polygon.html#af633d30af94b4ae177c3d9cba4a5d0c2", null ],
     [ "back", "classwykobi_1_1polygon.html#aa7e0c1a00223d7f9b9617f1e5b07aa38", null ],

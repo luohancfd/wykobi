@@ -29,7 +29,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Wykobi
-   &#160;<span id="projectnumber">a5cf0d1abe11dcae5d177397cbaa5474a02a117b</span>
+   &#160;<span id="projectnumber">1fe459cfeb281c2302d65ddb1374f5bbd99aca2f</span>
    </div>
   </td>
  </tr>
@@ -1046,6 +1046,10 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a6ab26049561a7b34dac848cf0bcf9cc0"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="wykobi_8hpp.html#a6ab26049561a7b34dac848cf0bcf9cc0">wykobi::intersection_point</a> (const ray&lt; T, 3 &gt; &amp;ray, const triangle&lt; T, 3 &gt; &amp;triangle, point3d&lt; T &gt; &amp;point, bool robust=true)</td></tr>
 <tr class="memdesc:a6ab26049561a7b34dac848cf0bcf9cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the intersecting point of a ray and a triangle.  <a href="wykobi_8hpp.html#a6ab26049561a7b34dac848cf0bcf9cc0">More...</a><br /></td></tr>
 <tr class="separator:a6ab26049561a7b34dac848cf0bcf9cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37d5b6c0dafedbd11c265ff1b8c5d1a1"><td class="memTemplParams" colspan="2"><a id="a37d5b6c0dafedbd11c265ff1b8c5d1a1"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a37d5b6c0dafedbd11c265ff1b8c5d1a1"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const ray&lt; T, 3 &gt; &amp;ray, const polygon&lt; T, 3 &gt; &amp;polygon, point3d&lt; T &gt; &amp;point, bool robust=true)</td></tr>
+<tr class="separator:a37d5b6c0dafedbd11c265ff1b8c5d1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a449d79bf7424b564471446e8ab70cb57"><td class="memTemplParams" colspan="2"><a id="a449d79bf7424b564471446e8ab70cb57"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a449d79bf7424b564471446e8ab70cb57"><td class="memTemplItemLeft" align="right" valign="top">point3d&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::intersection_point</b> (const ray&lt; T, 3 &gt; &amp;ray, const triangle&lt; T, 3 &gt; &amp;triangle)</td></tr>
@@ -5147,6 +5151,10 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a6978fd6183939c9cf43888d27c52448b"><td class="memTemplItemLeft" align="right" valign="top">triangle&lt; typename T::Scalar, 3 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_triangle</b> (const Eigen::MatrixBase&lt; T &gt; &amp;point1, const Eigen::MatrixBase&lt; T &gt; &amp;point2, const Eigen::MatrixBase&lt; T &gt; &amp;point3)</td></tr>
 <tr class="separator:a6978fd6183939c9cf43888d27c52448b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe2e87d493318ea72eeb7a7a272f308c"><td class="memTemplParams" colspan="2"><a id="abe2e87d493318ea72eeb7a7a272f308c"></a>
+template&lt;typename T , std::size_t Dimension&gt; </td></tr>
+<tr class="memitem:abe2e87d493318ea72eeb7a7a272f308c"><td class="memTemplItemLeft" align="right" valign="top">triangle&lt; T, Dimension &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_triangle</b> (const polygon&lt; T, Dimension &gt; &amp;p, std::size_t i, std::size_t j, std::size_t k)</td></tr>
+<tr class="separator:abe2e87d493318ea72eeb7a7a272f308c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a288d18101a0b1cbc43057163a05b6a8d"><td class="memTemplParams" colspan="2"><a id="a288d18101a0b1cbc43057163a05b6a8d"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a288d18101a0b1cbc43057163a05b6a8d"><td class="memTemplItemLeft" align="right" valign="top">quadix&lt; T, 2 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wykobi::make_quadix</b> (const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;x3, const T &amp;y3, const T &amp;x4, const T &amp;y4)</td></tr>
