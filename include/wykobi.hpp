@@ -36,8 +36,7 @@
 #include <vector>
 #include <cassert>
 #include <iomanip>
-#include <Eigen/Core>
-#include "Eigen/src/Core/Matrix.h"
+#include <Eigen/Dense>
 #include "wykobi_math.hpp"
 
 #ifndef CURRENT_FUNCTION
@@ -365,11 +364,11 @@ namespace wykobi
          calculate_norm();
       };
 
-      segment(const point2d<T>& point1, const point2d<T>& point2) : _data({point1, point2}) {
+      segment(const point2d<T>& point1, const point2d<T>& point2) : _data{point1, point2} {
          calculate_norm();
 
       };
-      segment(const point3d<T>& point1, const point3d<T>& point2) : _data({point1, point2}) {
+      segment(const point3d<T>& point1, const point3d<T>& point2) : _data{point1, point2} {
          calculate_norm();
       };
 
