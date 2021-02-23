@@ -62,7 +62,7 @@
   do {                                    \
     if (X) {                              \
       std::stringstream ss;               \
-      ss << "\e[1;31m" << CURRENT_FUNCTION << "\e[0m " << Y << std::endl;  \
+      ss << "\033[1;31m" << CURRENT_FUNCTION << "\033[0m " << Y << std::endl;  \
       throw std::runtime_error(ss.str()); \
     }                                     \
   } while (0)

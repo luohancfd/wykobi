@@ -770,7 +770,7 @@ namespace wykobi
                          T x3, T y3, T z3,
                          T x4, T y4, T z4)
    {
-      return intersect(point3d<T>(x1, y1, z2), point3d<T>(x2,y2,z2), point3d<T>(x3, y3, z3), point3d<T>(x4, y4,z4));
+      return intersect(point3d<T>(x1, y1, z1), point3d<T>(x2,y2,z2), point3d<T>(x3, y3, z3), point3d<T>(x4, y4,z4));
    }
 
    template <typename T>
@@ -1882,7 +1882,7 @@ namespace wykobi
       T s = - dot_product(w*v, n) / n_sq_norm;
 
       if (greater_than_or_equal(t, T(0.0)) && less_than_or_equal(t, T(1.0)) &&
-          greater_than_or_equal(t, T(0.0)) && less_than_or_equal(t, T(1.0)))
+          greater_than_or_equal(s, T(0.0)) && less_than_or_equal(s, T(1.0)))
       {
          ix = point1.x + u.x * t;
          iy = point1.y + u.y * t;
@@ -1939,7 +1939,7 @@ namespace wykobi
                                              const Eigen::Vector3d& point4)
    {
       Eigen::Vector3d ipoint;
-      bool r = intersection_point<double>(point1(0), point1(1), point1(2),
+      intersection_point<double>(point1(0), point1(1), point1(2),
                                           point2(0), point2(1), point2(2),
                                           point3(0), point3(1), point3(2),
                                           point4(0), point4(1), point4(2),
