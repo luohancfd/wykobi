@@ -409,7 +409,7 @@ namespace wykobi
       const T cy = (dx2 * dz1) - (dx1 * dz2);
       const T cz = (dx1 * dy2) - (dx2 * dy1);
 
-      return is_equal(cx * cx + cy * cy + cz * cz, sqr(epsilon));
+      return is_equal(cx * cx + cy * cy + cz * cz, epsilon);
    }
 
    template <typename T>
@@ -617,7 +617,7 @@ namespace wykobi
      }
      return less_than_or_equal(
          lay_distance(point4, make_plane(point1, point2, point3, false)),
-         sqr(epsilon));
+         epsilon);
    }
 
    template <typename T>
