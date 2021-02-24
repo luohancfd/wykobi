@@ -4660,11 +4660,11 @@ namespace wykobi
       else
       {
          int or3 = orientation(x3, y3, x1, y1, px, py);
-         if ((or1 == or3) || (0 == or3))
+         if ((or1 == or3) || (CollinearOrientation == or3))
             return true;
-         else if (0 == or1)
+         else if (CollinearOrientation == or1)
             return ((or2 * or3) >= 0);
-         else if (0 == or2)
+         else if (CollinearOrientation == or2)
             return ((or1 * or3) >= 0);
          else
             return false;
@@ -4737,13 +4737,13 @@ namespace wykobi
       if ((or1 == or2) && (or2 == or3) && (or3 == or4))
          return true;
       else if (0 == or1)
-         return (0 == (or2 * or4));
+         return (0 <= (or2 * or4));
       else if (0 == or2)
-         return (0 == (or1 * or3));
+         return (0 <= (or1 * or3));
       else if (0 == or3)
-         return (0 == (or2 * or4));
+         return (0 <= (or2 * or4));
       else if (0 == or4)
-         return (0 == (or1 * or3));
+         return (0 <= (or1 * or3));
       else
          return false;
    }
@@ -8374,6 +8374,7 @@ namespace wykobi
    inline bool point_in_convex_polygon(const T& px, const T& py, const polygon<T,2>& polygon)
    {
       if (polygon.size() < 3) return false;
+      if (point_on_polygon_edge(px, py, polygon)) return true;
 
       int initial_orientation = orientation
                                 (
@@ -8433,6 +8434,7 @@ namespace wykobi
    {
       bool result = false;
       if (polygon.size() < 3) return false;
+      if (point_on_polygon_edge(px, py, polygon)) return true;
 
       std::size_t j = polygon.size() - 1;
 
@@ -8467,6 +8469,7 @@ namespace wykobi
    {
       int winding_number = 0;
       std::size_t j = polygon.size() - 1;
+      if (point_on_polygon_edge(px, py, polygon)) return true;
 
       for (std::size_t i = 0; i < polygon.size(); ++i)
       {

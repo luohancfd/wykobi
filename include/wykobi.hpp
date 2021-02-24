@@ -2311,6 +2311,21 @@ namespace wykobi
    template <typename T>
    inline bool point_in_box(const point3d<T>& point, const segment<T,3>& segment);
 
+   /**
+    * @brief Check whether a point is in the triangle (including on the edge of the triangle) or not
+    *
+    * @tparam T
+    * @param px
+    * @param py
+    * @param x1
+    * @param y1
+    * @param x2
+    * @param y2
+    * @param x3
+    * @param y3
+    * @return true
+    * @return false
+    */
    template <typename T>
    inline bool point_in_triangle(const T& px, const T& py,
                                  const T& x1, const T& y1,
@@ -2338,6 +2353,23 @@ namespace wykobi
    template <typename T>
    inline bool segment_in_plane(const segment<T,3> seg, const plane<T,3>& plane);
 
+   /**
+    * @brief Check whether a point is in the quadrangle (including on the edge of the quadrangle)
+    *
+    * @tparam T
+    * @param px
+    * @param py
+    * @param x1
+    * @param y1
+    * @param x2
+    * @param y2
+    * @param x3
+    * @param y3
+    * @param x4
+    * @param y4
+    * @return true
+    * @return false
+    */
    template <typename T>
    inline bool point_in_quadix(const T& px, const T& py,
                                const T& x1, const T& y1,
@@ -3253,9 +3285,29 @@ namespace wykobi
    template <typename T> inline bool point_on_polygon_edge(const T& px, const T& py, const polygon<T,2>& polygon);
    template <typename T> inline bool point_on_polygon_edge(const point2d<T>& point, const polygon<T,2>& polygon);
 
+   /**
+    * @brief Test whether a point is in the polygon (including on the edge of the polygon) or not by ray casting algorithm
+    *
+    * @tparam T
+    * @param px
+    * @param py
+    * @param polygon
+    * @return true
+    * @return false
+    */
    template <typename T> inline bool point_in_polygon(const T& px, const T& py, const polygon<T,2>& polygon);
    template <typename T> inline bool point_in_polygon(const point2d<T>& point, const polygon<T,2>& polygon);
 
+   /**
+   * @brief Test whether a point is in the polygon (including on the edge of the polygon) or not by calculating winding number
+   *
+   * @tparam T
+   * @param px
+   * @param py
+   * @param polygon
+   * @return true
+   * @return false
+   */
    template <typename T> inline bool point_in_polygon_winding_number(const T& px, const T& py, const polygon<T,2>& polygon);
    template <typename T> inline bool point_in_polygon_winding_number(const point2d<T>& point, const polygon<T,2>& polygon);
 
