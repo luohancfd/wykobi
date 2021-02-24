@@ -8376,22 +8376,40 @@ namespace wykobi
       if (polygon.size() < 3) return false;
       if (point_on_polygon_edge(px, py, polygon)) return true;
 
+      std::size_t j = static_cast<int>(polygon.size()) - 1;
+
       int initial_orientation = orientation
                                 (
                                   polygon[0],
-                                  polygon[static_cast<int>(polygon.size()) - 1],
+                                  polygon[j],
                                   px, py
                                 );
-      std::size_t j = 0;
+      if (initial_orientation == CollinearOrientation) {
+        if (is_equal(polygon[0].x, polygon[j].x)) {
+          return greater_than_or_equal(py, polygon[0].y) !=
+                 greater_than_or_equal(py, polygon[j].y);
+        } else {
+          return greater_than_or_equal(px, polygon[0].x) !=
+                 greater_than_or_equal(px, polygon[j].x);
+        }
+      }
 
-      for (std::size_t i = 1; i < polygon.size(); ++i)
-      {
-         if (initial_orientation != orientation(polygon[i],polygon[j],px,py))
-         {
-            return false;
-         }
-
-         j = i;
+      j = 0;
+      for (std::size_t i = 1; i < polygon.size(); j = i++) {
+        int k = orientation(polygon[i], polygon[j], px, py);
+        if (k == CollinearOrientation) {
+          // check for point on line
+          if (is_equal(polygon[i].x, polygon[j].x)) {
+            return greater_than_or_equal(py, polygon[i].y) !=
+                   greater_than_or_equal(py, polygon[j].y);
+          } else {
+            return greater_than_or_equal(px, polygon[i].x) !=
+                   greater_than_or_equal(px, polygon[j].x);
+          }
+        }
+        if (initial_orientation != k) {
+          return false;
+        }
       }
 
       return true;
@@ -8432,27 +8450,41 @@ namespace wykobi
    template <typename T>
    inline bool point_in_polygon(const T& px, const T& py, const polygon<T,2>& polygon)
    {
+      /**
+       * @brief The algorithm is Randolph Frankin's version of ray-casting
+       *        https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html.
+       *
+       *        More introduction of the other methods is here
+       *        https://www.eecs.umich.edu/courses/eecs380/HANDOUTS/PROJ2/InsidePoly.html
+       *
+       */
       bool result = false;
       if (polygon.size() < 3) return false;
-      if (point_on_polygon_edge(px, py, polygon)) return true;
 
       std::size_t j = polygon.size() - 1;
 
-      for (std::size_t i = 0; i < polygon.size(); ++i)
+      for (std::size_t i = 0; i < polygon.size(); j=i++)
       {
-         if (
-              ((polygon[i].y <= py) && (py < polygon[j].y)) || // an upward crossing
-              ((polygon[j].y <= py) && (py < polygon[i].y))    // a downward crossing
-            )
+         // py sits between pnt_i and pnt_j while pnt_i and pnt_j don't have the same y
+         if ((polygon[i].y < py) != (polygon[j].y < py))
          {
             /* compute the edge-ray intersect @ the x-coordinate */
-            if (px - polygon[i].x < ((polygon[j].x - polygon[i].x) * (py - polygon[i].y) / (polygon[j].y - polygon[i].y)))
+            T dx = (px - polygon[i].x) - ((polygon[j].x - polygon[i].x) * (py - polygon[i].y) / (polygon[j].y - polygon[i].y));
+            if (dx < T(0.0))
             {
                result = !result;
+            } else if (dx > T(0.0)) {
+               continue;
+            } else {
+               // TODO: Should I use is_equal here?
+               return true;
             }
+         } else if (is_equal(polygon[i].y, polygon[j].y) &&
+                    is_equal(py, polygon[i].y) &&
+                    (greater_than_or_equal(px, polygon[i].x) !=
+                     greater_than_or_equal(px, polygon[j].x))) {
+           return true;
          }
-
-         j = i;
       }
 
       return result;
@@ -8469,7 +8501,6 @@ namespace wykobi
    {
       int winding_number = 0;
       std::size_t j = polygon.size() - 1;
-      if (point_on_polygon_edge(px, py, polygon)) return true;
 
       for (std::size_t i = 0; i < polygon.size(); ++i)
       {
@@ -8497,7 +8528,7 @@ namespace wykobi
          j = i;
       }
 
-      return (winding_number != 0);
+      return (winding_number != 0) || point_on_polygon_edge(px, py, polygon);
    }
 
    template <typename T>
