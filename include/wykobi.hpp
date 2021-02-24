@@ -1098,7 +1098,7 @@ namespace wykobi
     * @brief Check the position of vector (px,py) relative
     *        to a plane. The plane is formed by vector (1 -> 2)
     *        and vector (1 -> 3). The plane normal direction is
-    *        (1->3)x(1-2).
+    *        (1->2)x(1->3).
     *        Robust version, eps = Epsilon
     * @return int
     */

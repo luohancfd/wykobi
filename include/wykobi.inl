@@ -49,7 +49,7 @@ namespace wykobi
       const T vy = y3 - y1;
       const T vz = z3 - z1;
 
-      // orin = dot_product(p1, cross_product(p3 - p1, p2 - p1))
+      // orin = dot_product(p1, cross_product(p2 - p1, p3 - p1))
       const T orin = (px - x1) * (uy * vz - vy * uz) +
                      (py - y1) * (uz * vx - vz * ux) +
                      (pz - z1) * (ux * vy - vx * uy) ;
@@ -94,7 +94,7 @@ namespace wykobi
       const T vy = y3 - y1;
       const T vz = z3 - z1;
 
-      // orin = dot_product(p1, cross_product(p3 - p1, p2 - p1))
+      // orin = dot_product(p1, cross_product(p2 - p1, p3 - p1))
       const T orin = (px - x1) * (uy * vz - vy * uz) +
                      (py - y1) * (uz * vx - vz * ux) +
                      (pz - z1) * (ux * vy - vx * uy) ;
