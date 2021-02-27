@@ -28,11 +28,15 @@ namespace wykobi
                           const T& x2, const T& y2,
                           const T& px, const T& py)
    {
-      const T orin = (x2 - x1) * (py - y1) - (px - x1) * (y2 - y1);
+      const T ux = x2 - x1;
+      const T uy = y2 - y1;
 
-      if (orin > T(0.0))      return LeftHandSide;         /* Orientaion is to the left-hand side  */
-      else if (orin < T(0.0)) return RightHandSide;        /* Orientaion is to the right-hand side */
-      else                    return CollinearOrientation; /* Orientaion is neutral aka collinear  */
+      T orin = ux * (py - y1) - (px - x1) * uy;
+      orin  /= sqrt(ux * ux + uy * uy);
+
+      if (is_equal(orin, T(0.0))) return CollinearOrientation; /* Orientaion is neutral aka collinear  */
+      else if (orin > T(0.0))     return LeftHandSide;         /* Orientaion is to the left-hand side  */
+      else                        return RightHandSide;        /* Orientaion is to the right-hand side */
    }
 
    template <typename T>
@@ -50,58 +54,15 @@ namespace wykobi
       const T vz = z3 - z1;
 
       // orin = dot_product(p1, cross_product(p2 - p1, p3 - p1))
-      const T orin = (px - x1) * (uy * vz - vy * uz) +
-                     (py - y1) * (uz * vx - vz * ux) +
-                     (pz - z1) * (ux * vy - vx * uy) ;
+      T orin = (px - x1) * (uy * vz - vy * uz) +
+               (py - y1) * (uz * vx - vz * ux) +
+               (pz - z1) * (ux * vy - vx * uy) ;
 
-      if (orin < T(0.0))      return BelowOrientation;    /* Orientaion is below plane                      */
-      else if (orin > T(0.0)) return AboveOrientation;    /* Orientaion is above plane                      */
-      else                    return CoplanarOrientation; /* Orientaion is coplanar to plane if Result is 0 */
-   }
+      orin /= sqrt(ux * ux + uy * uy + uz * uz);
 
-   template <typename T>
-   inline int robust_orientation(const T& x1, const T& y1,
-                                 const T& x2, const T& y2,
-                                 const T& px, const T& py)
-   {
-      const T orin = (x2 - x1) * (py - y1) - (px - x1) * (y2 - y1);
-
-      /*
-         Calculation Policy:
-         if |Orin - Orin`| < Epsilon then Orin` is assumed to be equal to zero.
-         Where:
-           Orin : is the "real" mathematically precise orientation value, using infinite
-                  precision arithmetic (hypothetical)
-           Orin`: is the calculated imprecise orientation value, using finite precision
-                  arithmetic
-      */
-      if (is_equal(orin,T(0.0))) return CollinearOrientation; /* orientaion is neutral aka collinear  */
-      else if (orin < T(0.0))    return RightHandSide;        /* orientaion is to the right-hand side */
-      else                       return LeftHandSide;         /* orientaion is to the left-hand side  */
-   }
-
-   template <typename T>
-   inline int robust_orientation(const T& x1, const T& y1, const T& z1,
-                                 const T& x2, const T& y2, const T& z2,
-                                 const T& x3, const T& y3, const T& z3,
-                                 const T& px, const T& py, const T& pz)
-   {
-      const T ux = x2 - x1;
-      const T uy = y2 - y1;
-      const T uz = z2 - z1;
-
-      const T vx = x3 - x1;
-      const T vy = y3 - y1;
-      const T vz = z3 - z1;
-
-      // orin = dot_product(p1, cross_product(p2 - p1, p3 - p1))
-      const T orin = (px - x1) * (uy * vz - vy * uz) +
-                     (py - y1) * (uz * vx - vz * ux) +
-                     (pz - z1) * (ux * vy - vx * uy) ;
-
-      if (is_equal(orin,T(0.0))) return CoplanarOrientation; /* Orientaion is coplanar to plane if Result is 0 */
-      else if (orin < T(0.0))    return BelowOrientation;    /* Orientaion is below plane                      */
-      else                       return AboveOrientation;    /* Orientaion is above plane                      */
+      if (is_equal(orin, T(0.0)))  return CoplanarOrientation; /* Orientaion is coplanar to plane if Result is 0 */
+      else if (orin < T(0.0))      return BelowOrientation;    /* Orientaion is below plane                      */
+      else                         return AboveOrientation;    /* Orientaion is above plane                      */
    }
 
    template <typename T>
@@ -4655,8 +4616,12 @@ namespace wykobi
       const int or1 = orientation(x1, y1, x2, y2, px, py);
       const int or2 = orientation(x2, y2, x3, y3, px, py);
 
-      if ((or1 * or2) == -1)
+      if ((or1 * or2) == -1) {
          return false;
+      }
+      else if (or1  == 0 && or2 == 0) {
+         return true;
+      }
       else
       {
          int or3 = orientation(x3, y3, x1, y1, px, py);
@@ -4757,7 +4722,7 @@ namespace wykobi
    {
       return point_in_quadix
              (
-                point.x,  point.y,
+               point.x,  point.y,
                point1.x, point1.y,
                point2.x, point2.y,
                point3.x, point3.y,
