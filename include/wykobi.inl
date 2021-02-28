@@ -18,6 +18,7 @@
 */
 
 
+#include <bits/c++config.h>
 #include "wykobi.hpp"
 #include "wykobi_math.hpp"
 
@@ -12347,11 +12348,11 @@ namespace wykobi
    template <typename T>
    inline T area(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3)
    {
-      return T(0.5) * (
+      return abs(T(0.5) * (
                         (point1.x * (point2.y - point3.y)) +
                         (point2.x * (point3.y - point1.y)) +
                         (point3.x * (point1.y - point2.y))
-                      );
+                      ));
    }
 
    template <typename T>
@@ -12375,11 +12376,11 @@ namespace wykobi
    template <typename T>
    inline T area(const triangle<T,2>& triangle)
    {
-      return T(0.5) * (
+      return abs(T(0.5) * (
                         (triangle[0].x * (triangle[1].y - triangle[2].y)) +
                         (triangle[1].x * (triangle[2].y - triangle[0].y)) +
                         (triangle[2].x * (triangle[0].y - triangle[1].y))
-                      );
+                      ));
    }
 
    template <typename T>
@@ -12403,12 +12404,12 @@ namespace wykobi
    template <typename T>
    inline T area(const quadix<T,2>& quadix)
    {
-      return T(0.5) * (
+      return abs(T(0.5) * (
                         (quadix[0].x * (quadix[1].y - quadix[3].y)) +
                         (quadix[1].x * (quadix[2].y - quadix[0].y)) +
                         (quadix[2].x * (quadix[3].y - quadix[1].y)) +
                         (quadix[3].x * (quadix[0].y - quadix[2].y))
-                      );
+                      ));
    }
 
    template <typename T>
@@ -12435,19 +12436,62 @@ namespace wykobi
    template <typename T>
    inline T area(const polygon<T,2>& polygon)
    {
-      if (polygon.size() < 3) return T(0.0);
+      std::size_t n = polygon.size();
+      if (n < 3) return T(0.0);
 
-      T result = T(0.0);
+      T result = polygon[0].x * (polygon[1].y - polygon[n-1].y);
+      for (std::size_t i = 1; i < n-1; ++i) {
+         result += polygon[i].x * (polygon[i+1].y - polygon[i-1].y);
+      }
+      result += polygon[n-1].x * (polygon[0].y - polygon[n-2].y);
 
-      std::size_t j = polygon.size() - 1;
+      return abs(result * T(0.5));
+   }
 
-      for (std::size_t i = 0; i < polygon.size(); ++i)
-      {
-         result += ((polygon[j].x * polygon[i].y) - (polygon[j].y * polygon[i].x));
-         j = i;
+   template <typename T>
+   inline T area(const polygon<T, 3>& polygon)
+   {
+      std::size_t n = polygon.size();
+      if (n < 3) return T(0.0);
+
+
+      // calculate the normal vector of the polygon
+      T ux = polygon[1].x - polygon[0].x;
+      T uy = polygon[1].y - polygon[0].y;
+      T uz = polygon[1].z - polygon[0].z;
+      vector3d<T> N;
+      T vx,vy,vz, an;
+      for (std::size_t i = 2; i < n; ++i) {
+         vx = polygon[i].x - polygon[0].x;
+         vy = polygon[i].y - polygon[0].y;
+         vz = polygon[i].z - polygon[0].z;
+         N.x = uy*vz-uz*vy;
+         N.y = uz*vx-ux*vz;
+         N.z = ux*vy-uy*vx;
+         an = sqrt(N.x*N.x + N.y*N.y + N.z*N.z);
+         if (!is_equal(an, T(0.0))) break;
       }
 
-      return abs<T>(result * T(0.5));
+      // select largest abs coordinate to ignore for projection
+      std::size_t coord = 0;
+      T p = abs(N.x);
+      for (std::size_t i = 1; i < 3; ++i) {
+         if (abs(N[i]) > p) p = abs(N[i]);
+      }
+      std::size_t coord2 = (coord == 2 ? 0 : coord+1);
+      std::size_t coord3 = (coord2 == 2 ? 0 : coord2+1);
+
+      // calculate the area in the projection plane
+      T result = polygon[0][coord] * (polygon[1][coord2] - polygon[n-1][coord2]);
+      for (std::size_t i = 1; i < n-1; ++i) {
+         result += polygon[i][coord] * (polygon[i+1][coord2] - polygon[i-1][coord2]);
+      }
+      result += polygon[n-1][coord] * (polygon[0][coord2] - polygon[n-2][coord2]);
+
+      // scale the surface
+      result *= T(0.5) * an / N[coord3];
+
+      return abs(result);
    }
 
    template <typename T>

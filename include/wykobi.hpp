@@ -3824,15 +3824,50 @@ namespace wykobi
    template <typename T> inline bool clip(const rectangle<T>&  rectangle1, const rectangle<T>&  rectangle2, rectangle<T>& crectangle);
    template <typename T> inline bool clip(const box<T,3>&              box1, const box<T,3>&        box2,       box<T,3>&       cbox);
 
+   /**
+    * @brief Calculate the area of a triangle formed by the three points in 2D/3D
+    *
+    * @tparam T
+    * @param point1
+    * @param point2
+    * @param point3
+    * @return T
+    */
    template <typename T> inline T area(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3);
    template <typename T> inline T area(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3);
+
+   /**
+    * @brief Calculate the area of a triangle in 2D/3D
+    *
+    * @tparam T
+    * @param triangle
+    * @return T
+    */
    template <typename T> inline T area(const triangle<T,2>& triangle);
    template <typename T> inline T area(const triangle<T,3>& triangle);
+
+   /**
+    * @brief Calculate the area of a quadrilateral. The algorithm also works for quadrilateral with self intersection
+    *        Check detail algorithm here http://geomalgorithms.com/a01-_area.html
+    *
+    * @tparam T
+    * @param quadix
+    * @return T
+    */
    template <typename T> inline T area(const quadix<T,2>& quadix);
    template <typename T> inline T area(const quadix<T,3>& quadix);
    template <typename T> inline T area(const rectangle<T>& rectangle);
    template <typename T> inline T area(const circle<T>& circle);
+
+   /**
+    * @brief Calculate the area of a polygon.
+    *
+    * @tparam T
+    * @param polygon
+    * @return T
+    */
    template <typename T> inline T area(const polygon<T,2>& polygon);
+   template <typename T> inline T area(const polygon<T,3>& polygon);
 
    template <typename T> inline T perimeter(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3);
    template <typename T> inline T perimeter(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3);
