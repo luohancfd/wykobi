@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['vector2d',['vector2d',['../classwykobi_1_1vector2d.html',1,'wykobi']]],
-  ['vector3d',['vector3d',['../classwykobi_1_1vector3d.html',1,'wykobi']]],
-  ['vectornd',['vectornd',['../classwykobi_1_1vectornd.html',1,'wykobi']]]
+  ['triangle',['triangle',['../classwykobi_1_1triangle.html',1,'wykobi']]],
+  ['trig_5fluts',['trig_luts',['../classwykobi_1_1trig__luts.html',1,'wykobi']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['differing_5forientation',['differing_orientation',['../wykobi_8hpp.html#a19cf6f6a9c8e712add150c560bfbac67',1,'wykobi']]],
-  ['distance_5fline_5fto_5fline',['distance_line_to_line',['../wykobi_8hpp.html#ad9248dae4ee8bb8cded64e0c695ea5ea',1,'wykobi']]]
+  ['collinear',['collinear',['../wykobi_8hpp.html#a41f6c87ae8fccaac3a1ed583c87ec781',1,'wykobi']]],
+  ['create_5fperpendicular_5fvector',['create_perpendicular_vector',['../wykobi_8hpp.html#a654b0eb313ba3e289fa27085cc64a9d2',1,'wykobi::create_perpendicular_vector(const vector2d&lt; T &gt; &amp;v)'],['../wykobi_8hpp.html#a47390880bec7a4a3c1ec1405c5b59141',1,'wykobi::create_perpendicular_vector(const vector3d&lt; T &gt; &amp;v, const vector3d&lt; T &gt; &amp;w)']]]
 ];

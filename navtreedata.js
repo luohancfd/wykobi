@@ -21,7 +21,7 @@ var NAVTREEINDEX =
 "wykobi_8hpp.html#a5c3d1cfc5c7c2b9e39b9fbd3e6a94187",
 "wykobi_8hpp.html#a8e055915a40e473637518fa47bde86a5",
 "wykobi_8hpp.html#ab9cca040a149bc50f47a378794442272",
-"wykobi_8hpp.html#aec5cec9eafa9ff06a991f3f5cc43bd25"
+"wykobi_8hpp.html#aec35b5e4ee8a89606ee5dab4109a9e48"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

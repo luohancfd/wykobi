@@ -127,6 +127,7 @@ var wykobi_8hpp =
     [ "area", "wykobi_8hpp.html#aea1dc747900f637f5676c2485c3da789", null ],
     [ "area", "wykobi_8hpp.html#adbd9280dac3faf2d4f053aa54ffb98d2", null ],
     [ "area", "wykobi_8hpp.html#af78c84b5a12f9be266ecaf0e3a6d19b4", null ],
+    [ "area", "wykobi_8hpp.html#accec47edd770483fa616574232da584b", null ],
     [ "bezier_convex_hull", "wykobi_8hpp.html#a79883194de5053b23fac180688c33b7d", null ],
     [ "bezier_convex_hull", "wykobi_8hpp.html#ae71a33e7369cbc45c78bb58884779083", null ],
     [ "bezier_curve_length", "wykobi_8hpp.html#a4e804bb69de9525270855b15ffbdf630", null ],
