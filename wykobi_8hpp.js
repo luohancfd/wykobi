@@ -122,6 +122,7 @@ var wykobi_8hpp =
     [ "area", "wykobi_8hpp.html#a1907c1b12b9e6c10209d5ebc3aa42440", null ],
     [ "area", "wykobi_8hpp.html#ab7a6701556f236e462901be94e7b2929", null ],
     [ "area", "wykobi_8hpp.html#af78c84b5a12f9be266ecaf0e3a6d19b4", null ],
+    [ "area", "wykobi_8hpp.html#accec47edd770483fa616574232da584b", null ],
     [ "area", "wykobi_8hpp.html#a3ebd46d410a59bf099a73accb4f880c3", null ],
     [ "area", "wykobi_8hpp.html#a2638590d3dba6a6df40ce8b28b4c4414", null ],
     [ "area", "wykobi_8hpp.html#aea1dc747900f637f5676c2485c3da789", null ],

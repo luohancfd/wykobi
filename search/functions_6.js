@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['point_5fin_5fpolygon_201',['point_in_polygon',['../wykobi_8hpp.html#a2a743af653a81a58a53ef873663c4e15',1,'wykobi']]],
-  ['point_5fin_5fpolygon_5fwinding_5fnumber_202',['point_in_polygon_winding_number',['../wykobi_8hpp.html#acf06e212fe713c37f9e99dad3f29bfb2',1,'wykobi']]],
-  ['point_5fin_5fquadix_203',['point_in_quadix',['../wykobi_8hpp.html#a44445aba99373b04ffe28f294a4f8c49',1,'wykobi']]],
-  ['point_5fin_5ftriangle_204',['point_in_triangle',['../wykobi_8hpp.html#a28d471c26e2d5aca851c937c4aec635a',1,'wykobi']]]
+  ['orientation_202',['orientation',['../wykobi_8hpp.html#a846daaf3ff54fc5689254871e50d9dea',1,'wykobi::orientation(const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;px, const T &amp;py)'],['../wykobi_8hpp.html#a372eeb70d3746b01901bbe6a4a3b9e3c',1,'wykobi::orientation(const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;px, const T &amp;py, const T &amp;pz)']]]
 ];

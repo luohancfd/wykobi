@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['collinear_189',['collinear',['../wykobi_8hpp.html#a41f6c87ae8fccaac3a1ed583c87ec781',1,'wykobi']]],
-  ['create_5fperpendicular_5fvector_190',['create_perpendicular_vector',['../wykobi_8hpp.html#a654b0eb313ba3e289fa27085cc64a9d2',1,'wykobi::create_perpendicular_vector(const vector2d&lt; T &gt; &amp;v)'],['../wykobi_8hpp.html#a47390880bec7a4a3c1ec1405c5b59141',1,'wykobi::create_perpendicular_vector(const vector3d&lt; T &gt; &amp;v, const vector3d&lt; T &gt; &amp;w)']]]
+  ['area_190',['area',['../wykobi_8hpp.html#a1907c1b12b9e6c10209d5ebc3aa42440',1,'wykobi::area(const point2d&lt; T &gt; &amp;point1, const point2d&lt; T &gt; &amp;point2, const point2d&lt; T &gt; &amp;point3)'],['../wykobi_8hpp.html#a82fe1936a3fae96d4da88ebf8e953df9',1,'wykobi::area(const triangle&lt; T, 2 &gt; &amp;triangle)'],['../wykobi_8hpp.html#a3ebd46d410a59bf099a73accb4f880c3',1,'wykobi::area(const quadix&lt; T, 2 &gt; &amp;quadix)'],['../wykobi_8hpp.html#af78c84b5a12f9be266ecaf0e3a6d19b4',1,'wykobi::area(const polygon&lt; T, 2 &gt; &amp;polygon)']]]
 ];
