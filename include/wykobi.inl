@@ -1025,25 +1025,36 @@ namespace wykobi
       T denom =  dot_product(line_dir,normal);
       T sign  = 0.0;
 
+      if (is_equal(denom, T(0.0))) {
+         if (is_equal(dot_product(diff, normal), T(0.0))) {
+            // line is in the triangle's plane
+            // find the maximum non-zero coordinate
+            std::size_t i = abs(edge1[0]) > abs(edge1[1]) ? 0 : 1;
+            if (abs(edge1[2]) > abs(edge1[i])) {
+               i = 2;
+            }
+            std::size_t j = i+1;
+            if (i > 2) j = 0;
+            return intersect(
+               wykobi::line<T, 2>(line[0][i], line[0][j], line[1][i], line[1][j]),
+               wykobi::triangle<T,2>(triangle[0][i], triangle[0][j], triangle[1][i], triangle[1][j], triangle[2][i], triangle[2][j])
+            );
+
+         } else {
+            return false;
+         }
+      }
+
       if (denom > T(0.0))
       {
          // line crosses the triangle from bottom to top
          sign = T(1.0);
       }
-      else if (denom < T(0.0))
+      else
       {
          // line crosses the triangle from top to bottom
          sign  = T(-1.0);
          denom = -denom;
-      }
-      else
-      {
-         // line is parallel to the triangle or in the triangle
-         if (is_equal(dot_product(diff, normal), T(0.0))) {
-            return true;
-         } else {
-            return false;
-         }
       }
 
       T val1 = sign * dot_product(line_dir,(diff * edge2));
