@@ -1,11 +1,6 @@
 var searchData=
 [
-  ['naive_5fgroup_5fintersections',['naive_group_intersections',['../structwykobi_1_1algorithm_1_1naive__group__intersections.html',1,'wykobi::algorithm']]],
-  ['naive_5fgroup_5fintersections_3c_20circle_3c_20t_20_3e_20_3e',['naive_group_intersections&lt; circle&lt; T &gt; &gt;',['../structwykobi_1_1algorithm_1_1naive__group__intersections_3_01circle_3_01T_01_4_01_4.html',1,'wykobi::algorithm']]],
-  ['naive_5fgroup_5fintersections_3c_20segment_3c_20t_2c_202_20_3e_20_3e',['naive_group_intersections&lt; segment&lt; T, 2 &gt; &gt;',['../structwykobi_1_1algorithm_1_1naive__group__intersections_3_01segment_3_01T_00_012_01_4_01_4.html',1,'wykobi::algorithm']]],
-  ['naive_5fgroup_5fintersections_3c_20segment_3c_20t_2c_203_20_3e_20_3e',['naive_group_intersections&lt; segment&lt; T, 3 &gt; &gt;',['../structwykobi_1_1algorithm_1_1naive__group__intersections_3_01segment_3_01T_00_013_01_4_01_4.html',1,'wykobi::algorithm']]],
-  ['naive_5fminimum_5fbounding_5fball',['naive_minimum_bounding_ball',['../structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball.html',1,'wykobi::algorithm']]],
-  ['naive_5fminimum_5fbounding_5fball_3c_20point2d_3c_20t_20_3e_20_3e',['naive_minimum_bounding_ball&lt; point2d&lt; T &gt; &gt;',['../structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball_3_01point2d_3_01T_01_4_01_4.html',1,'wykobi::algorithm']]],
-  ['naive_5fminimum_5fbounding_5fball_5fwith_5fch_5ffilter',['naive_minimum_bounding_ball_with_ch_filter',['../structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter.html',1,'wykobi::algorithm']]],
-  ['naive_5fminimum_5fbounding_5fball_5fwith_5fch_5ffilter_3c_20point2d_3c_20t_20_3e_20_3e',['naive_minimum_bounding_ball_with_ch_filter&lt; point2d&lt; T &gt; &gt;',['../structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter_3_01point2d_3_01T_01_4_01_4.html',1,'wykobi::algorithm']]]
+  ['ordered_5fpolygon_56',['ordered_polygon',['../structwykobi_1_1algorithm_1_1ordered__polygon.html',1,'wykobi::algorithm']]],
+  ['ordered_5fpolygon_3c_20point2d_3c_20t_20_3e_20_3e_57',['ordered_polygon&lt; point2d&lt; T &gt; &gt;',['../structwykobi_1_1algorithm_1_1ordered__polygon_3_01point2d_3_01T_01_4_01_4.html',1,'wykobi::algorithm']]],
+  ['orientation_58',['orientation',['../wykobi_8hpp.html#a846daaf3ff54fc5689254871e50d9dea',1,'wykobi::orientation(const T &amp;x1, const T &amp;y1, const T &amp;x2, const T &amp;y2, const T &amp;px, const T &amp;py)'],['../wykobi_8hpp.html#a372eeb70d3746b01901bbe6a4a3b9e3c',1,'wykobi::orientation(const T &amp;x1, const T &amp;y1, const T &amp;z1, const T &amp;x2, const T &amp;y2, const T &amp;z2, const T &amp;x3, const T &amp;y3, const T &amp;z3, const T &amp;px, const T &amp;py, const T &amp;pz)']]]
 ];

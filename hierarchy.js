@@ -40,9 +40,6 @@ var hierarchy =
       [ "wykobi::point3d< T >", "classwykobi_1_1point3d.html", [
         [ "wykobi::vector3d< T >", "classwykobi_1_1vector3d.html", null ]
       ] ],
-      [ "wykobi::pointnd< T, D >", "classwykobi_1_1pointnd.html", [
-        [ "wykobi::vectornd< T, D >", "classwykobi_1_1vectornd.html", null ]
-      ] ],
       [ "wykobi::polygon< T, Dimension >", "classwykobi_1_1polygon.html", null ],
       [ "wykobi::quadix< T, Dimension >", "classwykobi_1_1quadix.html", null ],
       [ "wykobi::quadratic_bezier< T, Dimension >", "classwykobi_1_1quadratic__bezier.html", null ],
@@ -66,6 +63,7 @@ var hierarchy =
     [ "wykobi::algorithm::naive_minimum_bounding_ball_with_ch_filter< point2d< T > >", "structwykobi_1_1algorithm_1_1naive__minimum__bounding__ball__with__ch__filter_3_01point2d_3_01T_01_4_01_4.html", null ],
     [ "wykobi::algorithm::ordered_polygon< T >", "structwykobi_1_1algorithm_1_1ordered__polygon.html", null ],
     [ "wykobi::algorithm::ordered_polygon< point2d< T > >", "structwykobi_1_1algorithm_1_1ordered__polygon_3_01point2d_3_01T_01_4_01_4.html", null ],
+    [ "wykobi::pointnd< T, D >", "classwykobi_1_1pointnd.html", null ],
     [ "wykobi::algorithm::polygon_triangulate< T >", "structwykobi_1_1algorithm_1_1polygon__triangulate.html", null ],
     [ "wykobi::algorithm::polygon_triangulate< point2d< T > >", "structwykobi_1_1algorithm_1_1polygon__triangulate_3_01point2d_3_01T_01_4_01_4.html", null ],
     [ "wykobi::algorithm::randomized_minimum_bounding_ball< T >", "structwykobi_1_1algorithm_1_1randomized__minimum__bounding__ball.html", null ],
@@ -83,6 +81,7 @@ var hierarchy =
     [ "wykobi::algorithm::sutherland_hodgman_polygon_clipper_engine< T >", "structwykobi_1_1algorithm_1_1sutherland__hodgman__polygon__clipper__engine.html", null ],
     [ "wykobi::algorithm::sutherland_hodgman_polygon_clipper_engine< point2d< T > >", "structwykobi_1_1algorithm_1_1sutherland__hodgman__polygon__clipper__engine_3_01point2d_3_01T_01_4_01_4.html", null ],
     [ "wykobi::trig_luts< T >", "classwykobi_1_1trig__luts.html", null ],
+    [ "wykobi::vectornd< T, D >", "classwykobi_1_1vectornd.html", null ],
     [ "wykobi::wykobi_graphics_net< T >", "classwykobi_1_1wykobi__graphics__net.html", null ],
     [ "wykobi::wykobi_graphics_opengl< T >", "classwykobi_1_1wykobi__graphics__opengl.html", null ],
     [ "wykobi::wykobi_graphics_vcl< T >", "classwykobi_1_1wykobi__graphics__vcl.html", null ],

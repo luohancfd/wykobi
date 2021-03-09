@@ -1,7 +1,6 @@
 var classwykobi_1_1polygon =
 [
     [ "const_iterator", "classwykobi_1_1polygon.html#adb4ca7e35f81662433329c94f3f11d01", null ],
-    [ "const_reference", "classwykobi_1_1polygon.html#ac0328de289c0353f606e35ba27a3897b", null ],
     [ "iterator", "classwykobi_1_1polygon.html#a64b319d08261184597df1444986e661a", null ],
     [ "PointType", "classwykobi_1_1polygon.html#a0020cc06f486e53630c3644f2929e956", null ],
     [ "reference", "classwykobi_1_1polygon.html#adaf97c0b59d110392dc0395bac672176", null ],
@@ -11,12 +10,12 @@ var classwykobi_1_1polygon =
     [ "~polygon", "classwykobi_1_1polygon.html#adec7df64d846c8be7c7b8860ff6d9e6e", null ],
     [ "back", "classwykobi_1_1polygon.html#af633d30af94b4ae177c3d9cba4a5d0c2", null ],
     [ "back", "classwykobi_1_1polygon.html#aa7e0c1a00223d7f9b9617f1e5b07aa38", null ],
-    [ "begin", "classwykobi_1_1polygon.html#a0f8e4009898a3283d14b3a6627f70747", null ],
     [ "begin", "classwykobi_1_1polygon.html#a5886a932f0a87985781c84a295273d0f", null ],
-    [ "clear", "classwykobi_1_1polygon.html#a23541728e3c3468fdeb84841c024f3e8", null ],
+    [ "begin", "classwykobi_1_1polygon.html#a0f8e4009898a3283d14b3a6627f70747", null ],
     [ "clear", "classwykobi_1_1polygon.html#ae0375b5392293dce8855471e761bc54d", null ],
-    [ "end", "classwykobi_1_1polygon.html#a297ad3ca936d3ad1d48f775be5f4853c", null ],
+    [ "clear", "classwykobi_1_1polygon.html#a23541728e3c3468fdeb84841c024f3e8", null ],
     [ "end", "classwykobi_1_1polygon.html#aeda136150ca601aebf8ab127c76e70a1", null ],
+    [ "end", "classwykobi_1_1polygon.html#a297ad3ca936d3ad1d48f775be5f4853c", null ],
     [ "erase", "classwykobi_1_1polygon.html#a0807d3e9f749fa40e4dfccd9b2d51048", null ],
     [ "front", "classwykobi_1_1polygon.html#a339bd7c5f02c62c6ee476939ff0323bc", null ],
     [ "front", "classwykobi_1_1polygon.html#ab302693a20056827d808fa0e21f282aa", null ],
@@ -25,5 +24,6 @@ var classwykobi_1_1polygon =
     [ "push_back", "classwykobi_1_1polygon.html#a23cff9882c5e0f9e2e3842918f8be6d6", null ],
     [ "reserve", "classwykobi_1_1polygon.html#a29875a24d8f2dd65513bed912ebb99de", null ],
     [ "reverse", "classwykobi_1_1polygon.html#a55e0d2f133c1fea4a0ef41a3d550166d", null ],
-    [ "size", "classwykobi_1_1polygon.html#ac811dfd52533284aea033981abf60d36", null ]
+    [ "size", "classwykobi_1_1polygon.html#ac811dfd52533284aea033981abf60d36", null ],
+    [ "const_reference", "classwykobi_1_1polygon.html#a07e88ecdada7010abe4ad0cf4bd264ad", null ]
 ];
